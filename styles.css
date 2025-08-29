@@ -229,3 +229,73 @@ section:last-of-type {
         margin: 10px 0;
     }
 }
+/* ===== AUTH (Login & Register) PAGES ===== */
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-form label {
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #444;
+}
+
+.auth-form input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.auth-form input:focus {
+    border-color: #007bff;
+}
+
+.auth-form .btn {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.auth-form .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.auth-form .switch {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.auth-form .switch a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
