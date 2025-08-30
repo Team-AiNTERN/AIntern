@@ -31,6 +31,16 @@ h1, h2, h3 {
     color: var(--navy-blue);
     margin-bottom: 1rem;
 }
+.site-header {
+  background-color: black;   /* black strip */
+  padding: 10px 0;           /* thin strip */
+  text-align: center;        /* centers the content */
+}
+
+.header-logo {
+  height: 50px;              /* adjust size of logo */
+  display: inline-block;
+}
 section {
     padding: 60px 0;
     border-bottom: 1px solid var(--border-color);
@@ -339,3 +349,4 @@ section:last-of-type {
     margin-bottom: 15px;
   }
 }
+
