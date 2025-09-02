@@ -348,12 +348,11 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
-.card {
+    .card {
   display: flex;
   align-items: flex-start;
   gap: 15px;
-  background: #E3F2FD;   /* ✅ light blue background */
-  color: #000;           /* ✅ dark text */
+  background: #007BFF;   /* solid blue bar */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -363,7 +362,7 @@ section:last-of-type {
 
 .card .icon {
   font-size: 40px;
-  color: #007BFF;  /* ✅ blue icons */
+  color: #FFD700;  /* yellow icon for contrast */
   flex-shrink: 0;
   margin-top: 5px;
 }
@@ -371,16 +370,18 @@ section:last-of-type {
 .card-text h3 {
   margin: 0;
   font-size: 18px;
-  color: #000;  /* ✅ black heading */
+  color: #FFFFFF;  /* force heading white */
 }
 
 .card-text p {
   margin: 5px 0 0;
   font-size: 15px;
-  color: #333;  /* ✅ dark grey for better readability */
+  color: #FFFFFF;  /* force paragraph white */
   line-height: 1.5;
 }
+
 }
+
 
 
 
