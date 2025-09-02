@@ -348,42 +348,38 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
-    .info-cards {
+    .card {
   display: flex;
-  flex-direction: column;
-  gap: 20px; /* space between cards */
-}
-
-.card {
-  display: flex;
-  align-items: flex-start; /* align text to top of icon */
-  gap: 15px; /* space between icon and text */
-  background: #f9f9f9;
-  padding: 15px;
+  align-items: flex-start;
+  gap: 15px;
+  background: #007BFF;   /* blue bar */
+  color: white;          /* white text so it's visible */
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .card .icon {
   font-size: 40px;
-  color: orange; /* adjust as per your theme */
-  flex-shrink: 0; /* prevents icon from shrinking */
-  margin-top: 5px; /* keeps icon aligned with heading */
+  color: #FFD700;   /* gold/yellow icon for contrast */
+  flex-shrink: 0;
+  margin-top: 5px;
 }
 
 .card h3 {
   margin: 0;
   font-size: 18px;
-  color: #222;
+  color: white;
 }
 
 .card p {
   margin: 5px 0 0;
   font-size: 15px;
-  color: #555;
+  color: white;
   line-height: 1.5;
 }
 
 }
+
 
 
