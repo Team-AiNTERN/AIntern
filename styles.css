@@ -356,34 +356,30 @@ section:last-of-type {
 }
 
 .card {
-  display: block;              /* ✅ make card a block so it expands fully */
-  background: #007BFF;         /* blue bar */
+  display: flex;
+  flex-direction: column;   /* stack icon, h3, p inside */
+  background: #007BFF;      /* blue background */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 100%;
+  color: #fff;
+  width: 100%;              /* ✅ full width */
   box-sizing: border-box;
-  color: #fff;                 /* default text color white */
 }
 
 .card .icon {
   font-size: 40px;
-  color: #FFD700;              /* yellow icon */
-  margin-right: 15px;
-  float: left;                 /* ✅ force icon to left side */
+  color: #FFD700;           /* yellow icon */
+  margin-bottom: 10px;
 }
 
-.card-text {
-  overflow: hidden;            /* ✅ ensures text stays inside */
-}
-
-.card-text h3 {
+.card h3 {
   margin: 0;
   font-size: 18px;
   color: #fff;
 }
 
-.card-text p {
+.card p {
   margin: 5px 0 0;
   font-size: 15px;
   color: #fff;
@@ -391,7 +387,9 @@ section:last-of-type {
 }
 
 
+
 }
+
 
 
 
