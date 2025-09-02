@@ -133,21 +133,34 @@ section:last-of-type {
     gap: 2rem;
     margin-top: 4rem;
 }
+
 .card {
     background: var(--white);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
-    text-align: center;
+    text-align: left;            /* ✅ align text neatly to the left */
     transition: transform 0.3s;
+    display: flex;               /* ✅ put icon + text in a row */
+    align-items: flex-start;     /* align text with icon top */
+    gap: 1rem;                   /* space between icon and text */
 }
+
 .card:hover {
     transform: translateY(-10px);
 }
+
 .card .icon {
     font-size: 3rem;
     color: var(--saffron);
-    margin-bottom: 1rem;
+    flex-shrink: 0;              /* ✅ icon stays fixed, text won’t overlap */
+    margin-bottom: 0;            /* remove bottom margin since we’re in a row */
+}
+
+.card h3, 
+.card p {
+    margin: 0;                   /* remove extra spacing issues */
+    line-height: 1.5;
 }
 
 /* --- Forms Section --- */
@@ -348,22 +361,7 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
-.card {
-  background-color: #ffffff !important;  /* white box */
-  color: #000000 !important;             /* black text */
-  border: 1px solid #ddd;                /* subtle border */
-  border-radius: 8px;
-  padding: 20px;
-}
 
-.card .icon {
-  color: #007BFF !important;  /* blue icon */
-}
-
-.card h3, 
-.card p {
-  color: #000000 !important;  /* black heading + paragraph */
-}
 
 
 
@@ -371,6 +369,7 @@ section:last-of-type {
 
 
 }
+
 
 
 
