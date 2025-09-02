@@ -348,26 +348,31 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
- .info-cards {
+.info-cards {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* space between cards */
+  gap: 20px;   /* spacing between cards */
+  width: 100%; /* full page width */
+  margin: 0;   /* remove centering */
+  padding: 0;
 }
 
 .card {
   display: flex;
   align-items: flex-start;
   gap: 15px;
-  background: #007BFF;   /* blue background for each card */
+  background: #007BFF;   /* blue bar */
   color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 0;      /* remove rounding for full-width look */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;           /* ✅ full width */
+  box-sizing: border-box;
 }
 
 .card .icon {
   font-size: 40px;
-  color: #FFD700;   /* yellow/gold icons */
+  color: #FFD700;  /* yellow icons */
   flex-shrink: 0;
   margin-top: 5px;
 }
@@ -380,13 +385,12 @@ section:last-of-type {
 
 .card-text p {
   margin: 5px 0 0;
-  font-size: 15px;
-  color: white;
-  line-height: 1.5;
-}
+  font-size: 15
+
 
 
 }
+
 
 
 
