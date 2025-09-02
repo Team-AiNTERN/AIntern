@@ -348,12 +348,18 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
-    .card {
+ .info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* space between cards */
+}
+
+.card {
   display: flex;
   align-items: flex-start;
   gap: 15px;
-  background: #007BFF;   /* blue bar */
-  color: white;          /* white text so it's visible */
+  background: #007BFF;   /* blue background for each card */
+  color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -361,25 +367,27 @@ section:last-of-type {
 
 .card .icon {
   font-size: 40px;
-  color: #FFD700;   /* gold/yellow icon for contrast */
+  color: #FFD700;   /* yellow/gold icons */
   flex-shrink: 0;
   margin-top: 5px;
 }
 
-.card h3 {
+.card-text h3 {
   margin: 0;
   font-size: 18px;
   color: white;
 }
 
-.card p {
+.card-text p {
   margin: 5px 0 0;
   font-size: 15px;
   color: white;
   line-height: 1.5;
 }
 
+
 }
+
 
 
 
