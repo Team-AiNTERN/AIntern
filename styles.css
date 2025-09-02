@@ -356,39 +356,43 @@ section:last-of-type {
 }
 
 .card {
-  display: flex;
-  flex-direction: column;   /* stack icon, h3, p inside */
-  background: #007BFF;      /* blue background */
+  display: flex;                 /* ✅ puts icon + text in one row */
+  align-items: flex-start;       /* align text top with icon */
+  background: #007BFF;           /* blue background */
+  color: #fff;                   /* white text */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  color: #fff;
-  width: 100%;              /* ✅ full width */
+  width: 100%;                   /* ✅ full width */
   box-sizing: border-box;
 }
 
 .card .icon {
   font-size: 40px;
-  color: #FFD700;           /* yellow icon */
-  margin-bottom: 10px;
+  color: #FFD700;                /* yellow icon */
+  margin-right: 15px;            /* space between icon & text */
+  flex-shrink: 0;                /* icon never shrinks */
+}
+
+.card h3, 
+.card p {
+  margin: 0;
 }
 
 .card h3 {
-  margin: 0;
   font-size: 18px;
-  color: #fff;
+  margin-bottom: 5px;
 }
 
 .card p {
-  margin: 5px 0 0;
   font-size: 15px;
-  color: #fff;
   line-height: 1.5;
 }
 
 
 
 }
+
 
 
 
