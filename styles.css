@@ -348,50 +348,101 @@ section:last-of-type {
     width: 80%;
     margin-bottom: 15px;
   }
-   .info-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+/* ---------------------------
+  Strong CSS overrides — paste at the END of your CSS
+   (forces full-width blue bars and readable text)
+   No HTML changes required
+   --------------------------- */
+
+.info-cards {
+  width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
 }
 
+/* Make each card a full-width row and ensure background covers text */
 .card {
-  display: flex;                 /* ✅ puts icon + text in one row */
-  align-items: flex-start;       /* align text top with icon */
-  background: #007BFF;           /* blue background */
-  color: #fff;                   /* white text */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 100%;                   /* ✅ full width */
-  box-sizing: border-box;
+  display: flex !important;               /* icon + text in one row */
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  width: 100% !important;                 /* full width of parent */
+  box-sizing: border-box !important;
+  padding: 20px 24px !important;
+  background: #007BFF !important;         /* blue bar */
+  color: #ffffff !important;              /* white text */
+  border-radius: 0px !important;          /* remove rounding if needed */
+  min-height: 72px !important;            /* ensures visible height */
+  overflow: visible !important;           /* prevent clipping */
+  position: relative !important;
+  z-index: 10 !important;                 /* keep on top if overlapped */
 }
 
+/* Make sure the FA icon area is fixed width so text wraps beside it */
 .card .icon {
-  font-size: 40px;
-  color: #FFD700;                /* yellow icon */
-  margin-right: 15px;            /* space between icon & text */
-  flex-shrink: 0;                /* icon never shrinks */
+  font-size: 40px !important;
+  color: #FFD700 !important;              /* gold icon for contrast */
+  flex: 0 0 64px !important;              /* reserved width for icon */
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
 }
 
-.card h3, 
-.card p {
-  margin: 0;
+/* Force heading + paragraph to occupy remaining space and wrap nicely */
+.card h3, .card p {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
 }
 
+/* Slight spacing for heading and paragraph */
 .card h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+  font-size: 18px !important;
+  margin-bottom: 6px !important;
 }
 
 .card p {
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
 }
 
+/* If the page container has padding that hides the full-bleed, optionally allow full-bleed: 
+   uncomment and use only if you want cards edge-to-edge across viewport */
+/*
+.info-cards.full-bleed {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding-left: 16px !important;  // keep some internal padding if desired
+  padding-right: 16px !important;
+}
+*/
+
+/* Safety: ensure no parent is clipping the cards */
+.info-cards, .info-cards * {
+  overflow: visible !important;
+}
+
+/* Debug helper (temporary): add outline so you can see card area in devtools
+   Remove this block once things look right */
+/*
+.card { outline: 2px dashed rgba(255,255,255,0.3) !important; }
+*/
+
+
 
 
 }
+
 
 
 
