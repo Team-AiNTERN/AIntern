@@ -36,6 +36,28 @@
 
   console.log("Firebase Connected ✅");
 </script>
+<script type="module">
+  import { createUserWithEmailAndPassword } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  // assuming 'auth' is already initialized
+
+  const signupBtn = document.getElementById("signupBtn");
+  signupBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User signed up:", userCredential.user);
+      alert("Signup successful!");
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+    }
+  });
+</script>
+
 
     <!-- Header -->
     <header class="header">
@@ -43,7 +65,26 @@
         <nav class="nav-links">
                 
             <img src="favicon.png" alt="Logo" width="85">
-        <img src="Ministry_of_Corporate_Affairs_India.png" alt="Logo" width="80">
+        <img src="Minist<script type="module">
+  import { collection, addDoc } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  // assuming 'db' is already initialized
+
+  async function saveUserData(username, email) {
+    try {
+      await addDoc(collection(db, "users"), {
+        username: username,
+        email: email,
+        createdAt: new Date()
+      });
+      console.log("User data saved!");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+</script>
+ry_of_Corporate_Affairs_India.png" alt="Logo" width="80">
          
           
             <img src="pminternship.png" alt="Logo" width="100">
@@ -1026,6 +1067,7 @@
   </script>
 </body>
 </html>
+
 
 
 
