@@ -113,7 +113,7 @@ if (applicationForm) {
           const nm = feature.properties.st_nm || feature.properties.NAME_1 || feature.properties.name || '';
           const p = percentFor(nm, currentRound);
           const hasData = dataRounds[currentRound].states[nm] != null;
-          return { color: '#3572ef', weight: 1, fillColor: hasData ? colorForPercent(p) : '#eee', fillOpacity: hasData ? 0.9 : 0.6 };
+          return { color: '#3572ef', weight: 1, fillColor: hasData ? colorForPercent(p) : colorForPercent(2), fillOpacity: hasData ? 0.9 : 0.8 };
         };
         const onEach = (feature, layer) => {
           const nm = feature.properties.st_nm || feature.properties.NAME_1 || feature.properties.name || '';
@@ -176,7 +176,9 @@ if (applicationForm) {
     mapEl.innerHTML = '<div style="background:#fff;border:1px solid #dee2e6;padding:12px;border-radius:8px;color:#000080">Map unavailable (Leaflet failed to load). Insights below are still available.</div>';
   }
 
-  // Gender bar chart with axis/grid/legend
+  // Gender line chart with axes/grid/legend (SVG)
+  let showApp = true;
+  let showRec = true;
   function renderGender() {
     const data = [
       { round: 'Round 1', application: 31, recruitment: 28 },
@@ -185,23 +187,106 @@ if (applicationForm) {
     const maxY = 50; // 0-50%
     const ticks = [0,10,20,30,40,50];
 
-    const groupsHtml = data.map((d) => {
-      const appBar = `<div class="bar" style="height:${d.application}%" title="Applications: ${d.application}%"><span class="bar-value">${d.application}%</span></div>`;
-      const recBar = d.recruitment == null
-        ? `<div class="bar na" title="Recruitment: N/A" style="height: 8%"><span class="bar-value">N/A</span></div>`
-        : `<div class="bar secondary" style="height:${d.recruitment}%" title="Recruitment: ${d.recruitment}%"><span class="bar-value">${d.recruitment}%</span></div>`;
-      return `<div class="bar-group" aria-label="${d.round}">${appBar}${recBar}<div class="bar-label">${d.round}</div></div>`;
+    const width = 640, height = 280;
+    const m = { top: 12, right: 12, bottom: 34, left: 48 };
+    const iw = width - m.left - m.right;
+    const ih = height - m.top - m.bottom;
+
+    const x = (i) => m.left + (iw * (data.length === 1 ? 0.5 : i / (data.length - 1)));
+    const y = (v) => m.top + ih - (ih * (v / maxY));
+
+    const pathFor = (key) => {
+      let d = '';
+      let started = false;
+      data.forEach((pt, i) => {
+        const v = pt[key];
+        if (v == null) { started = false; return; }
+        const cmd = started ? 'L' : 'M';
+        d += `${cmd}${x(i)},${y(v)} `;
+        started = true;
+      });
+      return d.trim();
+    };
+
+    const circlesFor = (key, colorClass) => data.map((pt, i) => {
+      if (pt[key] == null) return '';
+      return `<circle class="dot ${colorClass}" data-series="${key}" data-value="${pt[key]}" cx="${x(i)}" cy="${y(pt[key])}" r="5" tabindex="0" aria-label="${pt.round} ${key} ${pt[key]}%"></circle>`;
     }).join('');
 
-    const axisHtml = ticks.map((t) => `<div class="y-tick" style="bottom:${(t/maxY)*100}%"><span>${t}%</span><div class="grid-line"></div></div>`).join('');
+    const gridLines = ticks.map((t) => `<line x1="${m.left}" y1="${y(t)}" x2="${m.left+iw}" y2="${y(t)}" class="grid"/>`).join('');
+    const yLabels = ticks.map((t) => `<text x="${m.left-8}" y="${y(t)+4}" class="y-label">${t}%</text>`).join('');
+    const xLabels = data.map((d,i) => `<text x="${x(i)}" y="${m.top+ih+22}" class="x-label">${d.round}</text>`).join('');
+
     const legendHtml = `
       <div class="chart-legend">
         <span class="legend-item"><i class="swatch swatch-app"></i> Applications</span>
         <span class="legend-item"><i class="swatch swatch-rec"></i> Recruitment</span>
       </div>`;
+    const controlsHtml = `
+      <div class="chart-controls" role="group" aria-label="Toggle series">
+        <label><input type="checkbox" id="toggle-app" ${showApp ? 'checked' : ''}/> Applications</label>
+        <label><input type="checkbox" id="toggle-rec" ${showRec ? 'checked' : ''}/> Recruitment</label>
+      </div>`;
 
-    genderChartRoot.innerHTML = `<div class="chart-wrap"><div class="y-axis">${axisHtml}</div><div class="bars">${groupsHtml}</div></div>${legendHtml}`;
+    const appPath = showApp ? `<path class="line app" d="${pathFor('application')}"/>${circlesFor('application','app')}` : '';
+    const recPath = showRec ? `<path class="line rec" d="${pathFor('recruitment')}"/>${circlesFor('recruitment','rec')}` : '';
+
+    const svg = `
+      <svg class="line-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">
+        <rect x="${m.left}" y="${m.top}" width="${iw}" height="${ih}" fill="#fff" stroke="#c7d2fe" stroke-width="2" />
+        ${gridLines}
+        <line x1="${m.left}" y1="${m.top}" x2="${m.left}" y2="${m.top+ih}" class="axis"/>
+        <line x1="${m.left}" y1="${m.top+ih}" x2="${m.left+iw}" y2="${m.top+ih}" class="axis"/>
+        ${yLabels}
+        ${xLabels}
+        ${appPath}
+        ${recPath}
+      </svg>`;
+
+    genderChartRoot.innerHTML = `${controlsHtml}<div class="line-chart">${svg}</div>${legendHtml}<div class="chart-tooltip" id="gender-tooltip" hidden></div>`;
+
+    const tip = document.getElementById('gender-tooltip');
+    const showTip = (e, text) => {
+      tip.textContent = text;
+      tip.hidden = false;
+      const rect = genderChartRoot.getBoundingClientRect();
+      const xPos = (e.clientX || rect.left) - rect.left + 10;
+      const yPos = (e.clientY || rect.top) - rect.top - 10;
+      tip.style.left = xPos + 'px';
+      tip.style.top = yPos + 'px';
+    };
+    const hideTip = () => { tip.hidden = true; };
+
+    genderChartRoot.querySelectorAll('.dot').forEach((dot) => {
+      const series = dot.getAttribute('data-series');
+      const val = dot.getAttribute('data-value');
+      const label = series === 'application' ? 'Applications' : 'Recruitment';
+      const text = `${label}: ${val}%`;
+      dot.addEventListener('mouseenter', (e) => showTip(e, text));
+      dot.addEventListener('mousemove', (e) => showTip(e, text));
+      dot.addEventListener('mouseleave', hideTip);
+      dot.addEventListener('focus', (e) => showTip(e, text));
+      dot.addEventListener('blur', hideTip);
+    });
+
+    const appCb = document.getElementById('toggle-app');
+    const recCb = document.getElementById('toggle-rec');
+    if (appCb) appCb.addEventListener('change', () => { showApp = appCb.checked; renderGender(); });
+    if (recCb) recCb.addEventListener('change', () => { showRec = recCb.checked; renderGender(); });
   }
 
   renderGender();
+})();
+
+// Illustration tint controls
+(function initIllustrationTint(){
+  const img = document.getElementById('about-illustration-img');
+  if (!img) return;
+  const apply = (cls) => {
+    img.classList.remove('tint-blue','tint-green','tint-mono');
+    img.classList.add(cls);
+  };
+  document.querySelectorAll('.tint-controls .tint-btn').forEach(btn => {
+    btn.addEventListener('click', () => apply(btn.getAttribute('data-tint')));
+  });
 })();
