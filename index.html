@@ -229,9 +229,27 @@
       });
     }
   </script>
+  <!-- Chatbot -->
+<link rel="stylesheet" href="chatbot.css">
+<script src="chatbot.js" defer></script>
+
+<div id="chatbot-container">
+  <div id="chatbot-icon" onclick="toggleChat()">🤖</div>
+  <div id="chatbot-window">
+    <div id="chatbot-header">
+      AiNTERN Assistant 🤖
+      <span id="close-btn" onclick="toggleChat()">✖</span>
+    </div>
+    <div id="chatbot-body">
+      <div id="chatbot-messages"></div>
+      <input type="text" id="chatbot-input" placeholder="Type your question..." onkeypress="handleKey(event)">
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
+
 
 
 
