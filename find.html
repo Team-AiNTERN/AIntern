@@ -5,26 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Find Internships</title>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; display: flex; }
-    header { height: 60px; width: 100%; background: #0f172a; color: white; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: fixed; top: 0; z-index: 100; }
-    header h1 { font-size: 18px; margin: 0; }
-    header .icons { display: flex; gap: 15px; }
-    header .icons span { cursor: pointer; }
-    .sidebar { width: 220px; background: #2c3e50; color: #fff; height: 100vh; padding-top: 80px; position: fixed; }
-    .sidebar h2 { text-align: center; margin-bottom: 30px; }
-    .sidebar a { display: block; color: white; padding: 12px; text-decoration: none; margin: 5px 15px; border-radius: 8px; }
-    .sidebar a:hover { background: #34495e; }
-    .main { flex: 1; margin-left: 220px; padding: 100px 20px 20px 20px; background: #ecf0f1; min-height: 100vh; }
-    .logout-btn { margin: 20px; padding: 10px; background: #e74c3c; border: none; border-radius: 5px; color: #fff; cursor: pointer; }
-    .logout-btn:hover { background: #c0392b; }
-    .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .card h2 { margin-top: 0; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-    .filters { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-    .filters select, .filters input { padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-    .selected-list { margin-top: 10px; background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-    .selected-list span { display: inline-block; background: #2c3e50; color: white; padding: 5px 10px; margin: 5px; border-radius: 5px; }
-    .search-btn { padding: 10px 20px; background: #0f172a; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .search-btn:hover { background: #1e293b; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #333;
+    }
+
+    header {
+      height: 60px;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #f39c12;
+      color: white;
+      height: 100vh;
+      padding-top: 80px;
+      position: fixed;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 12px;
+      text-decoration: none;
+      margin: 5px 15px;
+      border-radius: 8px;
+    }
+
+    .sidebar a:hover {
+      background: #e67e22;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 100px 30px 30px 30px;
+      background: #fdfdfd;
+      min-height: 100vh;
+    }
+
+    .logout-btn {
+      background: #e74c3c;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 16px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      color: #f39c12;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .filters select,
+    .filters input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .selected-list {
+      margin-top: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .selected-list span {
+      display: inline-block;
+      background: #f39c12;
+      color: white;
+      padding: 5px 10px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    .search-btn {
+      padding: 10px 20px;
+      background: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: #1e293b;
+    }
   </style>
 </head>
 <body>
@@ -39,7 +141,7 @@
 </header>
 
 <div class="sidebar">
-  <h2>AiNTERN</h2>
+  <h2 style="text-align:center;">AiNTERN</h2>
   <a href="dashboard.html">🏠 Dashboard</a>
   <a href="find.html">🔍 Find Internships</a>
   <a href="applications.html">📂 My Applications</a>
@@ -56,53 +158,35 @@
     <h2>Search & Filter</h2>
     <div class="filters">
       <input type="text" id="searchInput" placeholder="Search internship title..." />
+
       <select onchange="addFilter(this)">
         <option disabled selected>Degree</option>
-        <option>B.Tech</option>
-        <option>B.Sc</option>
-        <option>BCA</option>
-        <option>M.Tech</option>
-        <option>MBA</option>
+        <option>B.A.</option><option>B.Com</option><option>B.E.</option><option>B.Sc.</option><option>B.Tech</option><option>BBA</option><option>Bsc.</option><option>Diploma</option>
       </select>
+
       <select onchange="addFilter(this)">
         <option disabled selected>Languages</option>
-        <option>Python</option>
-        <option>JavaScript</option>
-        <option>Java</option>
-        <option>C++</option>
-        <option>SQL</option>
+        <option>Hindi</option><option>English</option><option>Assamese</option><option>Bengali</option><option>Bodo</option><option>Dogri</option><option>Gujarati</option><option>Kannada</option><option>Kashmiri</option><option>Konkani</option><option>Maithili</option><option>Malayalam</option><option>Manipuri (Meitei)</option><option>Marathi</option><option>Nepali</option><option>Odia</option><option>Punjabi</option><option>Sanskrit</option><option>Santali</option><option>Sindhi</option><option>Tamil</option><option>Telugu</option><option>Urdu</option>
       </select>
+
       <select onchange="addFilter(this)">
         <option disabled selected>Skills</option>
-        <option>Machine Learning</option>
-        <option>Web Development</option>
-        <option>UI/UX Design</option>
-        <option>Data Analysis</option>
-        <option>Cloud Computing</option>
+        <option>Machine Learning</option><option>Web Development</option><option>UI/UX Design</option><option>Data Analysis</option><option>Cloud Computing</option>
       </select>
+
       <select onchange="addFilter(this)">
         <option disabled selected>Specialisations</option>
-        <option>AI</option>
-        <option>Cybersecurity</option>
-        <option>Blockchain</option>
-        <option>IoT</option>
-        <option>AR/VR</option>
+        <option>Biotechnology</option><option>Chemical</option><option>Civil</option><option>Computer Science</option><option>Data Science</option><option>Electrical</option><option>Electronics</option><option>Finance</option><option>Marketing</option><option>Mechanical</option>
       </select>
+
       <select onchange="addFilter(this)">
         <option disabled selected>Extra Courses</option>
-        <option>Coursera ML</option>
-        <option>Google UX</option>
-        <option>AWS Cloud</option>
-        <option>Stanford NLP</option>
-        <option>Harvard CS50</option>
+        <option>Advanced Excel</option><option>AWS Fundamentals</option><option>Coursera: Data Science</option><option>Google: Digital Marketing</option><option>IBM: Data Analyst</option><option>NPTEL: Machine Learning</option><option>SAP Basics</option><option>Udemy: Web Development</option><option>None</option>
       </select>
+
       <select onchange="addFilter(this)">
         <option disabled selected>Domain</option>
-        <option>Software</option>
-        <option>Finance</option>
-        <option>Healthcare</option>
-        <option>Education</option>
-        <option>Marketing</option>
+        <option>Consulting</option><option>Data Analytics</option><option>Design</option><option>Engineering</option><option>Finance</option><option>HR</option><option>IT</option><option>Marketing</option><option>Operations</option><option>R&D</option>
       </select>
     </div>
 
@@ -153,28 +237,3 @@
       "AI Research Intern – Google",
       "Data Science Intern – Microsoft",
       "Web Development Intern – Amazon",
-      "UX Design Intern – Adobe",
-      "Cloud Intern – AWS"
-    ];
-
-    const filtered = allInternships.filter(internship => {
-      const lower = internship.toLowerCase();
-      return (
-        lower.includes(query) ||
-        selected.some(term => lower.includes(term.toLowerCase()))
-      );
-    });
-
-    results.innerHTML = "<h2>Available Internships</h2>";
-    if (filtered.length === 0) {
-      results.innerHTML += "<p>No internships match your criteria.</p>";
-    } else {
-      filtered.forEach(item => {
-        results.innerHTML += `<p>${item}</p>`;
-      });
-    }
-  }
-</script>
-
-</body>
-</html>
