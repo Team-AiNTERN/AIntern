@@ -236,6 +236,36 @@
     }
   }
 </script>
+<script>
+document.getElementById("searchBtn").addEventListener("click", async () => {
+    const title = document.getElementById("titleInput").value;
+    const degree = document.getElementById("degreeFilter").value;
+    const language = document.getElementById("languageFilter").value;
+    const skill = document.getElementById("skillFilter").value;
+    const specialisation = document.getElementById("specialisationFilter").value;
+    const domain = document.getElementById("domainFilter").value;
+
+    const query = new URLSearchParams({
+        title, degree, language, skill, specialisation, domain
+    });
+
+    const response = await fetch(`http://127.0.0.1:8000/match?${query}`);
+    const data = await response.json();
+
+    let resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (data.Matches.length === 0) {
+        resultsDiv.innerHTML = `<p>No internships found.</p>`;
+    } else {
+        data.Matches.forEach(item => {
+            let p = document.createElement("p");
+            p.textContent = `${item.Role} at ${item.Company} — ${item.MatchPercent}% match (Matched on: ${item.MatchedOn.join(", ")})`;
+            resultsDiv.appendChild(p);
+        });
+    }
+});
+</script>
 
 </body>
 </html>
