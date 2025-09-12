@@ -3,28 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Registration | PM Internship Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Extended Student Registration | PM Internship Portal</title>
 </head>
 <body>
-  <div class="auth-container">
-    <h2>Student Registration</h2>
-    <form class="auth-form">
-      <label for="student-name">Full Name</label>
-      <input type="text" id="student-name" required>
+  <h2>Extended Student Registration</h2>
+  <form>
 
-      <label for="student-email">Email</label>
-      <input type="email" id="student-email" required>
+    <!-- Personal Details -->
+    <fieldset>
+      <legend>Personal Details</legend>
+      <label>Full Name: <input type="text" name="fullName" required></label><br>
+      <label>Age: <input type="number" name="age" required></label><br>
+      <label>Gender:
+        <select name="gender" required>
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </label><br>
+      <label>Category:
+        <select name="category" required>
+          <option value="">Select</option>
+          <option>General</option>
+          <option>OBC</option>
+          <option>SC</option>
+          <option>ST</option>
+          <option>EWS</option>
+        </select>
+      </label>
+    </fieldset>
 
-      <label for="student-password">Password</label>
-      <input type="password" id="student-password" required>
+    <!-- Contact Details -->
+    <fieldset>
+      <legend>Contact Details</legend>
+      <label>Email: <input type="email" name="email" required></label><br>
+      <label>Phone Number: <input type="tel" name="phone" required></label>
+    </fieldset>
 
-      <label for="student-confirm-password">Confirm Password</label>
-      <input type="password" id="student-confirm-password" required>
+    <!-- Address -->
+    <fieldset>
+      <legend>Permanent Address</legend>
+      <label>House No.: <input type="text" name="permHouse"></label><br>
+      <label>Address Line 1: <input type="text" name="permLine1"></label><br>
+      <label>Address Line 2: <input type="text" name="permLine2"></label><br>
+      <label>State:
+        <select name="permState">
+          <option value="">Select State</option>
+          <option>Tamil Nadu</option>
+          <option>Maharashtra</option>
+          <option>Delhi</option>
+          <option>Karnataka</option>
+          <!-- Add more states -->
+        </select>
+      </label><br>
+      <label>District:
+        <select name="permDistrict">
+          <option value="">Select District</option>
+          <option>Chengalpattu</option>
+          <option>Chennai</option>
+          <option>Pune</option>
+          <option>Bangalore Urban</option>
+          <!-- Add more districts -->
+        </select>
+      </label><br>
+      <label>Pin Code: <input type="text" name="permPin"></label>
+    </fieldset>
 
-      <button type="submit" class="btn">Register</button>
-      <p class="switch">Already have an account? <a href="student-login.html">Login</a></p>
-    </form>
-  </div>
+    <fieldset>
+      <legend>Current Address</legend>
+      <label>House No.: <input type="text" name="currHouse"></label><br>
+      <label>Address Line 1: <input type="text" name="currLine1"></label><br>
+      <label>Address Line 2: <input type="text" name="currLine2"></label><br>
+      <label>State:
+        <select name="currState">
+          <option value="">Select State</option>
+          <option>Tamil Nadu</option>
+          <option>Maharashtra</option>
+          <option>Delhi</option>
+          <option>Karnataka</option>
+        </select>
+      </label><br>
+      <label>District:
+        <select name="currDistrict">
+          <option value="">Select District</option>
+          <option>Chengalpattu</option>
+          <option>Chennai</option>
+          <option>Pune</option>
+          <option>Bangalore Urban</option>
+        </select>
+      </label><br>
+      <label>Pin Code: <input type="text" name="currPin"></label>
+    </fieldset>
+
+    <!-- Education Details -->
+    <fieldset>
+      <legend>Education Details</legend>
+      <label>Class 10 School Name: <input type="text" name="class10School"></label><br>
+      <label>Class 10 Percentage: <input type="text" name="class10Percent"></label><br>
+      <label>Class 12 School Name: <input type="text" name="class12School"></label><br>
+      <label>Class 12 Percentage: <input type="text" name="class12Percent"></label><br>
+      <label>Graduation College Name: <input type="text" name="gradCollege"></label><br>
+      <label>Graduation Percentage: <input type="text" name="gradPercent"></label><br>
+      <label>Degree: <input type="text" name="degree"></label><br>
+      <label>Year of Passing: <input type="text" name="gradYear"></label>
+    </fieldset>
+
+    <!-- Additional Qualifications -->
+    <fieldset>
+      <legend>Additional Qualifications</legend>
+      <label>Extra Courses: <input type="text" name="extraCourses"></label><br>
+      <label>Specialisation: <input type="text" name="specialisation"></label><br>
+      <label>Languages Known: <input type="text" name="languages"></label><br>
+      <label>Skills: <input type="text" name="skills"></label><br>
+      <label>Past Experience: <input type="text" name="experience"></label><br>
+      <label>Preferred Work Location: <input type="text" name="workLocation"></label>
+    </fieldset>
+
+    <!-- Projects & Achievements -->
+    <fieldset>
+      <legend>Projects & Achievements</legend>
+      <label>Projects: <input type="text" name="projects"></label><br>
+      <label>Competitions: <input type="text" name="competitions"></label><br>
+      <label>Publications: <input type="text" name="publications"></label><br>
+      <label>Patents: <input type="text" name="patents"></label>
+    </fieldset>
+
+    <!-- Submit -->
+    <button type="submit">Register</button>
+  </form>
 </body>
 </html>
