@@ -86,41 +86,41 @@
       font-weight: bold;
     }
 
-    form {
+    .form-container {
       margin-top: 20px;
       padding: 15px;
       background: #fff;
-      border-radius: 8px;
+      border-radius: 5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    form input, form select, form button {
+    input, textarea, select {
       display: block;
-      width: 100%;
-      margin-bottom: 10px;
+      width: 95%;
+      margin: 8px 0;
       padding: 10px;
-      font-size: 1rem;
     }
-    form button {
+    .btn {
       background: #3498db;
       border: none;
-      color: #fff;
-      border-radius: 5px;
+      color: white;
+      padding: 10px 15px;
+      margin-top: 10px;
       cursor: pointer;
+      border-radius: 4px;
     }
-    form button:hover {
+    .btn:hover {
       background: #2980b9;
     }
-
-    .actions button {
-      margin-right: 5px;
+    .action-btn {
+      margin-right: 8px;
       padding: 6px 10px;
-      font-size: 0.9rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      color: #fff;
     }
-    .edit-btn { background: #f39c12; color: #fff; }
-    .delete-btn { background: #e74c3c; color: #fff; }
+    .edit-btn { background: #f39c12; }
+    .delete-btn { background: #e74c3c; }
   </style>
 </head>
 <body>
@@ -153,19 +153,19 @@
           <tbody></tbody>
         </table>
 
-        <!-- Add Student Form -->
-        <h3>Add Student</h3>
-        <form id="studentForm">
-          <input type="text" id="sName" placeholder="Name" required>
-          <input type="text" id="sCourse" placeholder="Course" required>
-          <input type="number" step="0.1" id="sCgpa" placeholder="CGPA" required>
-          <input type="email" id="sEmail" placeholder="Email" required>
-          <select id="sEligibility">
+        <div class="form-container">
+          <h3>Add / Update Student</h3>
+          <input type="hidden" id="studentId">
+          <input type="text" id="studentName" placeholder="Name">
+          <input type="text" id="studentCourse" placeholder="Course">
+          <input type="number" step="0.1" id="studentCgpa" placeholder="CGPA">
+          <input type="email" id="studentEmail" placeholder="Email">
+          <select id="studentEligibility">
             <option value="Eligible">Eligible</option>
             <option value="Not Eligible">Not Eligible</option>
           </select>
-          <button type="submit">Add Student</button>
-        </form>
+          <button class="btn" onclick="saveStudent()">Save Student</button>
+        </div>
       </div>
 
       <!-- Recruiters Section -->
@@ -176,7 +176,7 @@
             <tr>
               <th>Company</th>
               <th>Role</th>
-              <th>Eligibility Requirements</th>
+              <th>Requirements</th>
               <th>Contact</th>
               <th>Actions</th>
             </tr>
@@ -184,132 +184,153 @@
           <tbody></tbody>
         </table>
 
-        <!-- Add Recruiter Form -->
-        <h3>Add Recruiter</h3>
-        <form id="recruiterForm">
-          <input type="text" id="rCompany" placeholder="Company" required>
-          <input type="text" id="rRole" placeholder="Role" required>
-          <input type="text" id="rReq" placeholder="Eligibility Requirements" required>
-          <input type="email" id="rContact" placeholder="Contact Email" required>
-          <button type="submit">Add Recruiter</button>
-        </form>
+        <div class="form-container">
+          <h3>Add / Update Recruiter</h3>
+          <input type="hidden" id="recruiterId">
+          <input type="text" id="recruiterCompany" placeholder="Company">
+          <input type="text" id="recruiterRole" placeholder="Role">
+          <textarea id="recruiterReq" placeholder="Requirements"></textarea>
+          <input type="text" id="recruiterContact" placeholder="Contact">
+          <button class="btn" onclick="saveRecruiter()">Save Recruiter</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const supabaseUrl = "https://xozzpzasbdvgpyysuvew.supabase.co";
-    const supabaseKey = "YOUR_ANON_KEY_HERE"; // ⚠️ Replace with your anon key
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    const { createClient } = supabase;
+    const supabaseClient = createClient(
+      "https://xozzpzasbdvgpyysuvew.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM"
+    );
 
     function showSection(section) {
       document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
       document.getElementById(section).classList.remove('hidden');
     }
 
-    // --- STUDENTS CRUD ---
+    // ---------------- STUDENTS CRUD ----------------
     async function fetchStudents() {
-      const { data, error } = await supabase.from('students').select('*');
+      const { data, error } = await supabaseClient.from('students').select('*');
       if (error) { console.error(error); return; }
-      console.log("Students:", data); // Debug log
       const tbody = document.querySelector("#studentsTable tbody");
       tbody.innerHTML = "";
-      data.forEach(student => {
+      data.forEach(stu => {
         tbody.innerHTML += `
           <tr>
-            <td>${student.name}</td>
-            <td>${student.course}</td>
-            <td>${student.cgpa}</td>
-            <td>${student.email}</td>
-            <td class="${student.eligibility === 'Eligible' ? 'eligible' : 'not-eligible'}">${student.eligibility}</td>
-            <td class="actions">
-              <button class="edit-btn" onclick="editStudent(${student.id})">Edit</button>
-              <button class="delete-btn" onclick="deleteStudent(${student.id})">Delete</button>
+            <td>${stu.name}</td>
+            <td>${stu.course}</td>
+            <td>${stu.cgpa}</td>
+            <td>${stu.email}</td>
+            <td class="${stu.eligibility === 'Eligible' ? 'eligible' : 'not-eligible'}">${stu.eligibility}</td>
+            <td>
+              <button class="action-btn edit-btn" onclick="editStudent(${stu.id}, '${stu.name}', '${stu.course}', ${stu.cgpa}, '${stu.email}', '${stu.eligibility}')">Edit</button>
+              <button class="action-btn delete-btn" onclick="deleteStudent(${stu.id})">Delete</button>
             </td>
           </tr>`;
       });
+    }
+
+    async function saveStudent() {
+      const id = document.getElementById("studentId").value;
+      const name = document.getElementById("studentName").value;
+      const course = document.getElementById("studentCourse").value;
+      const cgpa = document.getElementById("studentCgpa").value;
+      const email = document.getElementById("studentEmail").value;
+      const eligibility = document.getElementById("studentEligibility").value;
+
+      let result;
+      if (id) {
+        result = await supabaseClient.from('students').update({ name, course, cgpa, email, eligibility }).eq("id", id);
+      } else {
+        result = await supabaseClient.from('students').insert([{ name, course, cgpa, email, eligibility }]);
+      }
+
+      if (result.error) console.error("Error saving student:", result.error);
+      else fetchStudents();
+
+      document.getElementById("studentId").value = "";
+      document.getElementById("studentName").value = "";
+      document.getElementById("studentCourse").value = "";
+      document.getElementById("studentCgpa").value = "";
+      document.getElementById("studentEmail").value = "";
+    }
+
+    function editStudent(id, name, course, cgpa, email, eligibility) {
+      document.getElementById("studentId").value = id;
+      document.getElementById("studentName").value = name;
+      document.getElementById("studentCourse").value = course;
+      document.getElementById("studentCgpa").value = cgpa;
+      document.getElementById("studentEmail").value = email;
+      document.getElementById("studentEligibility").value = eligibility;
     }
 
     async function deleteStudent(id) {
-      const { error } = await supabase.from("students").delete().eq("id", id);
-      if (error) alert("Delete failed: " + error.message);
+      const { error } = await supabaseClient.from('students').delete().eq("id", id);
+      if (error) console.error("Error deleting student:", error);
       else fetchStudents();
     }
 
-    async function editStudent(id) {
-      const newName = prompt("Enter new name:");
-      if (!newName) return;
-      const { error } = await supabase.from("students").update({ name: newName }).eq("id", id);
-      if (error) alert("Update failed: " + error.message);
-      else fetchStudents();
-    }
-
-    // --- RECRUITERS CRUD ---
+    // ---------------- RECRUITERS CRUD ----------------
     async function fetchRecruiters() {
-      const { data, error } = await supabase.from('recruiters').select('*');
+      const { data, error } = await supabaseClient.from('recruiters').select('*');
       if (error) { console.error(error); return; }
-      console.log("Recruiters:", data); // Debug log
       const tbody = document.querySelector("#recruitersTable tbody");
       tbody.innerHTML = "";
-      data.forEach(r => {
+      data.forEach(rec => {
         tbody.innerHTML += `
           <tr>
-            <td>${r.company}</td>
-            <td>${r.role}</td>
-            <td>${r.requirements}</td>
-            <td>${r.contact}</td>
-            <td class="actions">
-              <button class="edit-btn" onclick="editRecruiter(${r.id})">Edit</button>
-              <button class="delete-btn" onclick="deleteRecruiter(${r.id})">Delete</button>
+            <td>${rec.company}</td>
+            <td>${rec.role}</td>
+            <td>${rec.requirements}</td>
+            <td>${rec.contact}</td>
+            <td>
+              <button class="action-btn edit-btn" onclick="editRecruiter(${rec.id}, '${rec.company}', '${rec.role}', '${rec.requirements}', '${rec.contact}')">Edit</button>
+              <button class="action-btn delete-btn" onclick="deleteRecruiter(${rec.id})">Delete</button>
             </td>
           </tr>`;
       });
     }
 
+    async function saveRecruiter() {
+      const id = document.getElementById("recruiterId").value;
+      const company = document.getElementById("recruiterCompany").value;
+      const role = document.getElementById("recruiterRole").value;
+      const requirements = document.getElementById("recruiterReq").value;
+      const contact = document.getElementById("recruiterContact").value;
+
+      let result;
+      if (id) {
+        result = await supabaseClient.from('recruiters').update({ company, role, requirements, contact }).eq("id", id);
+      } else {
+        result = await supabaseClient.from('recruiters').insert([{ company, role, requirements, contact }]);
+      }
+
+      if (result.error) console.error("Error saving recruiter:", result.error);
+      else fetchRecruiters();
+
+      document.getElementById("recruiterId").value = "";
+      document.getElementById("recruiterCompany").value = "";
+      document.getElementById("recruiterRole").value = "";
+      document.getElementById("recruiterReq").value = "";
+      document.getElementById("recruiterContact").value = "";
+    }
+
+    function editRecruiter(id, company, role, requirements, contact) {
+      document.getElementById("recruiterId").value = id;
+      document.getElementById("recruiterCompany").value = company;
+      document.getElementById("recruiterRole").value = role;
+      document.getElementById("recruiterReq").value = requirements;
+      document.getElementById("recruiterContact").value = contact;
+    }
+
     async function deleteRecruiter(id) {
-      const { error } = await supabase.from("recruiters").delete().eq("id", id);
-      if (error) alert("Delete failed: " + error.message);
+      const { error } = await supabaseClient.from('recruiters').delete().eq("id", id);
+      if (error) console.error("Error deleting recruiter:", error);
       else fetchRecruiters();
     }
 
-    async function editRecruiter(id) {
-      const newRole = prompt("Enter new role:");
-      if (!newRole) return;
-      const { error } = await supabase.from("recruiters").update({ role: newRole }).eq("id", id);
-      if (error) alert("Update failed: " + error.message);
-      else fetchRecruiters();
-    }
-
-    // --- ADD STUDENT ---
-    document.getElementById("studentForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const student = {
-        name: document.getElementById("sName").value,
-        course: document.getElementById("sCourse").value,
-        cgpa: parseFloat(document.getElementById("sCgpa").value),
-        email: document.getElementById("sEmail").value,
-        eligibility: document.getElementById("sEligibility").value
-      };
-      const { error } = await supabase.from("students").insert([student]);
-      if (error) alert("Error adding student: " + error.message);
-      else { fetchStudents(); e.target.reset(); }
-    });
-
-    // --- ADD RECRUITER ---
-    document.getElementById("recruiterForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const recruiter = {
-        company: document.getElementById("rCompany").value,
-        role: document.getElementById("rRole").value,
-        requirements: document.getElementById("rReq").value,
-        contact: document.getElementById("rContact").value
-      };
-      const { error } = await supabase.from("recruiters").insert([recruiter]);
-      if (error) alert("Error adding recruiter: " + error.message);
-      else { fetchRecruiters(); e.target.reset(); }
-    });
-
-    // Load on page ready
+    // Load data
     window.onload = () => {
       fetchStudents();
       fetchRecruiters();
