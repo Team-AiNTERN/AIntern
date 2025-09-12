@@ -20,11 +20,13 @@ function sendMessage() {
   if (msg === "") return;
 
   addMessage(msg, "user");
+  saveConversation(); // save after user message
   input.value = "";
 
   setTimeout(() => {
     const reply = getBotReply(msg);
     addMessage(reply, "bot");
+    saveConversation(); // save after bot reply
   }, 500);
 }
 
@@ -37,6 +39,7 @@ function addMessage(text, sender) {
   container.scrollTop = container.scrollHeight;
 }
 
+// Bot reply logic
 function getBotReply(input) {
   input = input.toLowerCase();
 
@@ -51,3 +54,33 @@ function getBotReply(input) {
 
   return "I’m not sure about that 🤔. Try asking about internships, applications, skills, or profile!";
 }
+
+//
+// 🔹 Conversation Memory Functions
+//
+function saveConversation() {
+  const chatMessages = document.getElementById("chatbot-messages").innerHTML;
+  localStorage.setItem("chatHistory", chatMessages);
+}
+
+function loadConversation() {
+  const chatMessages = localStorage.getItem("chatHistory");
+  if (chatMessages) {
+    document.getElementById("chatbot-messages").innerHTML = chatMessages;
+  }
+}
+
+//
+// 🔹 Greeting on load
+//
+window.addEventListener("load", () => {
+  loadConversation(); // restore old conversation if exists
+
+  const name = localStorage.getItem("username") || "Student";
+
+  // Only greet if chat is empty
+  if (!localStorage.getItem("chatHistory")) {
+    addMessage(`Welcome back, ${name}! 👋 I’m AiNTERN Assistant. How can I help you today?`, "bot");
+    saveConversation();
+  }
+});
