@@ -11,7 +11,6 @@
       margin: 0;
       padding: 20px;
     }
-
     .container {
       max-width: 1000px;
       margin: auto;
@@ -20,116 +19,52 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #333;
-    }
-
-    fieldset {
-      border: none;
-      margin-bottom: 25px;
-    }
-
-    legend {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #2c3e50;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #555;
-    }
-
+    h2 { text-align: center; margin-bottom: 30px; color: #333; }
+    fieldset { border: none; margin-bottom: 25px; }
+    legend { font-size: 1.2em; font-weight: bold; margin-bottom: 10px; color: #2c3e50; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
     input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 0.95em;
-      background-color: #fafafa;
+      width: 100%; padding: 10px; border: 1px solid #ccc;
+      border-radius: 6px; font-size: 0.95em; background-color: #fafafa;
     }
-
-    textarea {
-      resize: vertical;
-    }
-
-    .full-width {
-      grid-column: span 2;
-    }
-
+    textarea { resize: vertical; }
+    .full-width { grid-column: span 2; }
     button {
-      background-color: #0078D4;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
-      margin-top: 20px;
+      background-color: #0078D4; color: white; padding: 12px 20px;
+      border: none; border-radius: 6px; font-size: 1em;
+      cursor: pointer; margin-top: 20px;
     }
-
-    button:hover {
-      background-color: #005fa3;
-    }
-
+    button:hover { background-color: #005fa3; }
     @media (max-width: 768px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full-width {
-        grid-column: span 1;
-      }
+      .form-grid { grid-template-columns: 1fr; }
+      .full-width { grid-column: span 1; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Student Registration</h2>
-    <form>
+    <form id="registerForm">
 
       <!-- Personal Details -->
       <fieldset>
         <legend>Personal Details</legend>
         <div class="form-grid">
-          <div>
-            <label>Full Name</label>
-            <input type="text" name="fullName" required>
-          </div>
-          <div>
-            <label>Age</label>
-            <input type="number" name="age" required>
-          </div>
+          <div><label>Full Name</label><input type="text" name="fullName" required></div>
+          <div><label>Age</label><input type="number" name="age" required></div>
           <div>
             <label>Gender</label>
             <select name="gender" required>
               <option value="">Select</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
+              <option>Male</option><option>Female</option><option>Other</option>
             </select>
           </div>
           <div>
             <label>Category</label>
             <select name="category" required>
               <option value="">Select</option>
-              <option>General</option>
-              <option>OBC</option>
-              <option>SC</option>
-              <option>ST</option>
-              <option>EWS</option>
+              <option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option>
             </select>
           </div>
         </div>
@@ -139,14 +74,9 @@
       <fieldset>
         <legend>Contact Details</legend>
         <div class="form-grid">
-          <div>
-            <label>Email</label>
-            <input type="email" name="email" required>
-          </div>
-          <div>
-            <label>Phone Number</label>
-            <input type="tel" name="phone" required>
-          </div>
+          <div><label>Email</label><input type="email" name="email" required></div>
+          <div><label>Phone Number</label><input type="tel" name="phone" required></div>
+          <div><label>Password</label><input type="password" name="password" required></div>
         </div>
       </fieldset>
 
@@ -154,67 +84,20 @@
       <fieldset>
         <legend>Permanent Address</legend>
         <div class="form-grid">
-          <div>
-            <label>House No.</label>
-            <input type="text" name="permHouse">
-          </div>
-          <div>
-            <label>Address Line 1</label>
-            <input type="text" name="permLine1">
-          </div>
-          <div>
-            <label>Address Line 2</label>
-            <input type="text" name="permLine2">
-          </div>
-          <div>
-            <label>State</label>
+          <div><label>House No.</label><input type="text" name="permHouse"></div>
+          <div><label>Address Line 1</label><input type="text" name="permLine1"></div>
+          <div><label>Address Line 2</label><input type="text" name="permLine2"></div>
+          <div><label>State</label>
             <select name="permState">
               <option value="">Select State</option>
-              <option>Tamil Nadu</option>
-              <option>Maharashtra</option>
-              <option>Delhi</option>
-              <option>Karnataka</option>
-              <option>Andra Pradesh</option>
-              <option>Arunachal Pradesh</option>
-              <option>Assam</option>
-              <option>Bihar</option>
-              <option>Chattisgarh</option>
-              <option>Goa</option>
-              <option>Gujarat</option>
-              <option>Haryana</option>
-              <option>Himachal Pradesh</option>
-              <option>Jharkhand</option>
-              <option>Manipur</option>
-              <option>Kerala</option>
-              <option>Madhya Pradesh</option>
-              <option>Meghalaya</option>
-              <option>Mizoram</option>
-              <option>Nagaland</option>
-              <option>Odisha</option>
-              <option>Punjab</option>
-              <option>Rajasthan</option>
-              <option>Sikkim</option>
-              <option>Telangana</option>
-              <option>Tripura</option>
-              <option>Uttar Pradesh</option>
-              <option>Uttarakhand</option>
+              <option>Tamil Nadu</option><option>Maharashtra</option><option>Delhi</option>
+              <option>Karnataka</option><option>Andhra Pradesh</option> <!-- corrected spelling -->
               <option>West Bengal</option>
+              <!-- add more -->
             </select>
           </div>
-          <div>
-            <label>District</label>
-            <select name="permDistrict">
-              <option value="">Select District</option>
-              <option>Chengalpattu</option>
-              <option>Chennai</option>
-              <option>Pune</option>
-              <option>Bangalore Urban</option>
-            </select>
-          </div>
-          <div>
-            <label>Pin Code</label>
-            <input type="text" name="permPin">
-          </div>
+          <div><label>District</label><input type="text" name="permDistrict"></div>
+          <div><label>Pin Code</label><input type="text" name="permPin"></div>
         </div>
       </fieldset>
 
@@ -222,38 +105,14 @@
       <fieldset>
         <legend>Education Details</legend>
         <div class="form-grid">
-          <div>
-            <label>Class 10 School</label>
-            <input type="text" name="class10School">
-          </div>
-          <div>
-            <label>Class 10 Percentage</label>
-            <input type="text" name="class10Percent">
-          </div>
-          <div>
-            <label>Class 12 School</label>
-            <input type="text" name="class12School">
-          </div>
-          <div>
-            <label>Class 12 Percentage</label>
-            <input type="text" name="class12Percent">
-          </div>
-          <div>
-            <label>Graduation College</label>
-            <input type="text" name="gradCollege">
-          </div>
-          <div>
-            <label>Graduation Percentage</label>
-            <input type="text" name="gradPercent">
-          </div>
-          <div>
-            <label>Degree</label>
-            <input type="text" name="degree">
-          </div>
-          <div>
-            <label>Year of Passing</label>
-            <input type="text" name="gradYear">
-          </div>
+          <div><label>Class 10 School</label><input type="text" name="class10School"></div>
+          <div><label>Class 10 Percentage</label><input type="text" name="class10Percent"></div>
+          <div><label>Class 12 School</label><input type="text" name="class12School"></div>
+          <div><label>Class 12 Percentage</label><input type="text" name="class12Percent"></div>
+          <div><label>Graduation College</label><input type="text" name="gradCollege"></div>
+          <div><label>Graduation Percentage</label><input type="text" name="gradPercent"></div>
+          <div><label>Degree</label><input type="text" name="degree"></div>
+          <div><label>Year of Passing</label><input type="text" name="gradYear"></div>
         </div>
       </fieldset>
 
@@ -261,30 +120,12 @@
       <fieldset>
         <legend>Additional Qualifications</legend>
         <div class="form-grid">
-          <div>
-            <label>Extra Courses</label>
-            <input type="text" name="extraCourses">
-          </div>
-          <div>
-            <label>Specialisation</label>
-            <input type="text" name="specialisation">
-          </div>
-          <div>
-            <label>Languages Known</label>
-            <input type="text" name="languages">
-          </div>
-          <div>
-            <label>Skills</label>
-            <input type="text" name="skills">
-          </div>
-          <div>
-            <label>Past Experience</label>
-            <input type="text" name="experience">
-          </div>
-          <div>
-            <label>Preferred Work Location</label>
-            <input type="text" name="workLocation">
-          </div>
+          <div><label>Extra Courses</label><input type="text" name="extraCourses"></div>
+          <div><label>Specialisation</label><input type="text" name="specialisation"></div>
+          <div><label>Languages Known</label><input type="text" name="languages"></div>
+          <div><label>Skills</label><input type="text" name="skills"></div>
+          <div><label>Past Experience</label><input type="text" name="experience"></div>
+          <div><label>Preferred Work Location</label><input type="text" name="workLocation"></div>
         </div>
       </fieldset>
 
@@ -292,97 +133,63 @@
       <fieldset>
         <legend>Projects & Achievements</legend>
         <div class="form-grid">
-          <div>
-            <label>Projects</label>
-            <input type="text" name="projects">
-          </div>
-          <div>
-            <label>Competitions</label>
-            <input type="text" name="competitions">
-          </div>
-          <div>
-            <label>Publications</label>
-            <input type="text" name="publications">
-          </div>
-          <div>
-            <label>Patents</label>
-            <input type="text" name="patents">
-          </div>
+          <div><label>Projects</label><input type="text" name="projects"></div>
+          <div><label>Competitions</label><input type="text" name="competitions"></div>
+          <div><label>Publications</label><input type="text" name="publications"></div>
+          <div><label>Patents</label><input type="text" name="patents"></div>
         </div>
       </fieldset>
 
       <button type="submit">Register</button>
     </form>
   </div>
-<!-- Firebase SDKs -->
-<script type="module">
-  // Import Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, setDoc } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Your Firebase config (replace with your project details)
-  const firebaseConfig = {
-  apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
-  authDomain: "aintern-285f9.firebaseapp.com",
-  projectId: "aintern-285f9",
-  storageBucket: "aintern-285f9.firebasestorage.app",
-  messagingSenderId: "1035209257137",
-  appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
-  measurementId: "G-4QSNCJQYFY"
-  };
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Initialize
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
+      authDomain: "aintern-285f9.firebaseapp.com",
+      projectId: "aintern-285f9",
+      storageBucket: "aintern-285f9.firebasestorage.app",
+      messagingSenderId: "1035209257137",
+      appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
+      measurementId: "G-4QSNCJQYFY"
+    };
 
-  // Make them accessible
-  window.auth = auth;
-  window.db = db;
-  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window.doc = doc;
-  window.setDoc = setDoc;
-</script>
-  <form id="registerForm">
-  <input type="text" id="username" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <button type="submit">Register</button>
-</form>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-<script type="module">
-  import { auth, db, createUserWithEmailAndPassword, doc, setDoc } from "./firebase.js"; // if separated
+    // Handle form submit
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-  document.getElementById("registerForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      try {
+        // Create auth account
+        const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        const user = userCred.user;
 
-    try {
-      const userCred = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCred.user;
+        // Remove password before saving to DB
+        delete data.password;
 
-      // Save extra user info in Firestore
-      await setDoc(doc(db, "students", user.uid), {
-        username: username,
-        email: email,
-        applied: false
-      });
+        // Save all details in Firestore
+        await setDoc(doc(db, "students", user.uid), data);
 
-      alert("Registration successful! You can now log in.");
-      window.location.href = "login.html"; 
-    } catch (error) {
-      alert(error.message);
-    }
-  });
-</script>
-
-
-
+        alert("Registration successful! Please login.");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  </script>
 </body>
 </html>
+
