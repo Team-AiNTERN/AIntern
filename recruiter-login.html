@@ -2,94 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recruiter Login | PM Internship Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Recruiter Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0078D4;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
 </head>
 <body>
-  <div class="auth-container">
-    <h2>Recruiter Portal</h2>
-    <form id="recruiterLoginForm" class="auth-form">
-      <label for="recruiter-email">Email</label>
-      <input type="email" id="recruiter-email" required>
-
-      <label for="recruiter-password">Password</label>
-      <input type="password" id="recruiter-password" required>
-
-      <button type="submit" class="btn">Login</button>
-      <p class="switch">New recruiter? <a href="recruiterreg.html">Register Now</a></p>
+  <div class="login-box">
+    <h2>Recruiter Login</h2>
+    <form id="recruiterLoginForm">
+      <input type="email" id="recruiterEmail" placeholder="Email" required>
+      <input type="password" id="recruiterPassword" placeholder="Password" required>
+      <button type="submit">Login</button>
     </form>
   </div>
 
-  <!-- Firebase SDKs -->
-  <!-- Firebase SDKs -->
-<script type="module">
-  // Import Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, setDoc } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  // Your Firebase config (replace with your project details)
-  const firebaseConfig = {
-  apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
-  authDomain: "aintern-285f9.firebaseapp.com",
-  projectId: "aintern-285f9",
-  storageBucket: "aintern-285f9.firebasestorage.app",
-  messagingSenderId: "1035209257137",
-  appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
-  measurementId: "G-4QSNCJQYFY"
-  };
-
-  // Initialize
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  // Make them accessible
-  window.auth = auth;
-  window.db = db;
-  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window.doc = doc;
-  window.setDoc = setDoc;
-</script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } 
-            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    // Your Firebase config (same project)
-    const firebaseConfig = {
-      apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
-      authDomain: "aintern-285f9.firebaseapp.com",
-      projectId: "aintern-285f9",
-      storageBucket: "aintern-285f9.firebasestorage.app",
-      messagingSenderId: "1035209257137",
-      appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
-      measurementId: "G-4QSNCJQYFY"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Recruiter Login Submit
-    document.getElementById("recruiterLoginForm").addEventListener("submit", async (e) => {
+  <script>
+    document.getElementById("recruiterLoginForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      const email = document.getElementById("recruiterEmail").value.trim();
+      const password = document.getElementById("recruiterPassword").value.trim();
 
-      const email = document.getElementById("recruiter-email").value;
-      const password = document.getElementById("recruiter-password").value;
-
-      try {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
-        alert("✅ Recruiter login successful!");
-        // Redirect to recruiter dashboard
-        window.location.href = "recruiterdashboard.html";
-      } catch (error) {
-        alert("❌ Error: " + error.message);
+      // ✅ Hardcoded recruiter credentials (for demo)
+      if (email === "recruiter@aintern.com" && password === "recruit123") {
+        alert("Welcome Recruiter!");
+        sessionStorage.setItem("isRecruiter", "true");
+        window.location.href = "recruiter.html"; // Redirect to dashboard
+      } else {
+        alert("Invalid recruiter credentials!");
       }
     });
   </script>
