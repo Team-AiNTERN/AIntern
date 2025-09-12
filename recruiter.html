@@ -91,7 +91,7 @@
     // Initialize Supabase
     const SUPABASE_URL = 'https://xozzpzasbdvgpyysuvew.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Fetch applications and stats
     async function loadDashboard() {
@@ -122,8 +122,15 @@
 
       // Update stats
       document.getElementById('total-applications').innerText = applications.length;
-      const activeInternships = await supabase.from('internships').select('*');
-      document.getElementById('active-internships').innerText = activeInternships.data.length;
+
+      let { data: internships, error: internshipError } = await supabase.from('internships').select('*');
+      if (internshipError) {
+        console.error(internshipError);
+        document.getElementById('active-internships').innerText = "0";
+      } else {
+        document.getElementById('active-internships').innerText = internships.length;
+      }
+
       const pendingReviews = applications.filter(a => a.status === 'Pending').length;
       document.getElementById('pending-reviews').innerText = pendingReviews;
     }
@@ -141,27 +148,27 @@
 
       const { data, error } = await supabase
         .from('internships')
-        .insert([{ title, description, location, created_at: new Date().toISOString() }]);
+        .insert([{ title, description, location }]);
 
       if (error) {
-        alert('Error posting internship');
+        alert('Error posting internship: ' + error.message);
         console.error(error);
       } else {
         alert('Internship posted successfully!');
         document.getElementById('title').value = '';
         document.getElementById('description').value = '';
         document.getElementById('location').value = '';
-        loaddashboard();
+        loadDashboard(); // ✅ corrected name
       }
     }
 
     function viewApplication(id) {
       alert('View details for application ID: ' + id);
-      // You can redirect to detailed view page or modal
+      // You can redirect to a detailed view page or show modal
     }
 
     // Load dashboard on page load
-    loaddashboard();
+    loadDashboard();
   </script>
 </body>
 </html>
