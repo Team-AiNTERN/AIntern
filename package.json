@@ -1,0 +1,12 @@
+{
+  "name": "new-static-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 3000 New",
+    "start": "serve -l 3000 New"
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}
