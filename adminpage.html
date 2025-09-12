@@ -1,340 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard | PM Internship Portal</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Tahoma, sans-serif;
       margin: 0;
-      background: #f4f6f9;
+      padding: 0;
+      background: #f9f9fb;
+      color: #333;
     }
 
     header {
-      background: #2d3e50;
-      color: #fff;
-      padding: 15px;
+      background: #4a69bd;
+      color: white;
+      padding: 15px 30px;
       text-align: center;
-      font-size: 1.4rem;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #f1f2f6;
+      padding: 12px;
+      gap: 15px;
+    }
+
+    nav button {
+      background: #4a69bd;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+    nav button:hover {
+      background: #3c57a5;
     }
 
     .container {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: #34495e;
-      color: #fff;
-      padding: 20px 0;
-    }
-    .sidebar button {
-      display: block;
-      width: 90%;
-      margin: 10px auto;
-      padding: 12px;
-      background: #2ecc71;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      color: #fff;
-    }
-    .sidebar button:hover {
-      background: #27ae60;
-    }
-
-    /* Main content */
-    .content {
-      flex: 1;
       padding: 20px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    .hidden {
+    section {
       display: none;
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #4a69bd;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-    th {
-      background: #2d3e50;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-    .eligible {
-      color: green;
-      font-weight: bold;
-    }
-    .not-eligible {
-      color: red;
-      font-weight: bold;
+      margin-top: 10px;
+      font-size: 14px;
     }
 
-    .form-container {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    thead {
+      background: #f1f2f6;
     }
-    input, textarea, select {
-      display: block;
-      width: 95%;
-      margin: 8px 0;
-      padding: 10px;
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
     }
-    .btn {
-      background: #3498db;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      margin-top: 10px;
-      cursor: pointer;
-      border-radius: 4px;
+
+    tr:hover {
+      background: #f9f9f9;
     }
-    .btn:hover {
-      background: #2980b9;
+
+    th {
+      font-weight: bold;
+      font-size: 14px;
+      color: #333;
     }
+
     .action-btn {
-      margin-right: 8px;
-      padding: 6px 10px;
+      padding: 5px 12px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 13px;
       cursor: pointer;
-      color: #fff;
+      transition: 0.2s;
     }
-    .edit-btn { background: #f39c12; }
-    .delete-btn { background: #e74c3c; }
+
+    .edit {
+      background: #ffc107;
+      color: #333;
+    }
+    .edit:hover {
+      background: #e0a800;
+    }
+
+    .delete {
+      background: #dc3545;
+      color: white;
+    }
+    .delete:hover {
+      background: #c82333;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 20px;
+      font-size: 16px;
+      color: #4a69bd;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 12px;
+      }
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    Admin Dashboard – PM Internship Portal
-  </header>
+  <header>Admin Dashboard</header>
+  <nav>
+    <button onclick="showSection('students')">📘 Students Data</button>
+    <button onclick="showSection('recruiters')">🏢 Recruiters Data</button>
+  </nav>
+
   <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <button onclick="showSection('students')">Students Data</button>
-      <button onclick="showSection('recruiters')">Recruiters Data</button>
-    </div>
+    <div id="loading">Loading data...</div>
 
-    <!-- Main Content -->
-    <div class="content">
-      <!-- Students Section -->
-      <div id="students" class="section">
-        <h2>Students Complete Data</h2>
-        <table id="studentsTable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Course</th>
-              <th>CGPA</th>
-              <th>Email</th>
-              <th>Eligibility</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <section id="students">
+      <h2>Students Data</h2>
+      <table id="studentsTable">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
-        <div class="form-container">
-          <h3>Add / Update Student</h3>
-          <input type="hidden" id="studentId">
-          <input type="text" id="studentName" placeholder="Name">
-          <input type="text" id="studentCourse" placeholder="Course">
-          <input type="number" step="0.1" id="studentCgpa" placeholder="CGPA">
-          <input type="email" id="studentEmail" placeholder="Email">
-          <select id="studentEligibility">
-            <option value="Eligible">Eligible</option>
-            <option value="Not Eligible">Not Eligible</option>
-          </select>
-          <button class="btn" onclick="saveStudent()">Save Student</button>
-        </div>
-      </div>
-
-      <!-- Recruiters Section -->
-      <div id="recruiters" class="section hidden">
-        <h2>Recruiters Complete Data</h2>
-        <table id="recruitersTable">
-          <thead>
-            <tr>
-              <th>Company</th>
-              <th>Role</th>
-              <th>Requirements</th>
-              <th>Contact</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <div class="form-container">
-          <h3>Add / Update Recruiter</h3>
-          <input type="hidden" id="recruiterId">
-          <input type="text" id="recruiterCompany" placeholder="Company">
-          <input type="text" id="recruiterRole" placeholder="Role">
-          <textarea id="recruiterReq" placeholder="Requirements"></textarea>
-          <input type="text" id="recruiterContact" placeholder="Contact">
-          <button class="btn" onclick="saveRecruiter()">Save Recruiter</button>
-        </div>
-      </div>
-    </div>
+    <section id="recruiters">
+      <h2>Recruiters Data</h2>
+      <table id="recruitersTable">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </section>
   </div>
 
   <script>
-    const { createClient } = supabase;
-    const supabaseClient = createClient(
-      "https://xozzpzasbdvgpyysuvew.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM"
-    );
+    const supabaseUrl = "https://xozzpzasbdvgpyysuvew.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function fetchData(table, tableId) {
+      document.getElementById("loading").style.display = "block";
+      const { data, error } = await supabase.from(table).select("*");
+      document.getElementById("loading").style.display = "none";
+
+      if (error) {
+        console.error("Error fetching:", error);
+        alert("Failed to fetch data: " + error.message);
+        return;
+      }
+      if (!data || data.length === 0) {
+        document.getElementById(tableId).innerHTML = "<p>No data found</p>";
+        return;
+      }
+      renderTable(data, tableId, table);
+    }
+
+    function renderTable(data, tableId, tableName) {
+      const table = document.getElementById(tableId);
+      const thead = table.querySelector("thead");
+      const tbody = table.querySelector("tbody");
+
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+
+      const headers = Object.keys(data[0]);
+      const headerRow = document.createElement("tr");
+      headers.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headerRow.appendChild(th);
+      });
+      const actionTh = document.createElement("th");
+      actionTh.textContent = "Actions";
+      headerRow.appendChild(actionTh);
+      thead.appendChild(headerRow);
+
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        headers.forEach(h => {
+          const td = document.createElement("td");
+          td.textContent = row[h];
+          tr.appendChild(td);
+        });
+
+        const actionTd = document.createElement("td");
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.className = "action-btn edit";
+        editBtn.onclick = () => updateRow(tableName, row);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.className = "action-btn delete";
+        deleteBtn.onclick = () => deleteRow(tableName, row);
+
+        actionTd.appendChild(editBtn);
+        actionTd.appendChild(deleteBtn);
+        tr.appendChild(actionTd);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function updateRow(table, row) {
+      const field = prompt("Enter the column name to update:");
+      const newValue = prompt(`Enter new value for ${field}:`);
+      if (!field || !newValue) return;
+
+      const uniqueCol = table === "InternsData" ? "Email" : "CompanyName";
+
+      const { error } = await supabase.from(table)
+        .update({ [field]: newValue })
+        .match({ [uniqueCol]: row[uniqueCol] });
+
+      if (error) console.error("Error updating:", error);
+      else fetchData(table, table === "InternsData" ? "studentsTable" : "recruitersTable");
+    }
+
+    async function deleteRow(table, row) {
+      if (!confirm("Are you sure to delete this row?")) return;
+
+      const uniqueCol = table === "InternsData" ? "Email" : "CompanyName";
+
+      const { error } = await supabase.from(table)
+        .delete()
+        .match({ [uniqueCol]: row[uniqueCol] });
+
+      if (error) console.error("Error deleting:", error);
+      else fetchData(table, table === "InternsData" ? "studentsTable" : "recruitersTable");
+    }
 
     function showSection(section) {
-      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-      document.getElementById(section).classList.remove('hidden');
-    }
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElement
+          function showSection(section) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(section).classList.add("active");
 
-    // ---------------- STUDENTS CRUD ----------------
-    async function fetchStudents() {
-      const { data, error } = await supabaseClient.from('students').select('*');
-      if (error) { console.error(error); return; }
-      const tbody = document.querySelector("#studentsTable tbody");
-      tbody.innerHTML = "";
-      data.forEach(stu => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${stu.name}</td>
-            <td>${stu.course}</td>
-            <td>${stu.cgpa}</td>
-            <td>${stu.email}</td>
-            <td class="${stu.eligibility === 'Eligible' ? 'eligible' : 'not-eligible'}">${stu.eligibility}</td>
-            <td>
-              <button class="action-btn edit-btn" onclick="editStudent(${stu.id}, '${stu.name}', '${stu.course}', ${stu.cgpa}, '${stu.email}', '${stu.eligibility}')">Edit</button>
-              <button class="action-btn delete-btn" onclick="deleteStudent(${stu.id})">Delete</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    async function saveStudent() {
-      const id = document.getElementById("studentId").value;
-      const name = document.getElementById("studentName").value;
-      const course = document.getElementById("studentCourse").value;
-      const cgpa = document.getElementById("studentCgpa").value;
-      const email = document.getElementById("studentEmail").value;
-      const eligibility = document.getElementById("studentEligibility").value;
-
-      let result;
-      if (id) {
-        result = await supabaseClient.from('students').update({ name, course, cgpa, email, eligibility }).eq("id", id);
+      if (section === "students") {
+        fetchData("InternsData", "studentsTable");
       } else {
-        result = await supabaseClient.from('students').insert([{ name, course, cgpa, email, eligibility }]);
+        fetchData("CompaniesData", "recruitersTable");
       }
-
-      if (result.error) console.error("Error saving student:", result.error);
-      else fetchStudents();
-
-      document.getElementById("studentId").value = "";
-      document.getElementById("studentName").value = "";
-      document.getElementById("studentCourse").value = "";
-      document.getElementById("studentCgpa").value = "";
-      document.getElementById("studentEmail").value = "";
     }
 
-    function editStudent(id, name, course, cgpa, email, eligibility) {
-      document.getElementById("studentId").value = id;
-      document.getElementById("studentName").value = name;
-      document.getElementById("studentCourse").value = course;
-      document.getElementById("studentCgpa").value = cgpa;
-      document.getElementById("studentEmail").value = email;
-      document.getElementById("studentEligibility").value = eligibility;
-    }
-
-    async function deleteStudent(id) {
-      const { error } = await supabaseClient.from('students').delete().eq("id", id);
-      if (error) console.error("Error deleting student:", error);
-      else fetchStudents();
-    }
-
-    // ---------------- RECRUITERS CRUD ----------------
-    async function fetchRecruiters() {
-      const { data, error } = await supabaseClient.from('recruiters').select('*');
-      if (error) { console.error(error); return; }
-      const tbody = document.querySelector("#recruitersTable tbody");
-      tbody.innerHTML = "";
-      data.forEach(rec => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${rec.company}</td>
-            <td>${rec.role}</td>
-            <td>${rec.requirements}</td>
-            <td>${rec.contact}</td>
-            <td>
-              <button class="action-btn edit-btn" onclick="editRecruiter(${rec.id}, '${rec.company}', '${rec.role}', '${rec.requirements}', '${rec.contact}')">Edit</button>
-              <button class="action-btn delete-btn" onclick="deleteRecruiter(${rec.id})">Delete</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    async function saveRecruiter() {
-      const id = document.getElementById("recruiterId").value;
-      const company = document.getElementById("recruiterCompany").value;
-      const role = document.getElementById("recruiterRole").value;
-      const requirements = document.getElementById("recruiterReq").value;
-      const contact = document.getElementById("recruiterContact").value;
-
-      let result;
-      if (id) {
-        result = await supabaseClient.from('recruiters').update({ company, role, requirements, contact }).eq("id", id);
-      } else {
-        result = await supabaseClient.from('recruiters').insert([{ company, role, requirements, contact }]);
-      }
-
-      if (result.error) console.error("Error saving recruiter:", result.error);
-      else fetchRecruiters();
-
-      document.getElementById("recruiterId").value = "";
-      document.getElementById("recruiterCompany").value = "";
-      document.getElementById("recruiterRole").value = "";
-      document.getElementById("recruiterReq").value = "";
-      document.getElementById("recruiterContact").value = "";
-    }
-
-    function editRecruiter(id, company, role, requirements, contact) {
-      document.getElementById("recruiterId").value = id;
-      document.getElementById("recruiterCompany").value = company;
-      document.getElementById("recruiterRole").value = role;
-      document.getElementById("recruiterReq").value = requirements;
-      document.getElementById("recruiterContact").value = contact;
-    }
-
-    async function deleteRecruiter(id) {
-      const { error } = await supabaseClient.from('recruiters').delete().eq("id", id);
-      if (error) console.error("Error deleting recruiter:", error);
-      else fetchRecruiters();
-    }
-
-    // Load data
-    window.onload = () => {
-      fetchStudents();
-      fetchRecruiters();
-    };
+    // Auto-load students section on page load
+    window.onload = () => showSection("students");
   </script>
 </body>
 </html>
