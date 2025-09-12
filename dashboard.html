@@ -1,181 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AiNTERN Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #333;
-    }
-    /* Header */
-    header {
-      height: 60px;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-    }
-    header h1 {
-      font-size: 18px;
-      margin: 0;
-    }
-    header .icons {
-      display: flex;
-      gap: 15px;
-    }
-    header .icons span {
-      cursor: pointer;
-    }
-    .logout-btn {
-      background: #ef4444;
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .logout-btn:hover {
-      background: #dc2626;
-    }
-    /* Layout */
-    .layout {
-      display: flex;
-    }
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: #1e293b;
-      color: white;
-      height: calc(100vh - 60px);
-      padding-top: 20px;
-    }
-    .sidebar a {
-      display: block;
-      padding: 12px 20px;
-      text-decoration: none;
-      color: white;
-      font-size: 14px;
-      transition: background 0.3s;
-    }
-    .sidebar a:hover {
-      background: #334155;
-    }
-    /* Main content */
-    .main {
-      flex: 1;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-      margin-top: 0;
-      font-size: 16px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-    }
-    .internship {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-    }
-    .internship:last-child {
-      border: none;
-    }
-    .btn {
-      background: #2563eb;
-      color: white;
-      padding: 6px 12px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 13px;
-    }
-    .progress-bar {
-      background: #e5e7eb;
-      border-radius: 6px;
-      height: 10px;
-      overflow: hidden;
-      margin: 6px 0;
-    }
-    .progress {
-      background: #10b981;
-      height: 10px;
-      width: 70%;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+body { margin: 0; font-family: Arial, sans-serif; display: flex; }
+header { height: 60px; width: 100%; background: #0f172a; color: white; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: fixed; top: 0; z-index: 100; }
+header h1 { font-size: 18px; margin: 0; }
+header .icons { display: flex; gap: 15px; }
+header .icons span { cursor: pointer; }
+.sidebar { width: 220px; background: #2c3e50; color: #fff; height: 100vh; padding-top: 80px; position: fixed; }
+.sidebar h2 { text-align: center; margin-bottom: 30px; }
+.sidebar a { display: block; color: white; padding: 12px; text-decoration: none; margin: 5px 15px; border-radius: 8px; }
+.sidebar a:hover { background: #34495e; }
+.main { flex: 1; margin-left: 220px; padding: 100px 20px 20px 20px; background: #ecf0f1; min-height: 100vh; }
+.logout-btn { margin: 20px; padding: 10px; background: #e74c3c; border: none; border-radius: 5px; color: #fff; cursor: pointer; }
+.logout-btn:hover { background: #c0392b; }
+.card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.card h2 { margin-top: 0; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+</style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>AiNTERN – Internship Portal</h1>
-    <div class="icons">
-      <span>🔔</span>
-      <span>👤</span>
-      <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
-  </header>
 
-  <!-- Layout -->
-  <div class="layout">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <a href="#">Dashboard</a>
-      <a href="#">Find Internships</a>
-      <a href="#">My Applications</a>
-      <a href="#">Skill Insights</a>
-      <a href="#">Profile</a>
-      <a href="#">Settings</a>
-    </div>
+<header>
+<h1>AiNTERN – Internship Portal</h1>
+<div class="icons">
+<span>🔔</span>
+<span>👤</span>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+</header>
 
-    <!-- Main Content -->
-    <div class="main">
-      <!-- Recommendations -->
-      <div class="card">
-        <h2>AI Recommendations</h2>
-        <div class="internship">
-          <strong>AI Research Intern</strong> – Google <br>
-          Match: 87% <br>
-          <a href="#" class="btn">Apply</a>
-        </div>
-        <div class="internship">
-          <strong>Data Science Intern</strong> – Microsoft <br>
-          Match: 82% <br>
-          <a href="#" class="btn">Apply</a>
-        </div>
-      </div>
+<div class="sidebar">
+<h2>AiNTERN</h2>
+<a href="dashboard.html">🏠 Dashboard</a>
+<a href="find.html">🔍 Find Internships</a>
+<a href="applications.html">📂 My Applications</a>
+<a href="skills.html">⭐ Skill Insights</a>
+<a href="profile.html">👤 Profile</a>
+<a href="settings.html">⚙️ Settings</a>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
 
-      <!-- Applications Tracker -->
-      <div class="card">
-        <h2>My Applications</h2>
-        <p>AI Research Intern – In Review</p>
-        <div class="progress-bar"><div class="progress"></div></div>
-        <p>Data Science Intern – Applied</p>
-        <div class="progress-bar"><div class="progress" style="width:30%"></div></div>
-      </div>
+<div class="main">
+<h1>Dashboard</h1>
+<div class="card">
+<h2>Recommended Internships</h2>
+<p>AI Research Intern – Google</p>
+<p>Data Science Intern – Microsoft</p>
+</div>
+<div class="card">
+<h2>My Applications</h2>
+<p>AI Research Intern – In Review</p>
+<p>Data Science Intern – Applied</p>
+</div>
+</div>
 
-      <!-- Skill Gap -->
-      <div class="card">
-        <h2>Skill Insights</h2>
-        <p>⚡ You are missing “TensorFlow” skill for 2 internships.</p>
-        <a href="#" class="btn">Upskill Now</a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function logout() {
-      window.location.href = "student-login.html"; // back to login
-    }
-  </script>
+<script>
+function logout() {
+  window.location.href="login.html";
+}
+</script>
 </body>
 </html>
+
+  
+  
+    
+ 
+ 
