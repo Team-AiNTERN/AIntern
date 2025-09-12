@@ -1,195 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Find Internships</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-      color: #333;
-    }
-    header {
-      height: 60px;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-    }
-    .sidebar {
-      width: 220px;
-      background: #f39c12;
-      color: white;
-      height: 100vh;
-      padding-top: 80px;
-      position: fixed;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      padding: 12px;
-      text-decoration: none;
-      margin: 5px 15px;
-      border-radius: 8px;
-    }
-    .sidebar a:hover {
-      background: #e67e22;
-    }
-    .main {
-      margin-left: 220px;
-      padding: 100px 30px 30px;
-      background: #fdfdfd;
-      min-height: 100vh;
-    }
-    .logout-btn {
-      background: #e74c3c;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-    }
-    .logout-btn:hover {
-      background: #c0392b;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-      margin-top: 0;
-      font-size: 16px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-      color: #f39c12;
-    }
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .filters select,
-    .filters input {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      min-width: 180px;
-    }
-    .selected-list {
-      margin-top: 10px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    }
-    .selected-list span {
-      display: inline-block;
-      background: #f39c12;
-      color: white;
-      padding: 5px 10px;
-      margin: 5px;
-      border-radius: 5px;
-    }
-    .search-btn {
-      padding: 10px 20px;
-      background: #0f172a;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .search-btn:hover {
-      background: #1e293b;
-    }
-    #internshipResults p {
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-    }
-    #internshipResults p:hover {
-      background: #fff8e1;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>AiNTERN – Internship Portal</h1>
-  <div class="icons">
-    <span>🔔</span>
-    <span>👤</span>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-</header>
-
-<div class="sidebar">
-  <h2 style="text-align:center;">AiNTERN</h2>
-  <a href="dashboard.html">🏠 Dashboard</a>
-  <a href="find.html">🔍 Find Internships</a>
-  <a href="applications.html">📂 My Applications</a>
-  <a href="skills.html">⭐ Skill Insights</a>
-  <a href="profile.html">👤 Profile</a>
-  <a href="settings.html">⚙️ Settings</a>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
-
-<div class="main">
-  <h1>Find Internships</h1>
-
-  <div class="card">
-    <h2>Search & Filter</h2>
-    <div class="filters">
-      <input type="text" id="searchInput" placeholder="Search internship title..." />
-      <select id="degreeDropdown" onchange="addFilter(this)">
-        <option disabled selected>Degree</option>
-      </select>
-      <select id="languageDropdown" onchange="addFilter(this)">
-        <option disabled selected>Languages</option>
-      </select>
-      <select id="skillsDropdown" onchange="addFilter(this)">
-        <option disabled selected>Skills</option>
-      </select>
-      <select id="specialisationDropdown" onchange="addFilter(this)">
-        <option disabled selected>Specialisations</option>
-      </select>
-      <select id="coursesDropdown" onchange="addFilter(this)">
-        <option disabled selected>Extra Courses</option>
-      </select>
-      <select id="domainDropdown" onchange="addFilter(this)">
-        <option disabled selected>Domain</option>
-      </select>
-    </div>
-
-    <div class="selected-list" id="selectedFilters"></div>
-    <button class="search-btn" onclick="searchInternships()">Search</button>
-  </div>
-
-  <div class="card" id="internshipResults">
-    <h2>Available Internships</h2>
-    <p>AI Research Intern – Google</p>
-    <p>Data Science Intern – Microsoft</p>
-    <p>Web Development Intern – Amazon</p>
-    <p>UX Design Intern – Adobe</p>
-    <p>Cloud Intern – AWS</p>
-    <p>Cybersecurity Intern – IBM</p>
-    <p>Blockchain Intern – Infosys</p>
-    <p>AR/VR Intern – Meta</p>
-    <p>Marketing Intern – Unilever</p>
-    <p>Finance Intern – Goldman Sachs</p>
-  </div>
-</div>
+<!-- Everything above remains unchanged -->
 
 <script>
   function logout() {
@@ -240,10 +49,99 @@
     }
   }
 
-  // Dropdown data arrays
   const degrees = ["B.A.","B.Com","B.E.","B.Sc.","B.Tech","BBA","Bsc.","Diploma"];
   const languages = ["Hindi","English","Assamese","Bengali","Bodo","Dogri","Gujarati","Kannada","Kashmiri","Konkani","Maithili","Malayalam","Manipuri (Meitei)","Marathi","Nepali","Odia","Punjabi","Sanskrit","Santali","Sindhi","Tamil","Telugu","Urdu"];
   const specialisations = ["Biotechnology","Chemical","Civil","Computer Science","Data Science","Electrical","Electronics","Finance","Marketing","Mechanical"];
   const domains = ["Consulting","Data Analytics","Design","Engineering","Finance","HR","IT","Marketing","Operations","R&D"];
-  const skills = [/* paste your full skills list here as an array of strings */];
-  const courses = [/* paste your full courses list here as
+
+  const skills = [
+    "C++; Communication","C++; Customer Service; Python","C++; Customer Service; SQL",
+    "C++; HTML/CSS; Data Analysis; Java; Sales","C++; Java","C++; Java; Machine Learning",
+    "C++; JavaScript; Java; Power BI; Communication","C++; JavaScript; Java; SQL",
+    "C++; JavaScript; Sales; MS Excel; Python","C++; Machine Learning; Java; Marketing",
+    "C++; Marketing","C++; Marketing; JavaScript","C++; Marketing; Power BI",
+    "C++; Marketing; SQL; Communication","C++; MS Excel",
+    "C++; MS Excel; Data Analysis; JavaScript; Tableau",
+    "C++; Problem Solving; JavaScript; Data Analysis; Power BI",
+    "C++; Problem Solving; Tableau; Power BI","C++; Python",
+    "C++; Python; Problem Solving; Machine Learning; JavaScript",
+    "Communication; C++","Communication; C++; HTML/CSS; SQL",
+    "Communication; C++; Marketing; Problem Solving","Communication; C++; Power BI; Marketing",
+    "Communication; Customer Service","Communication; Customer Service; HTML/CSS",
+    "Communication; Data Analysis; Customer Service; Marketing",
+    "Communication; Data Analysis; Tableau; Customer Service; R","Communication; HTML/CSS",
+    "Communication; Java","Communication; Java; Sales",
+    "Communication; JavaScript; Problem Solving; SQL; Tableau",
+    "Communication; Machine Learning; HTML/CSS; C++",
+    "Communication; Machine Learning; Java; Problem Solving; Tableau",
+    "Communication; Machine Learning; Marketing; Power BI; C++","Communication; Marketing",
+    "Communication; Marketing; Problem Solving","Communication; Tableau; Customer Service; Marketing",
+    "Communication; Tableau; SQL; Data Analysis"
+    // You can continue adding the rest of your skills list here
+  ];
+
+  const courses = [
+    "Advanced Excel","Advanced Excel; AWS Fundamentals",
+    "Advanced Excel; Coursera: Data Science","Advanced Excel; Google: Digital Marketing",
+    "Advanced Excel; IBM: Data Analyst","Advanced Excel; NPTEL: Machine Learning",
+    "Advanced Excel; Udemy: Web Development","AWS Fundamentals",
+    "AWS Fundamentals; Advanced Excel","AWS Fundamentals; Coursera: Data Science",
+    "AWS Fundamentals; Google: Digital Marketing","AWS Fundamentals; IBM: Data Analyst",
+    "AWS Fundamentals; NPTEL: Machine Learning","AWS Fundamentals; SAP Basics",
+    "AWS Fundamentals; Udemy: Web Development","Coursera: Data Science",
+    "Coursera: Data Science; Advanced Excel","Coursera: Data Science; AWS Fundamentals",
+    "Coursera: Data Science; Google: Digital Marketing",
+    "Coursera: Data Science; IBM: Data Analyst",
+    "Coursera: Data Science; NPTEL: Machine Learning",
+    "Coursera: Data Science; SAP Basics",
+    "Coursera: Data Science; Udemy: Web Development","Google: Digital Marketing",
+    "Google: Digital Marketing; Advanced Excel",
+    "Google: Digital Marketing; Coursera: Data Science",
+    "Google: Digital Marketing; IBM: Data Analyst",
+    "Google: Digital Marketing; NPTEL: Machine Learning",
+    "Google: Digital Marketing; SAP Basics","IBM: Data Analyst",
+    "IBM: Data Analyst; Advanced Excel","IBM: Data Analyst; AWS Fundamentals",
+    "IBM: Data Analyst; Coursera: Data Science",
+    "IBM: Data Analyst; Google: Digital Marketing",
+    "IBM: Data Analyst; NPTEL: Machine Learning",
+    "IBM: Data Analyst; SAP Basics","IBM: Data Analyst; Udemy: Web Development",
+    "None","NPTEL: Machine Learning","NPTEL: Machine Learning; Advanced Excel",
+    "NPTEL: Machine Learning; AWS Fundamentals",
+    "NPTEL: Machine Learning; Coursera: Data Science",
+    "NPTEL: Machine Learning; Google: Digital Marketing",
+    "NPTEL: Machine Learning; IBM: Data Analyst",
+    "NPTEL: Machine Learning; SAP Basics","SAP Basics",
+    "SAP Basics; Advanced Excel","SAP Basics; AWS Fundamentals",
+    "SAP Basics; Coursera: Data Science","SAP Basics; Google: Digital Marketing",
+    "SAP Basics; IBM: Data Analyst","SAP Basics; Udemy: Web Development",
+    "Udemy: Web Development","Udemy: Web Development; Advanced Excel",
+    "Udemy: Web Development; AWS Fundamentals",
+    "Udemy: Web Development; Coursera: Data Science",
+    "Udemy: Web Development; Google: Digital Marketing",
+    "Udemy: Web Development; IBM: Data Analyst",
+    "Udemy: Web Development; NPTEL: Machine Learning",
+    "Udemy: Web Development; SAP Basics"
+  ];
+
+  function populate(id, arr) {
+    const dd = document.getElementById(id);
+    arr.forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      dd.appendChild(opt);
+    });
+  }
+
+  window.onload = () => {
+    populate("degreeDropdown", degrees);
+    populate("languageDropdown", languages);
+    populate("skillsDropdown", skills);
+    populate("specialisationDropdown", specialisations);
+    populate("coursesDropdown", courses);
+    populate("domainDropdown", domains);
+  };
+</script>
+
+</body>
+</html>
