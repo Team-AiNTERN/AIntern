@@ -10,124 +10,55 @@
       --primary-dark: #1e293b;
       --accent: #f39c12;
       --bg: #f8fafc;
-      --card-bg: #ffffff;
     }
 
-    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
       background: var(--bg);
       color: #333;
+      line-height: 1.6;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary);
       color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 25px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
-    }
-    .icons {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    .icons span {
-      font-size: 1.4rem;
-      cursor: pointer;
-    }
-    .logout-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-    .logout-btn:hover { background: #d98300; }
-
-    /* ===== SIDEBAR ===== */
-    .sidebar {
-      position: fixed;
-      top: 60px; /* height of header */
-      left: 0;
-      width: 230px;
-      height: calc(100vh - 60px);
-      background: var(--primary);
-      color: white;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h2 {
+      padding: 20px;
+      font-size: 1.5rem;
       text-align: center;
-      color: var(--accent);
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-    }
-    .sidebar a, .sidebar button.logout-btn {
-      color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      display: block;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-      background: transparent;
-      text-align: left;
-      border: none;
-      cursor: pointer;
-    }
-    .sidebar a:hover, .sidebar a.active {
-      background: var(--primary-dark);
+      font-weight: bold;
+      letter-spacing: 0.5px;
     }
 
-    /* ===== MAIN ===== */
     .main {
-      margin-left: 230px;
       padding: 30px;
-    }
-    .main h1 {
-      color: var(--primary);
-      font-size: 1.6rem;
-      margin-top: 0;
+      max-width: 900px;
+      margin: auto;
     }
 
     .card {
-      background: var(--card-bg);
+      background: white;
       border-radius: 12px;
       padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       margin-bottom: 25px;
-      transition: transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    .card:hover { transform: translateY(-2px); }
+
     .card h2 {
       margin-top: 0;
       font-size: 1.25rem;
       border-bottom: 2px solid #eee;
-      padding-bottom: 8px;
+      padding-bottom: 10px;
       color: var(--accent);
     }
 
-    /* Filters */
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 15px;
     }
+
     .filters select,
     .filters input {
       padding: 10px;
@@ -140,6 +71,7 @@
     .selected-list {
       margin-top: 10px;
     }
+
     .chip {
       display: inline-flex;
       align-items: center;
@@ -151,6 +83,7 @@
       font-size: 0.85rem;
       cursor: default;
     }
+
     .chip button {
       background: transparent;
       border: none;
@@ -158,6 +91,7 @@
       margin-left: 6px;
       font-size: 1rem;
       cursor: pointer;
+      line-height: 1;
     }
 
     .search-btn {
@@ -170,49 +104,35 @@
       font-size: 1rem;
       transition: background 0.2s;
     }
-    .search-btn:hover { background: var(--primary-dark); }
+
+    .search-btn:hover {
+      background: var(--primary-dark);
+    }
 
     #internshipResults p {
       padding: 8px 0;
       border-bottom: 1px solid #eee;
     }
-    .loading { font-style: italic; color: #666; }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .sidebar { width: 200px; position: absolute; transform: translateX(-100%); transition: transform .3s; }
-      .sidebar.open { transform: translateX(0); }
-      .main { margin-left: 0; padding-top: 70px; }
+    .loading {
+      font-style: italic;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .filters select,
+      .filters input {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>AiNTERN – Internship Portal</h1>
-  <div class="icons">
-    <span title="Notifications">🔔</span>
-    <span title="Profile">👤</span>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-</header>
+<header>AiNTERN – Find Internships</header>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <h2>AiNTERN</h2>
-  <a href="dashboard.html">🏠 Dashboard</a>
-  <a href="find.html" class="active">🔍 Find Internships</a>
-  <a href="applications.html">📂 My Applications</a>
-  <a href="skills.html">⭐ Skill Insights</a>
-  <a href="profile.html">👤 Profile</a>
-  <a href="settings.html">⚙️ Settings</a>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
-
-<!-- Main -->
 <div class="main">
-  <h1>Find Internships</h1>
-
+  <!-- Search & Filters -->
   <div class="card">
     <h2>Search & Filter</h2>
     <div class="filters">
@@ -220,42 +140,86 @@
 
       <select onchange="addFilter(this)">
         <option disabled selected>Degree</option>
-        <option>B.A.</option><option>B.Com</option><option>B.E.</option>
-        <option>B.Sc.</option><option>B.Tech</option><option>BBA</option><option>Diploma</option>
+        <option>B.A.</option>
+        <option>B.Com</option>
+        <option>B.E.</option>
+        <option>B.Sc.</option>
+        <option>B.Tech</option>
+        <option>BBA</option>
+        <option>Diploma</option>
       </select>
 
       <select onchange="addFilter(this)">
         <option disabled selected>Language</option>
-        <option>Hindi</option><option>English</option><option>Bengali</option>
-        <option>Gujarati</option><option>Kannada</option><option>Malayalam</option>
-        <option>Marathi</option><option>Nepali</option><option>Odia</option>
-        <option>Punjabi</option><option>Sanskrit</option><option>Tamil</option>
-        <option>Telugu</option><option>Urdu</option>
+        <option>Hindi</option>
+        <option>English</option>
+        <option>Assamese</option>
+        <option>Bengali</option>
+        <option>Gujarati</option>
+        <option>Kannada</option>
+        <option>Kashmiri</option>
+        <option>Malayalam</option>
+        <option>Manipuri</option>
+        <option>Marathi</option>
+        <option>Nepali</option>
+        <option>Odia</option>
+        <option>Punjabi</option>
+        <option>Sanskrit</option>
+        <option>Sindhi</option>
+        <option>Tamil</option>
+        <option>Telugu</option>
+        <option>Urdu</option>
       </select>
 
       <select onchange="addFilter(this)">
         <option disabled selected>Skill</option>
-        <option>Accounting</option><option>CAD Design</option><option>Cloud Computing</option>
-        <option>Coding</option><option>Financial Analysis</option><option>Lab Skills</option>
-        <option>Machine Learning</option><option>Marketing</option>
-        <option>Programming</option><option>Research</option><option>Robotics</option>
-        <option>SEO</option><option>UI/UX</option><option>Writing</option>
+        <option>Accounting</option>
+        <option>CAD Design</option>
+        <option>Cloud Computing</option>
+        <option>Coding</option>
+        <option>Financial Analysis</option>
+        <option>Lab Skills</option>
+        <option>Machine Learning</option>
+        <option>Marketing</option>
+        <option>Programming</option>
+        <option>Research</option>
+        <option>Robotics</option>
+        <option>SEO</option>
+        <option>UI/UX</option>
+        <option>Writing</option>
       </select>
 
       <select onchange="addFilter(this)">
         <option disabled selected>Specialisation</option>
-        <option>AI</option><option>Biology</option><option>Chemistry</option>
-        <option>Commerce</option><option>Computer Science</option><option>Engineering</option>
-        <option>Finance</option><option>Genetics</option><option>History</option>
-        <option>IT</option><option>Literature</option><option>Marketing</option>
-        <option>Mechanical Engineering</option><option>Physics</option><option>Sociology</option>
+        <option>AI</option>
+        <option>Biology</option>
+        <option>Chemistry</option>
+        <option>Commerce</option>
+        <option>Computer Science</option>
+        <option>Engineering</option>
+        <option>Finance</option>
+        <option>Genetics</option>
+        <option>History</option>
+        <option>IT</option>
+        <option>Literature</option>
+        <option>Marketing</option>
+        <option>Mechanical Engineering</option>
+        <option>Physics</option>
+        <option>Sociology</option>
       </select>
 
       <select onchange="addFilter(this)">
         <option disabled selected>Domain</option>
-        <option>Consulting</option><option>Data Analytics</option><option>Design</option>
-        <option>Engineering</option><option>Finance</option><option>HR</option>
-        <option>IT</option><option>Marketing</option><option>Operations</option><option>R&D</option>
+        <option>Consulting</option>
+        <option>Data Analytics</option>
+        <option>Design</option>
+        <option>Engineering</option>
+        <option>Finance</option>
+        <option>HR</option>
+        <option>IT</option>
+        <option>Marketing</option>
+        <option>Operations</option>
+        <option>R&D</option>
       </select>
     </div>
 
@@ -263,6 +227,7 @@
     <button class="search-btn" onclick="searchInternships()">Search</button>
   </div>
 
+  <!-- Results -->
   <div class="card" id="internshipResults">
     <h2>Available Internships</h2>
     <p>AI Research Intern – Google</p>
@@ -274,11 +239,6 @@
 </div>
 
 <script>
-  function logout() {
-    alert("You have been logged out.");
-    window.location.href = "login.html";
-  }
-
   const selected = [];
   const internships = [
     "AI Research Intern – Google",
@@ -321,14 +281,19 @@
     setTimeout(() => {
       const filtered = internships.filter(role => {
         const lower = role.toLowerCase();
-        return lower.includes(query) || selected.some(term => lower.includes(term.toLowerCase()));
+        return (
+          lower.includes(query) ||
+          selected.some(term => lower.includes(term.toLowerCase()))
+        );
       });
 
       results.innerHTML = "<h2>Available Internships</h2>";
       if (filtered.length === 0) {
         results.innerHTML += "<p>No internships match your criteria.</p>";
       } else {
-        filtered.forEach(item => results.innerHTML += `<p>${item}</p>`);
+        filtered.forEach(item => {
+          results.innerHTML += `<p>${item}</p>`;
+        });
       }
     }, 400);
   }
