@@ -1,63 +1,95 @@
+// Toggle Chat Visibility
 function toggleChat() {
   const chatWindow = document.getElementById("chatbot-window");
   const icon = document.getElementById("chatbot-icon");
-  if (chatWindow.style.display === "none" || chatWindow.style.display === "") {
-    chatWindow.style.display = "flex";
-    icon.style.display = "none"; // hide icon when open
-  } else {
-    chatWindow.style.display = "none";
-    icon.style.display = "block"; // show icon again
+
+  const isHidden = chatWindow.style.display === "none" || chatWindow.style.display === "";
+  chatWindow.style.display = isHidden ? "flex" : "none";
+  icon.style.display = isHidden ? "none" : "block";
+
+  if (isHidden) {
+    document.getElementById("chatbot-input").focus();
   }
 }
 
+// Handle Enter Key
 function handleKey(event) {
-  if (event.key === "Enter") { sendMessage(); }
+  if (event.key === "Enter") sendMessage();
 }
 
+// Send Message
 function sendMessage() {
   const input = document.getElementById("chatbot-input");
   const msg = input.value.trim();
-  if (msg === "") return;
+  if (!msg) return;
 
   addMessage(msg, "user");
-  saveConversation(); // save after user message
+  saveConversation();
   input.value = "";
+  input.disabled = true;
+
+  showTypingIndicator();
 
   setTimeout(() => {
     const reply = getBotReply(msg);
+    hideTypingIndicator();
     addMessage(reply, "bot");
-    saveConversation(); // save after bot reply
-  }, 500);
+    saveConversation();
+    input.disabled = false;
+    input.focus();
+  }, 700);
 }
 
+// Add Message to Chat
 function addMessage(text, sender) {
   const container = document.getElementById("chatbot-messages");
   const div = document.createElement("div");
   div.classList.add("message", sender);
+  div.setAttribute("role", "text");
   div.innerText = text;
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 }
 
-// Bot reply logic
+// Typing Indicator
+function showTypingIndicator() {
+  const container = document.getElementById("chatbot-messages");
+  const typing = document.createElement("div");
+  typing.id = "typing-indicator";
+  typing.className = "message bot";
+  typing.innerText = "Typing...";
+  container.appendChild(typing);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTypingIndicator() {
+  const typing = document.getElementById("typing-indicator");
+  if (typing) typing.remove();
+}
+
+// Bot Reply Logic
 function getBotReply(input) {
   input = input.toLowerCase();
 
-  if (input.includes("internship")) return "You can explore internships in the 'Find Internships' page.";
-  if (input.includes("application")) return "Check your application status under 'My Applications'.";
-  if (input.includes("skill")) return "Visit 'Skill Insights' to see your skill progress.";
-  if (input.includes("profile")) return "You can update details in your 'Profile' page.";
-  if (input.includes("setting")) return "Go to 'Settings' to change your preferences.";
-  if (input.includes("pm scheme")) return "The PM Internship Scheme connects students with government internships easily.";
-  if (input.includes("hello") || input.includes("hi")) return "Hello 👋! I’m AiNTERN Assistant. How can I help you today?";
-  if (input.includes("bye")) return "Goodbye 👋! Come back anytime.";
+  const responses = [
+    { keywords: ["internship"], reply: "You can explore internships in the 'Find Internships' page." },
+    { keywords: ["application"], reply: "Check your application status under 'My Applications'." },
+    { keywords: ["skill"], reply: "Visit 'Skill Insights' to see your skill progress." },
+    { keywords: ["profile"], reply: "You can update details in your 'Profile' page." },
+    { keywords: ["setting"], reply: "Go to 'Settings' to change your preferences." },
+    { keywords: ["pm scheme"], reply: "The PM Internship Scheme connects students with government internships easily." },
+    { keywords: ["hello", "hi"], reply: "Hello 👋! I’m AiNTERN Assistant. How can I help you today?" },
+    { keywords: ["bye"], reply: "Goodbye 👋! Come back anytime." }
+  ];
+
+  for (const { keywords, reply } of responses) {
+    if (keywords.some(k => input.includes(k))) return reply;
+  }
 
   return "I’m not sure about that 🤔. Try asking about internships, applications, skills, or profile!";
 }
 
-//
-// 🔹 Conversation Memory Functions
-//
+// Save & Load Conversation
 function saveConversation() {
   const chatMessages = document.getElementById("chatbot-messages").innerHTML;
   localStorage.setItem("chatHistory", chatMessages);
@@ -70,17 +102,15 @@ function loadConversation() {
   }
 }
 
-//
-// 🔹 Greeting on load
-//
+// Greeting on Load
 window.addEventListener("load", () => {
-  loadConversation(); // restore old conversation if exists
+  loadConversation();
 
   const name = localStorage.getItem("username") || "Student";
-
-  // Only greet if chat is empty
   if (!localStorage.getItem("chatHistory")) {
     addMessage(`Welcome back, ${name}! 👋 I’m AiNTERN Assistant. How can I help you today?`, "bot");
     saveConversation();
   }
+
+  document.getElementById("chatbot-input").addEventListener("keydown", handleKey);
 });
