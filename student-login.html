@@ -68,7 +68,21 @@
     } catch (error) {
       alert(error.message);
     }
-  });
+  })
 </script>  
+  <script>
+  function login() {
+    let id = document.getElementById("studentId").value;
+    let pass = document.getElementById("password").value;
+
+    if (id && pass) {
+      // redirect to dashboard
+      window.location.href = "dashboard.html"; // 👈 same name as dashboard file
+    } else {
+      alert("Please enter both ID and Password");
+    }
+  }
+</script>
+
 </body>
 </html>
