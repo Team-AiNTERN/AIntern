@@ -2,120 +2,318 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | PM Internship Portal</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+    }
+
+    header {
+      background: #2d3e50;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #34495e;
+      color: #fff;
+      padding: 20px 0;
+    }
+    .sidebar button {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 12px;
+      background: #2ecc71;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .sidebar button:hover {
+      background: #27ae60;
+    }
+
+    /* Main content */
+    .content {
+      flex: 1;
       padding: 20px;
     }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 20px;
+
+    .hidden {
+      display: none;
     }
-    table, th, td {
-      border: 1px solid #ddd;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     th, td {
-      padding: 10px;
+      padding: 12px;
+      border: 1px solid #ddd;
       text-align: left;
     }
     th {
-      background: #f4f4f4;
+      background: #2d3e50;
+      color: white;
     }
-    button {
-      padding: 5px 10px;
-      margin: 2px;
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .eligible {
+      color: green;
+      font-weight: bold;
+    }
+    .not-eligible {
+      color: red;
+      font-weight: bold;
+    }
+
+    form {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    form input, form select, form button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    form button {
+      background: #3498db;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #2980b9;
+    }
+
+    .actions button {
+      margin-right: 5px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
-    .approve {
-      background: #4CAF50;
-      color: white;
-    }
-    .reject {
-      background: #f44336;
-      color: white;
-    }
+    .edit-btn { background: #f39c12; color: #fff; }
+    .delete-btn { background: #e74c3c; color: #fff; }
   </style>
 </head>
 <body>
-  <h2>Admin Dashboard</h2>
-  <button id="logoutBtn">Logout</button>
-  
-  <h3>Registered Students</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Applied</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="studentsTable">
-      <!-- Data will load here -->
-    </tbody>
-  </table>
+  <header>
+    Admin Dashboard – PM Internship Portal
+  </header>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <button onclick="showSection('students')">Students Data</button>
+      <button onclick="showSection('recruiters')">Recruiters Data</button>
+    </div>
 
-  <script type="module">
-    import { auth, db } from "./firebase.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Students Section -->
+      <div id="students" class="section">
+        <h2>Students Complete Data</h2>
+        <table id="studentsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Course</th>
+              <th>CGPA</th>
+              <th>Email</th>
+              <th>Eligibility</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
 
-    // Protect admin page
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      } else {
-        // Restrict access (only admin email allowed)
-        if (user.email !== "admin@example.com") {
-          alert("Access denied. Only admin can view this page.");
-          window.location.href = "index.html";
-        } else {
-          loadStudents();
-        }
-      }
-    });
+        <!-- Add Student Form -->
+        <h3>Add Student</h3>
+        <form id="studentForm">
+          <input type="text" id="sName" placeholder="Name" required>
+          <input type="text" id="sCourse" placeholder="Course" required>
+          <input type="number" step="0.1" id="sCgpa" placeholder="CGPA" required>
+          <input type="email" id="sEmail" placeholder="Email" required>
+          <select id="sEligibility">
+            <option value="Eligible">Eligible</option>
+            <option value="Not Eligible">Not Eligible</option>
+          </select>
+          <button type="submit">Add Student</button>
+        </form>
+      </div>
 
-    // Fetch student data
-    async function loadStudents() {
-      const querySnapshot = await getDocs(collection(db, "students"));
-      const tableBody = document.getElementById("studentsTable");
-      tableBody.innerHTML = "";
-      querySnapshot.forEach((docSnap) => {
-        const student = docSnap.data();
-        const row = `
+      <!-- Recruiters Section -->
+      <div id="recruiters" class="section hidden">
+        <h2>Recruiters Complete Data</h2>
+        <table id="recruitersTable">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Eligibility Requirements</th>
+              <th>Contact</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <!-- Add Recruiter Form -->
+        <h3>Add Recruiter</h3>
+        <form id="recruiterForm">
+          <input type="text" id="rCompany" placeholder="Company" required>
+          <input type="text" id="rRole" placeholder="Role" required>
+          <input type="text" id="rReq" placeholder="Eligibility Requirements" required>
+          <input type="email" id="rContact" placeholder="Contact Email" required>
+          <button type="submit">Add Recruiter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const supabaseUrl = "https://xozzpzasbdvgpyysuvew.supabase.co";
+    const supabaseKey = "YOUR_ANON_KEY_HERE"; // ⚠️ Replace with your anon key
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    function showSection(section) {
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(section).classList.remove('hidden');
+    }
+
+    // --- STUDENTS CRUD ---
+    async function fetchStudents() {
+      const { data, error } = await supabase.from('students').select('*');
+      if (error) { console.error(error); return; }
+      console.log("Students:", data); // Debug log
+      const tbody = document.querySelector("#studentsTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(student => {
+        tbody.innerHTML += `
           <tr>
-            <td>${student.username}</td>
+            <td>${student.name}</td>
+            <td>${student.course}</td>
+            <td>${student.cgpa}</td>
             <td>${student.email}</td>
-            <td>${student.applied ? "✅ Yes" : "❌ No"}</td>
-            <td>${student.status ? student.status : "Pending"}</td>
-            <td>
-              <button class="approve" onclick="updateStatus('${docSnap.id}', 'Approved')">Approve</button>
-              <button class="reject" onclick="updateStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            <td class="${student.eligibility === 'Eligible' ? 'eligible' : 'not-eligible'}">${student.eligibility}</td>
+            <td class="actions">
+              <button class="edit-btn" onclick="editStudent(${student.id})">Edit</button>
+              <button class="delete-btn" onclick="deleteStudent(${student.id})">Delete</button>
             </td>
-          </tr>
-        `;
-        tableBody.innerHTML += row;
+          </tr>`;
       });
     }
 
-    // Update student status
-    window.updateStatus = async (id, status) => {
-      const studentRef = doc(db, "students", id);
-      await updateDoc(studentRef, { status });
-      alert("Status updated to " + status);
-      loadStudents(); // refresh table
-    };
+    async function deleteStudent(id) {
+      const { error } = await supabase.from("students").delete().eq("id", id);
+      if (error) alert("Delete failed: " + error.message);
+      else fetchStudents();
+    }
 
-    // Logout
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "login.html";
+    async function editStudent(id) {
+      const newName = prompt("Enter new name:");
+      if (!newName) return;
+      const { error } = await supabase.from("students").update({ name: newName }).eq("id", id);
+      if (error) alert("Update failed: " + error.message);
+      else fetchStudents();
+    }
+
+    // --- RECRUITERS CRUD ---
+    async function fetchRecruiters() {
+      const { data, error } = await supabase.from('recruiters').select('*');
+      if (error) { console.error(error); return; }
+      console.log("Recruiters:", data); // Debug log
+      const tbody = document.querySelector("#recruitersTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(r => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${r.company}</td>
+            <td>${r.role}</td>
+            <td>${r.requirements}</td>
+            <td>${r.contact}</td>
+            <td class="actions">
+              <button class="edit-btn" onclick="editRecruiter(${r.id})">Edit</button>
+              <button class="delete-btn" onclick="deleteRecruiter(${r.id})">Delete</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    async function deleteRecruiter(id) {
+      const { error } = await supabase.from("recruiters").delete().eq("id", id);
+      if (error) alert("Delete failed: " + error.message);
+      else fetchRecruiters();
+    }
+
+    async function editRecruiter(id) {
+      const newRole = prompt("Enter new role:");
+      if (!newRole) return;
+      const { error } = await supabase.from("recruiters").update({ role: newRole }).eq("id", id);
+      if (error) alert("Update failed: " + error.message);
+      else fetchRecruiters();
+    }
+
+    // --- ADD STUDENT ---
+    document.getElementById("studentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const student = {
+        name: document.getElementById("sName").value,
+        course: document.getElementById("sCourse").value,
+        cgpa: parseFloat(document.getElementById("sCgpa").value),
+        email: document.getElementById("sEmail").value,
+        eligibility: document.getElementById("sEligibility").value
+      };
+      const { error } = await supabase.from("students").insert([student]);
+      if (error) alert("Error adding student: " + error.message);
+      else { fetchStudents(); e.target.reset(); }
     });
+
+    // --- ADD RECRUITER ---
+    document.getElementById("recruiterForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const recruiter = {
+        company: document.getElementById("rCompany").value,
+        role: document.getElementById("rRole").value,
+        requirements: document.getElementById("rReq").value,
+        contact: document.getElementById("rContact").value
+      };
+      const { error } = await supabase.from("recruiters").insert([recruiter]);
+      if (error) alert("Error adding recruiter: " + error.message);
+      else { fetchRecruiters(); e.target.reset(); }
+    });
+
+    // Load on page ready
+    window.onload = () => {
+      fetchStudents();
+      fetchRecruiters();
+    };
   </script>
 </body>
 </html>
