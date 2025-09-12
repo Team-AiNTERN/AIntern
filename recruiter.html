@@ -31,9 +31,8 @@
   <div class="sidebar">
     <h2>PM Internship</h2>
     <a href="#"><i class="fas fa-home"></i> Dashboard</a>
-    <a href="#"><i class="fas fa-briefcase"></i> Post Internship</a>
-    <a href="#"><i class="fas fa-file-alt"></i> Applications</a>
-    <a href="#"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <a href="#"><i class="fas fa-briefcase"></i> Find Interns</a>
+    <a href="#"><i class="fas fa-file-alt"></i> Shortlisted Interns</a>
     <a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 
@@ -91,9 +90,7 @@
   <script>
     // Initialize Supabase
     const SUPABASE_URL = 'https://xozzpzasbdvgpyysuvew.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM
-
-';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM';
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Fetch applications and stats
