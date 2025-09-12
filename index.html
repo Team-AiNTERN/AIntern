@@ -171,5 +171,67 @@
       });
     }
   </script>
+  <!-- Include Firebase Auth SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  const firebaseConfig = { /* your config */ };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const form = document.getElementById("registration-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = form["email"].value;
+    const password = form["password"].value;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      alert("✅ Registered successfully!");
+      console.log("User:", userCredential.user);
+      // Optionally redirect to login
+    } catch (error) {
+      alert("❌ Registration failed: " + error.message);
+    }
+  });
+</script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  const firebaseConfig = { /* same config */ };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const form = document.getElementById("login-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = form["email"].value;
+    const password = form["password"].value;
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert("✅ Logged in successfully!");
+      console.log("User:", userCredential.user);
+      // Redirect to dashboard or protected page
+    } catch (error) {
+      alert("❌ Login failed: " + error.message);
+    }
+  });
+</script>
+  <script> 
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+const db = getFirestore(app);
+
+await setDoc(doc(db, "users", userCredential.user.uid), {
+  fullName: form["full-name"].value,
+  skills: form["skills"].value,
+  experience: form["experience"].value,
+  createdAt: serverTimestamp()
+});
+  </script>
+  
 </body>
 </html>
+
