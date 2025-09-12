@@ -20,19 +20,17 @@
       <p class="switch">New here? <a href="studentreg.html">Register Now</a></p>
     </form>
   </div>
+<!-- Firebase SDKs -->
 <script type="module">
- // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  // Import Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, setDoc } 
+          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+  // Your Firebase config (replace with your project details)
+  const firebaseConfig = {
   apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
   authDomain: "aintern-285f9.firebaseapp.com",
   projectId: "aintern-285f9",
@@ -40,38 +38,21 @@ const firebaseConfig = {
   messagingSenderId: "1035209257137",
   appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
   measurementId: "G-4QSNCJQYFY"
-};
+  };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-// Services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+  // Initialize
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-console.log("✅ Firebase Connected");
+  // Make them accessible
+  window.auth = auth;
+  window.db = db;
+  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+  window.doc = doc;
+  window.setDoc = setDoc;
 </script>
-<script type="module">
-  import { createUserWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-  // assuming 'auth' is already initialized
-
-  const signupBtn = document.getElementById("signupBtn");
-  signupBtn.addEventListener("click", async () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User signed up:", userCredential.user);
-      alert("Signup successful!");
-    } catch (error) {
-      console.error(error.message);
-      alert(error.message);
-    }
-  });
-</script>
 </body>
 </html>
