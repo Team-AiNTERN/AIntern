@@ -30,9 +30,9 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>PM Internship</h2>
-    <a href="recruiter.html"><i class="fas fa-home"></i> Dashboard</a>
-    <a href="findIntern.html"><i class="fas fa-briefcase"></i> Find Interns</a>
-    <a href="ShortlistedInterns.html"><i class="fas fa-file-alt"></i> Shortlisted Interns</a>
+    <a href="#"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#"><i class="fas fa-briefcase"></i> Posted Internships</a>
+    <a href="#"><i class="fas fa-file-alt"></i> Applications</a>
     <a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 
@@ -42,45 +42,49 @@
       <h1>Welcome, Recruiter!</h1>
     </div>
 
-    <!-- Cards -->
+    <!-- Stats -->
     <div class="card-container">
+      <div class="card">
+        <h3>Total Internships</h3>
+        <p id="total-internships">0</p>
+      </div>
       <div class="card">
         <h3>Total Applications</h3>
         <p id="total-applications">0</p>
-      </div>
-      <div class="card">
-        <h3>Active Internships</h3>
-        <p id="active-internships">0</p>
-      </div>
-      <div class="card">
-        <h3>Pending Reviews</h3>
-        <p id="pending-reviews">0</p>
       </div>
     </div>
 
     <!-- Internship Form -->
     <div class="form-container">
       <h2>Post New Internship</h2>
+      <input type="text" id="company_name" placeholder="Company Name" />
       <input type="text" id="title" placeholder="Internship Title" />
       <textarea id="description" placeholder="Description"></textarea>
+      <input type="text" id="skills" placeholder="Skills Required (comma separated)" />
+      <input type="number" id="openings" placeholder="Number of Openings" />
+      <input type="text" id="stipend" placeholder="Stipend" />
+      <input type="text" id="duration" placeholder="Duration (e.g., 3 months)" />
       <input type="text" id="location" placeholder="Location" />
       <button class="btn" onclick="postInternship()">Post Internship</button>
     </div>
 
-    <!-- Applications Table -->
-    <h2>Recent Applications</h2>
+    <!-- Internship Table -->
+    <h2>Posted Internships</h2>
     <table>
       <thead>
         <tr>
-          <th>Intern Name</th>
-          <th>Email</th>
-          <th>Position</th>
-          <th>Status</th>
-          <th>Action</th>
+          <th>Company</th>
+          <th>Title</th>
+          <th>Skills</th>
+          <th>Openings</th>
+          <th>Stipend</th>
+          <th>Duration</th>
+          <th>Location</th>
+          <th>Posted</th>
         </tr>
       </thead>
-      <tbody id="applications-table">
-        <!-- Applications will be loaded here -->
+      <tbody id="internships-table">
+        <!-- Internships will be loaded here -->
       </tbody>
     </table>
   </div>
@@ -88,86 +92,83 @@
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.27.0/dist/supabase.min.js"></script>
   <script>
-    // Initialize Supabase
-    const SUPABASE_URL = 'https://xozzpzasbdvgpyysuvew.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM';
+    // ✅ Replace with your credentials
+    const SUPABASE_URL = "https://xozzpzasbdvgpyysuvew.supabase.co";
+    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Fetch applications and stats
+    // Load dashboard data
     async function loadDashboard() {
-      // Get applications
-      let { data: applications, error } = await supabase
-        .from('applications')
-        .select('*')
-        .order('created_at', { ascending: false });
+      // Get internships
+      let { data: internships, error } = await supabase
+        .from("internships")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) {
-        console.error(error);
+        console.error("Error fetching internships:", error);
         return;
       }
 
-      const table = document.getElementById('applications-table');
-      table.innerHTML = '';
-      applications.forEach(app => {
+      // Populate internships table
+      const table = document.getElementById("internships-table");
+      table.innerHTML = "";
+      internships.forEach(intern => {
         table.innerHTML += `
           <tr>
-            <td>${app.name}</td>
-            <td>${app.email}</td>
-            <td>${app.position}</td>
-            <td>${app.status}</td>
-            <td><button class="btn" onclick="viewApplication('${app.id}')">View</button></td>
+            <td>${intern.company_name}</td>
+            <td>${intern.title}</td>
+            <td>${intern.skills_required ? intern.skills_required.join(", ") : ""}</td>
+            <td>${intern.openings}</td>
+            <td>${intern.stipend}</td>
+            <td>${intern.duration}</td>
+            <td>${intern.location}</td>
+            <td>${new Date(intern.created_at).toLocaleDateString()}</td>
           </tr>
         `;
       });
 
-      // Update stats
-      document.getElementById('total-applications').innerText = applications.length;
+      // Stats
+      document.getElementById("total-internships").innerText = internships.length;
 
-      let { data: internships, error: internshipError } = await supabase.from('internships').select('*');
-      if (internshipError) {
-        console.error(internshipError);
-        document.getElementById('active-internships').innerText = "0";
-      } else {
-        document.getElementById('active-internships').innerText = internships.length;
-      }
-
-      const pendingReviews = applications.filter(a => a.status === 'Pending').length;
-      document.getElementById('pending-reviews').innerText = pendingReviews;
+      let { count: applicationsCount } = await supabase
+        .from("applications")
+        .select("*", { count: "exact", head: true });
+      document.getElementById("total-applications").innerText = applicationsCount || 0;
     }
 
-    // Post a new internship
+    // Post new internship
     async function postInternship() {
-      const title = document.getElementById('title').value;
-      const description = document.getElementById('description').value;
-      const location = document.getElementById('location').value;
+      const company_name = document.getElementById("company_name").value;
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const skills = document.getElementById("skills").value.split(",").map(s => s.trim());
+      const openings = parseInt(document.getElementById("openings").value);
+      const stipend = document.getElementById("stipend").value;
+      const duration = document.getElementById("duration").value;
+      const location = document.getElementById("location").value;
 
-      if (!title || !description || !location) {
-        alert('Please fill all fields.');
+      if (!company_name || !title || !description || !location) {
+        alert("Please fill all required fields.");
         return;
       }
 
-      const { data, error } = await supabase
-        .from('internships')
-        .insert([{ title, description, location }]);
+      const { error } = await supabase.from("internships").insert([{
+        company_name, title, description, skills_required: skills,
+        openings, stipend, duration, location
+      }]);
 
       if (error) {
-        alert('Error posting internship: ' + error.message);
+        alert("Error posting internship.");
         console.error(error);
       } else {
-        alert('Internship posted successfully!');
-        document.getElementById('title').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('location').value = '';
-        loadDashboard(); // ✅ corrected name
+        alert("Internship posted successfully!");
+        document.querySelectorAll(".form-container input, .form-container textarea").forEach(el => el.value = "");
+        loadDashboard();
       }
     }
 
-    function viewApplication(id) {
-      alert('View details for application ID: ' + id);
-      // You can redirect to a detailed view page or show modal
-    }
-
-    // Load dashboard on page load
+    // Load data on page load
     loadDashboard();
   </script>
 </body>
