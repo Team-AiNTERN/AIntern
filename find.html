@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AiNTERN – Find Internships</title>
+  <title>AiNTERN Dashboard – Find Internships</title>
   <style>
     :root {
       --primary: #0f172a;
       --primary-dark: #1e293b;
       --accent: #f39c12;
       --bg: #f8fafc;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -17,31 +22,80 @@
       font-family: "Segoe UI", Arial, sans-serif;
       background: var(--bg);
       color: #333;
-      line-height: 1.6;
     }
 
-    header {
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 230px;
+      height: 100vh;
       background: var(--primary);
       color: white;
-      padding: 20px;
-      font-size: 1.5rem;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar h1 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 30px;
       text-align: center;
-      font-weight: bold;
-      letter-spacing: 0.5px;
+    }
+    .sidebar nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background: var(--primary-dark);
     }
 
-    .main {
+    .toggle-btn {
+      display: none;
+      position: absolute;
+      top: 15px;
+      right: -45px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      cursor: pointer;
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content {
+      margin-left: 230px;
       padding: 30px;
-      max-width: 900px;
-      margin: auto;
+      transition: margin-left 0.3s ease;
+    }
+    header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 25px;
+      color: var(--primary);
     }
 
     .card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 12px;
       padding: 25px;
       margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
     }
 
     .card h2 {
@@ -52,13 +106,13 @@
       color: var(--accent);
     }
 
+    /* FILTERS */
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 15px;
     }
-
     .filters select,
     .filters input {
       padding: 10px;
@@ -83,7 +137,6 @@
       font-size: 0.85rem;
       cursor: default;
     }
-
     .chip button {
       background: transparent;
       border: none;
@@ -91,7 +144,6 @@
       margin-left: 6px;
       font-size: 1rem;
       cursor: pointer;
-      line-height: 1;
     }
 
     .search-btn {
@@ -104,7 +156,6 @@
       font-size: 1rem;
       transition: background 0.2s;
     }
-
     .search-btn:hover {
       background: var(--primary-dark);
     }
@@ -119,126 +170,112 @@
       color: #666;
     }
 
-    @media (max-width: 600px) {
-      .filters select,
-      .filters input {
-        flex: 1 1 100%;
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .toggle-btn {
+        display: block;
+      }
+      .content {
+        margin-left: 0;
+        padding-top: 70px;
       }
     }
   </style>
 </head>
 <body>
 
-<header>AiNTERN – Find Internships</header>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <h1>AiNTERN</h1>
+    <nav>
+      <a href="#" class="active">Find Internships</a>
+      <a href="#">Saved</a>
+      <a href="#">Applications</a>
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+    </nav>
+    <button class="toggle-btn" id="toggleBtn">&#9776;</button>
+  </aside>
 
-<div class="main">
-  <!-- Search & Filters -->
-  <div class="card">
-    <h2>Search & Filter</h2>
-    <div class="filters">
-      <input type="text" id="searchInput" placeholder="Search internship title..." />
+  <!-- Main Content -->
+  <main class="content">
+    <header>Find Internships</header>
 
-      <select onchange="addFilter(this)">
-        <option disabled selected>Degree</option>
-        <option>B.A.</option>
-        <option>B.Com</option>
-        <option>B.E.</option>
-        <option>B.Sc.</option>
-        <option>B.Tech</option>
-        <option>BBA</option>
-        <option>Diploma</option>
-      </select>
+    <!-- Filters -->
+    <div class="card">
+      <h2>Search & Filter</h2>
+      <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search internship title..." />
 
-      <select onchange="addFilter(this)">
-        <option disabled selected>Language</option>
-        <option>Hindi</option>
-        <option>English</option>
-        <option>Assamese</option>
-        <option>Bengali</option>
-        <option>Gujarati</option>
-        <option>Kannada</option>
-        <option>Kashmiri</option>
-        <option>Malayalam</option>
-        <option>Manipuri</option>
-        <option>Marathi</option>
-        <option>Nepali</option>
-        <option>Odia</option>
-        <option>Punjabi</option>
-        <option>Sanskrit</option>
-        <option>Sindhi</option>
-        <option>Tamil</option>
-        <option>Telugu</option>
-        <option>Urdu</option>
-      </select>
+        <select onchange="addFilter(this)">
+          <option disabled selected>Degree</option>
+          <option>B.A.</option><option>B.Com</option><option>B.E.</option>
+          <option>B.Sc.</option><option>B.Tech</option><option>BBA</option><option>Diploma</option>
+        </select>
 
-      <select onchange="addFilter(this)">
-        <option disabled selected>Skill</option>
-        <option>Accounting</option>
-        <option>CAD Design</option>
-        <option>Cloud Computing</option>
-        <option>Coding</option>
-        <option>Financial Analysis</option>
-        <option>Lab Skills</option>
-        <option>Machine Learning</option>
-        <option>Marketing</option>
-        <option>Programming</option>
-        <option>Research</option>
-        <option>Robotics</option>
-        <option>SEO</option>
-        <option>UI/UX</option>
-        <option>Writing</option>
-      </select>
+        <select onchange="addFilter(this)">
+          <option disabled selected>Language</option>
+          <option>Hindi</option><option>English</option><option>Bengali</option>
+          <option>Gujarati</option><option>Kannada</option><option>Malayalam</option>
+          <option>Marathi</option><option>Nepali</option><option>Odia</option>
+          <option>Punjabi</option><option>Sanskrit</option><option>Tamil</option>
+          <option>Telugu</option><option>Urdu</option>
+        </select>
 
-      <select onchange="addFilter(this)">
-        <option disabled selected>Specialisation</option>
-        <option>AI</option>
-        <option>Biology</option>
-        <option>Chemistry</option>
-        <option>Commerce</option>
-        <option>Computer Science</option>
-        <option>Engineering</option>
-        <option>Finance</option>
-        <option>Genetics</option>
-        <option>History</option>
-        <option>IT</option>
-        <option>Literature</option>
-        <option>Marketing</option>
-        <option>Mechanical Engineering</option>
-        <option>Physics</option>
-        <option>Sociology</option>
-      </select>
+        <select onchange="addFilter(this)">
+          <option disabled selected>Skill</option>
+          <option>Accounting</option><option>CAD Design</option><option>Cloud Computing</option>
+          <option>Coding</option><option>Financial Analysis</option>
+          <option>Lab Skills</option><option>Machine Learning</option>
+          <option>Marketing</option><option>Programming</option><option>Research</option>
+          <option>Robotics</option><option>SEO</option><option>UI/UX</option><option>Writing</option>
+        </select>
 
-      <select onchange="addFilter(this)">
-        <option disabled selected>Domain</option>
-        <option>Consulting</option>
-        <option>Data Analytics</option>
-        <option>Design</option>
-        <option>Engineering</option>
-        <option>Finance</option>
-        <option>HR</option>
-        <option>IT</option>
-        <option>Marketing</option>
-        <option>Operations</option>
-        <option>R&D</option>
-      </select>
+        <select onchange="addFilter(this)">
+          <option disabled selected>Specialisation</option>
+          <option>AI</option><option>Biology</option><option>Chemistry</option>
+          <option>Commerce</option><option>Computer Science</option><option>Engineering</option>
+          <option>Finance</option><option>Genetics</option><option>History</option>
+          <option>IT</option><option>Literature</option><option>Marketing</option>
+          <option>Mechanical Engineering</option><option>Physics</option><option>Sociology</option>
+        </select>
+
+        <select onchange="addFilter(this)">
+          <option disabled selected>Domain</option>
+          <option>Consulting</option><option>Data Analytics</option><option>Design</option>
+          <option>Engineering</option><option>Finance</option><option>HR</option>
+          <option>IT</option><option>Marketing</option><option>Operations</option><option>R&D</option>
+        </select>
+      </div>
+
+      <div class="selected-list" id="selectedFilters"></div>
+      <button class="search-btn" onclick="searchInternships()">Search</button>
     </div>
 
-    <div class="selected-list" id="selectedFilters"></div>
-    <button class="search-btn" onclick="searchInternships()">Search</button>
-  </div>
-
-  <!-- Results -->
-  <div class="card" id="internshipResults">
-    <h2>Available Internships</h2>
-    <p>AI Research Intern – Google</p>
-    <p>Data Science Intern – Microsoft</p>
-    <p>Web Development Intern – Amazon</p>
-    <p>UX Design Intern – Adobe</p>
-    <p>Cloud Intern – AWS</p>
-  </div>
-</div>
+    <!-- Results -->
+    <div class="card" id="internshipResults">
+      <h2>Available Internships</h2>
+      <p>AI Research Intern – Google</p>
+      <p>Data Science Intern – Microsoft</p>
+      <p>Web Development Intern – Amazon</p>
+      <p>UX Design Intern – Adobe</p>
+      <p>Cloud Intern – AWS</p>
+    </div>
+  </main>
 
 <script>
+  const sidebar = document.getElementById("sidebar");
+  const toggleBtn = document.getElementById("toggleBtn");
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+  });
+
   const selected = [];
   const internships = [
     "AI Research Intern – Google",
@@ -281,19 +318,14 @@
     setTimeout(() => {
       const filtered = internships.filter(role => {
         const lower = role.toLowerCase();
-        return (
-          lower.includes(query) ||
-          selected.some(term => lower.includes(term.toLowerCase()))
-        );
+        return lower.includes(query) || selected.some(term => lower.includes(term.toLowerCase()));
       });
 
       results.innerHTML = "<h2>Available Internships</h2>";
       if (filtered.length === 0) {
         results.innerHTML += "<p>No internships match your criteria.</p>";
       } else {
-        filtered.forEach(item => {
-          results.innerHTML += `<p>${item}</p>`;
-        });
+        filtered.forEach(item => results.innerHTML += `<p>${item}</p>`);
       }
     }, 400);
   }
