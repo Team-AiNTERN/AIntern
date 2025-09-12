@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recruiter Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0078D4;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    header h2 {
+      margin: 0;
+    }
+    #logoutBtn {
+      background: #f44336;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    #logoutBtn:hover {
+      background: #d32f2f;
+    }
+    .content {
+      margin-top: 30px;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    .content h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    .placeholder {
+      padding: 20px;
+      text-align: center;
+      border: 2px dashed #bbb;
+      color: #666;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Recruiter Dashboard</h2>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <div class="content">
+    <h3>Welcome, Recruiter 👋</h3>
+    <p>Here you can review student internship applications.</p>
+
+    <div class="placeholder">
+      <p>📌 Student data will be shown here (integration with Firestore).</p>
+    </div>
+  </div>
+
+  <script>
+    const isRecruiter = sessionStorage.getItem("isRecruiter");
+    if (!isRecruiter || isRecruiter !== "true") {
+      alert("Access denied. Please login as Recruiter.");
+      window.location.href = "recruiter-login.html";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("isRecruiter");
+      window.location.href = "recruiter-login.html";
+    });
+  </script>
+</body>
+</html>
