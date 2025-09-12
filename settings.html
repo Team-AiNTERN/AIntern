@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+<style>
+/* same CSS as dashboard */
+body { margin: 0; font-family: Arial, sans-serif; display: flex; }
+header { height: 60px; width: 100%; background: #0f172a; color: white; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: fixed; top: 0; z-index: 100; }
+header h1 { font-size: 18px; margin: 0; }
+header .icons { display: flex; gap: 15px; }
+header .icons span { cursor: pointer; }
+.sidebar { width: 220px; background: #2c3e50; color: #fff; height: 100vh; padding-top: 80px; position: fixed; }
+.sidebar h2 { text-align: center; margin-bottom: 30px; }
+.sidebar a { display: block; color: white; padding: 12px; text-decoration: none; margin: 5px 15px; border-radius: 8px; }
+.sidebar a:hover { background: #34495e; }
+.main { flex: 1; margin-left: 220px; padding: 100px 20px 20px 20px; background: #ecf0f1; min-height: 100vh; }
+.logout-btn { margin: 20px; padding: 10px; background: #e74c3c; border: none; border-radius: 5px; color: #fff; cursor: pointer; }
+.logout-btn:hover { background: #c0392b; }
+.card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.card h2 { margin-top: 0; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+</style>
+</head>
+<body>
+<header>
+<h1>AiNTERN – Internship Portal</h1>
+<div class="icons">
+<span>🔔</span>
+<span>👤</span>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+</header>
+<div class="sidebar">
+<h2>AiNTERN</h2>
+<a href="dashboard.html">🏠 Dashboard</a>
+<a href="find.html">🔍 Find Internships</a>
+<a href="applications.html">📂 My Applications</a>
+<a href="skills.html">⭐ Skill Insights</a>
+<a href="profile.html">👤 Profile</a>
+<a href="settings.html">⚙️ Settings</a>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+<div class="main">
+<h1>Settings</h1>
+<div class="card">
+<h2>Account Settings</h2>
+<p><label><input type="checkbox"> Receive Notifications</label></p>
+<p><label><input type="checkbox"> Enable Dark Mode</label></p>
+</div>
+<div class="card">
+<h2>Security</h2>
+<p><button>Change Password</button></p>
+</div>
+</div>
+<script>
+function logout(){window.location.href="student-login.html";}
+</script>
+</body>
+</html>
