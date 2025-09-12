@@ -391,6 +391,28 @@
     populate("domainDropdown", domains);
   };
 </script>
+<script>
+document.getElementById("searchBtn").addEventListener("click", async () => {
+    const skill = document.getElementById("searchInput").value;
+
+    // Call Python backend
+    const response = await fetch(`http://127.0.0.1:8000/match?skill=${skill}`);
+    const data = await response.json();
+
+    let resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (data.Matches.length === 0) {
+        resultsDiv.innerHTML = `<p>No internships found for "${skill}".</p>`;
+    } else {
+        data.Matches.forEach(item => {
+            let p = document.createElement("p");
+            p.textContent = `${item.Company} (matched on ${item.MatchSkill})`;
+            resultsDiv.appendChild(p);
+        });
+    }
+});
+</script>
 
 </body>
 </html>
