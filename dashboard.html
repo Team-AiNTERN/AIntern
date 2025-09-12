@@ -222,6 +222,43 @@
   </div>
 </div>
 
+<input type="text" id="skillInput" placeholder="Enter your skill">
+<button onclick="findInternships()">Search</button>
+
+<ul id="results"></ul>
+
+<script>
+async function findInternships() {
+  const skill = document.getElementById("skillInput").value;
+  // Call Python backend (FastAPI/Flask)
+  const response = await fetch(`http://127.0.0.1:8000/match?skill=${skill}`);
+  const data = await response.json();
+
+  let list = document.getElementById("results");
+  list.innerHTML = "";
+  data.Matches.forEach(item => {
+    let li = document.createElement("li");
+    li.textContent = `${item.Company} (matched on ${item.MatchSkill})`;
+    list.appendChild(li);
+  });
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 <script>
   // Inject username into greeting
   const username = localStorage.getItem("username");
