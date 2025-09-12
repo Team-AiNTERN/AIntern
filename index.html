@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AiNTERN - AI Allocation Engine</title>
-
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Header -->
@@ -24,12 +22,10 @@
       <a href="#student-apply">Apply</a>
       <a href="#contact">Contact</a>
     </nav>
-    <div class="menu-toggle">
-      <i class="fas fa-bars"></i>
-    </div>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section id="home">
     <div class="container">
       <h1>Welcome to the AiNTERN Portal</h1>
@@ -38,35 +34,20 @@
         <a href="#student-apply" class="btn">Register Now</a>
         <a href="#about" class="btn secondary">Learn More</a>
       </div>
-
-      <!-- Main Role Buttons -->
       <div class="big-buttons">
         <a href="student-login.html" class="role-btn student">Student</a>
         <a href="recruiter-login.html" class="role-btn recruiter">Recruiter</a>
         <a href="admin-login.html" class="role-btn admin">Admin</a>
       </div>
-
       <div class="info-cards">
-        <div class="card">
-          <i class="fas fa-robot icon"></i>
-          <h3>AI Matching</h3>
-          <p>Our AI engine matches your skills and preferences with the best internship opportunities.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-briefcase icon"></i>
-          <h3>Top Companies</h3>
-          <p>Connect with leading organizations offering real-world project management experience.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-graduation-cap icon"></i>
-          <h3>Career Growth</h3>
-          <p>Gain skills and mentorship to kickstart your career in project management.</p>
-        </div>
+        <div class="card"><i class="fas fa-robot icon"></i><h3>AI Matching</h3><p>Our AI engine matches your skills and preferences with the best internship opportunities.</p></div>
+        <div class="card"><i class="fas fa-briefcase icon"></i><h3>Top Companies</h3><p>Connect with leading organizations offering real-world project management experience.</p></div>
+        <div class="card"><i class="fas fa-graduation-cap icon"></i><h3>Career Growth</h3><p>Gain skills and mentorship to kickstart your career in project management.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
+  <!-- About -->
   <section id="about">
     <div class="container">
       <h2>About the Program</h2>
@@ -111,7 +92,7 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact -->
   <section id="contact">
     <div class="container">
       <h2>Contact Us</h2>
@@ -119,51 +100,76 @@
     </div>
   </section>
 
-  <!-- Firebase + Form Script -->
+  <!-- If you need other scripts, keep them after Firebase init -->
+  <script src="script.js"></script>
+
+  <!-- Firebase + Firestore script -->
   <script type="module">
-    // Import Firebase SDK
+    // --- Firebase SDK imports ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // Your Firebase config (replace with your actual config from Firebase Console)
+    // ---------- Use your Firebase config here ----------
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
+      authDomain: "aintern-285f9.firebaseapp.com",
+      projectId: "aintern-285f9",
+      storageBucket: "aintern-285f9.firebasestorage.app",
+      messagingSenderId: "1035209257137",
+      appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
+      measurementId: "G-4QSNCJQYFY"
     };
+    // --------------------------------------------------
 
-    // Initialize Firebase
+    // Initialize Firebase & Firestore
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    console.log("Firebase initialized:", firebaseConfig.projectId);
 
-    // Handle form submit
+    // Form handling
     const form = document.getElementById("application-form");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    if (!form) {
+      console.error("Form #application-form not found in DOM.");
+    } else {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      const fullName = document.getElementById("full-name").value;
-      const email = document.getElementById("email").value;
-      const skills = document.getElementById("skills").value;
-      const experience = document.getElementById("experience").value;
+        const submitBtn = form.querySelector("button[type='submit']");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
 
-      try {
-        await addDoc(collection(db, "applications"), {
-          fullName,
-          email,
-          skills,
-          experience,
-          timestamp: new Date()
-        });
-        alert("✅ Application submitted successfully!");
-        form.reset();
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        alert("❌ Failed to submit. Try again!");
-      }
-    });
+        const fullName = document.getElementById("full-name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const skills = document.getElementById("skills").value.trim();
+        const experience = document.getElementById("experience").value;
+
+        try {
+          console.log("Submitting application:", { fullName, email, skills, experience });
+          const docRef = await addDoc(collection(db, "applications"), {
+            fullName,
+            email,
+            skills,
+            experience,
+            createdAt: serverTimestamp()
+          });
+
+          console.log("Application saved. Document ID:", docRef.id);
+          alert("✅ Application submitted successfully! ID: " + docRef.id);
+          form.reset();
+        } catch (err) {
+          console.error("Error writing document:", err);
+          alert("❌ Failed to submit application. See console for details.");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit Application";
+        }
+      });
+    }
   </script>
 </body>
 </html>
