@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #f4f4f4;
+    }
+    button {
+      padding: 5px 10px;
+      margin: 2px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .approve {
+      background: #4CAF50;
+      color: white;
+    }
+    .reject {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <button id="logoutBtn">Logout</button>
+  
+  <h3>Registered Students</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Applied</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="studentsTable">
+      <!-- Data will load here -->
+    </tbody>
+  </table>
+
+  <script type="module">
+    import { auth, db } from "./firebase.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Protect admin page
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        // Restrict access (only admin email allowed)
+        if (user.email !== "admin@example.com") {
+          alert("Access denied. Only admin can view this page.");
+          window.location.href = "index.html";
+        } else {
+          loadStudents();
+        }
+      }
+    });
+
+    // Fetch student data
+    async function loadStudents() {
+      const querySnapshot = await getDocs(collection(db, "students"));
+      const tableBody = document.getElementById("studentsTable");
+      tableBody.innerHTML = "";
+      querySnapshot.forEach((docSnap) => {
+        const student = docSnap.data();
+        const row = `
+          <tr>
+            <td>${student.username}</td>
+            <td>${student.email}</td>
+            <td>${student.applied ? "✅ Yes" : "❌ No"}</td>
+            <td>${student.status ? student.status : "Pending"}</td>
+            <td>
+              <button class="approve" onclick="updateStatus('${docSnap.id}', 'Approved')">Approve</button>
+              <button class="reject" onclick="updateStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            </td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Update student status
+    window.updateStatus = async (id, status) => {
+      const studentRef = doc(db, "students", id);
+      await updateDoc(studentRef, { status });
+      alert("Status updated to " + status);
+      loadStudents(); // refresh table
+    };
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
