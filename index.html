@@ -62,6 +62,23 @@
       </div>
     </div>
   </section>
+  
+    <!-- Floating Icon -->
+  <div id="chatbot-icon" onclick="toggleChat()">💬</div>
+
+  <!-- Chat Window -->
+  <div id="chatbot-window">
+    <div id="chatbot-header">
+      AiNTERN Assistant
+      <span id="close-btn" onclick="toggleChat()">✖</span>
+    </div>
+    <div id="chatbot-body">
+      <div id="chatbot-messages"></div>
+      <input id="chatbot-input" type="text" placeholder="Type a message..." />
+    </div>
+  </div>
+
+  <script src="chatbot.js"></script>
 
   <!-- Insights & Statistics -->
   <section id="insights">
@@ -232,5 +249,6 @@
 
 </body>
 </html>
+
 
 
