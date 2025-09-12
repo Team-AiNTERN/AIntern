@@ -53,27 +53,22 @@
   window.doc = doc;
   window.setDoc = setDoc;
 </script>
+<script type="module">
+  import { auth, signInWithEmailAndPassword } from "./firebase.js"; // if separated
 
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-
-
-  
-<script>
-  function login() {
-    let id = document.getElementById("studentId").value;
-    let pass = document.getElementById("password").value;
- if (id && pass) {
-      // redirect to dashboard
-      window.location.href = "dashboard.html"; // 👈 same name as dashboard file
-    } else {
-      alert("Please enter both ID and Password");
+    try {
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      window.location.href = "index.html"; 
+    } catch (error) {
+      alert(error.message);
     }
-  }
-</script>
-
-
-
-
-  
+  });
+</script>  
 </body>
 </html>
