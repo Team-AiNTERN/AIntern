@@ -3,134 +3,291 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Extended Student Registration | PM Internship Portal</title>
+  <title>Student Registration | PM Internship Portal</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    fieldset {
+      border: none;
+      margin-bottom: 25px;
+    }
+
+    legend {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95em;
+      background-color: #fafafa;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    button {
+      background-color: #0078D4;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: span 1;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Extended Student Registration</h2>
-  <form>
+  <div class="container">
+    <h2>Student Registration</h2>
+    <form>
 
-    <!-- Personal Details -->
-    <fieldset>
-      <legend>Personal Details</legend>
-      <label>Full Name: <input type="text" name="fullName" required></label><br>
-      <label>Age: <input type="number" name="age" required></label><br>
-      <label>Gender:
-        <select name="gender" required>
-          <option value="">Select</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </label><br>
-      <label>Category:
-        <select name="category" required>
-          <option value="">Select</option>
-          <option>General</option>
-          <option>OBC</option>
-          <option>SC</option>
-          <option>ST</option>
-          <option>EWS</option>
-        </select>
-      </label>
-    </fieldset>
+      <!-- Personal Details -->
+      <fieldset>
+        <legend>Personal Details</legend>
+        <div class="form-grid">
+          <div>
+            <label>Full Name</label>
+            <input type="text" name="fullName" required>
+          </div>
+          <div>
+            <label>Age</label>
+            <input type="number" name="age" required>
+          </div>
+          <div>
+            <label>Gender</label>
+            <select name="gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Category</label>
+            <select name="category" required>
+              <option value="">Select</option>
+              <option>General</option>
+              <option>OBC</option>
+              <option>SC</option>
+              <option>ST</option>
+              <option>EWS</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
 
-    <!-- Contact Details -->
-    <fieldset>
-      <legend>Contact Details</legend>
-      <label>Email: <input type="email" name="email" required></label><br>
-      <label>Phone Number: <input type="tel" name="phone" required></label>
-    </fieldset>
+      <!-- Contact Details -->
+      <fieldset>
+        <legend>Contact Details</legend>
+        <div class="form-grid">
+          <div>
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="tel" name="phone" required>
+          </div>
+        </div>
+      </fieldset>
 
-    <!-- Address -->
-    <fieldset>
-      <legend>Permanent Address</legend>
-      <label>House No.: <input type="text" name="permHouse"></label><br>
-      <label>Address Line 1: <input type="text" name="permLine1"></label><br>
-      <label>Address Line 2: <input type="text" name="permLine2"></label><br>
-      <label>State:
-        <select name="permState">
-          <option value="">Select State</option>
-          <option>Tamil Nadu</option>
-          <option>Maharashtra</option>
-          <option>Delhi</option>
-          <option>Karnataka</option>
-          <!-- Add more states -->
-        </select>
-      </label><br>
-      <label>District:
-        <select name="permDistrict">
-          <option value="">Select District</option>
-          <option>Chengalpattu</option>
-          <option>Chennai</option>
-          <option>Pune</option>
-          <option>Bangalore Urban</option>
-          <!-- Add more districts -->
-        </select>
-      </label><br>
-      <label>Pin Code: <input type="text" name="permPin"></label>
-    </fieldset>
+      <!-- Address -->
+      <fieldset>
+        <legend>Permanent Address</legend>
+        <div class="form-grid">
+          <div>
+            <label>House No.</label>
+            <input type="text" name="permHouse">
+          </div>
+          <div>
+            <label>Address Line 1</label>
+            <input type="text" name="permLine1">
+          </div>
+          <div>
+            <label>Address Line 2</label>
+            <input type="text" name="permLine2">
+          </div>
+          <div>
+            <label>State</label>
+            <select name="permState">
+              <option value="">Select State</option>
+              <option>Tamil Nadu</option>
+              <option>Maharashtra</option>
+              <option>Delhi</option>
+              <option>Karnataka</option>
+            </select>
+          </div>
+          <div>
+            <label>District</label>
+            <select name="permDistrict">
+              <option value="">Select District</option>
+              <option>Chengalpattu</option>
+              <option>Chennai</option>
+              <option>Pune</option>
+              <option>Bangalore Urban</option>
+            </select>
+          </div>
+          <div>
+            <label>Pin Code</label>
+            <input type="text" name="permPin">
+          </div>
+        </div>
+      </fieldset>
 
-    <fieldset>
-      <legend>Current Address</legend>
-      <label>House No.: <input type="text" name="currHouse"></label><br>
-      <label>Address Line 1: <input type="text" name="currLine1"></label><br>
-      <label>Address Line 2: <input type="text" name="currLine2"></label><br>
-      <label>State:
-        <select name="currState">
-          <option value="">Select State</option>
-          <option>Tamil Nadu</option>
-          <option>Maharashtra</option>
-          <option>Delhi</option>
-          <option>Karnataka</option>
-        </select>
-      </label><br>
-      <label>District:
-        <select name="currDistrict">
-          <option value="">Select District</option>
-          <option>Chengalpattu</option>
-          <option>Chennai</option>
-          <option>Pune</option>
-          <option>Bangalore Urban</option>
-        </select>
-      </label><br>
-      <label>Pin Code: <input type="text" name="currPin"></label>
-    </fieldset>
+      <!-- Education -->
+      <fieldset>
+        <legend>Education Details</legend>
+        <div class="form-grid">
+          <div>
+            <label>Class 10 School</label>
+            <input type="text" name="class10School">
+          </div>
+          <div>
+            <label>Class 10 Percentage</label>
+            <input type="text" name="class10Percent">
+          </div>
+          <div>
+            <label>Class 12 School</label>
+            <input type="text" name="class12School">
+          </div>
+          <div>
+            <label>Class 12 Percentage</label>
+            <input type="text" name="class12Percent">
+          </div>
+          <div>
+            <label>Graduation College</label>
+            <input type="text" name="gradCollege">
+          </div>
+          <div>
+            <label>Graduation Percentage</label>
+            <input type="text" name="gradPercent">
+          </div>
+          <div>
+            <label>Degree</label>
+            <input type="text" name="degree">
+          </div>
+          <div>
+            <label>Year of Passing</label>
+            <input type="text" name="gradYear">
+          </div>
+        </div>
+      </fieldset>
 
-    <!-- Education Details -->
-    <fieldset>
-      <legend>Education Details</legend>
-      <label>Class 10 School Name: <input type="text" name="class10School"></label><br>
-      <label>Class 10 Percentage: <input type="text" name="class10Percent"></label><br>
-      <label>Class 12 School Name: <input type="text" name="class12School"></label><br>
-      <label>Class 12 Percentage: <input type="text" name="class12Percent"></label><br>
-      <label>Graduation College Name: <input type="text" name="gradCollege"></label><br>
-      <label>Graduation Percentage: <input type="text" name="gradPercent"></label><br>
-      <label>Degree: <input type="text" name="degree"></label><br>
-      <label>Year of Passing: <input type="text" name="gradYear"></label>
-    </fieldset>
+      <!-- Additional -->
+      <fieldset>
+        <legend>Additional Qualifications</legend>
+        <div class="form-grid">
+          <div>
+            <label>Extra Courses</label>
+            <input type="text" name="extraCourses">
+          </div>
+          <div>
+            <label>Specialisation</label>
+            <input type="text" name="specialisation">
+          </div>
+          <div>
+            <label>Languages Known</label>
+            <input type="text" name="languages">
+          </div>
+          <div>
+            <label>Skills</label>
+            <input type="text" name="skills">
+          </div>
+          <div>
+            <label>Past Experience</label>
+            <input type="text" name="experience">
+          </div>
+          <div>
+            <label>Preferred Work Location</label>
+            <input type="text" name="workLocation">
+          </div>
+        </div>
+      </fieldset>
 
-    <!-- Additional Qualifications -->
-    <fieldset>
-      <legend>Additional Qualifications</legend>
-      <label>Extra Courses: <input type="text" name="extraCourses"></label><br>
-      <label>Specialisation: <input type="text" name="specialisation"></label><br>
-      <label>Languages Known: <input type="text" name="languages"></label><br>
-      <label>Skills: <input type="text" name="skills"></label><br>
-      <label>Past Experience: <input type="text" name="experience"></label><br>
-      <label>Preferred Work Location: <input type="text" name="workLocation"></label>
-    </fieldset>
+      <!-- Achievements -->
+      <fieldset>
+        <legend>Projects & Achievements</legend>
+        <div class="form-grid">
+          <div>
+            <label>Projects</label>
+            <input type="text" name="projects">
+          </div>
+          <div>
+            <label>Competitions</label>
+            <input type="text" name="competitions">
+          </div>
+          <div>
+            <label>Publications</label>
+            <input type="text" name="publications">
+          </div>
+          <div>
+            <label>Patents</label>
+            <input type="text" name="patents">
+          </div>
+        </div>
+      </fieldset>
 
-    <!-- Projects & Achievements -->
-    <fieldset>
-      <legend>Projects & Achievements</legend>
-      <label>Projects: <input type="text" name="projects"></label><br>
-      <label>Competitions: <input type="text" name="competitions"></label><br>
-      <label>Publications: <input type="text" name="publications"></label><br>
-      <label>Patents: <input type="text" name="patents"></label>
-    </fieldset>
-
-    <!-- Submit -->
-    <button type="submit">Register</button>
-  </form>
+      <button type="submit">Register</button>
+    </form>
+  </div>
 </body>
 </html>
