@@ -17,8 +17,11 @@
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 350px;
+      width: 320px;
       text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
     }
     input {
       width: 90%;
@@ -49,61 +52,19 @@
       <button type="submit">Login</button>
     </form>
   </div>
-  <!-- Firebase SDKs -->
-<script type="module">
-  // Import Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, setDoc } 
-          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Your Firebase config (replace with your project details)
-  const firebaseConfig = {
-  apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
-  authDomain: "aintern-285f9.firebaseapp.com",
-  projectId: "aintern-285f9",
-  storageBucket: "aintern-285f9.firebasestorage.app",
-  messagingSenderId: "1035209257137",
-  appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
-  measurementId: "G-4QSNCJQYFY"
-  };
-
-  // Initialize
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  // Make them accessible
-  window.auth = auth;
-  window.db = db;
-  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window.doc = doc;
-  window.setDoc = setDoc;
-</script>
-
-  <script type="module">
-    import { auth } from "./firebase.js";
-    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+  <script>
+    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const email = document.getElementById("adminEmail").value;
-      const password = document.getElementById("adminPassword").value;
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value.trim();
 
-      // ✅ Restrict only admin@example.com
-      if (email.toLowerCase() !== "admin@example.com") {
-        alert("Only the Admin account can log in here!");
-        return;
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
+      // ✅ Hardcoded credentials
+      if (email === "admin@aintern.com" && password === "adminram") {
         alert("Welcome Admin!");
-        window.location.href = "adminpage.html";
-      } catch (error) {
-        alert("Login failed: " + error.message);
+        window.location.href = "adminpage.html"; // redirect to admin dashboard
+      } else {
+        alert("Invalid credentials! Only admin can log in.");
       }
     });
   </script>
