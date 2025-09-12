@@ -278,7 +278,4 @@ section:last-of-type {
 .dot.app { stroke: #007BFF; }
 .dot.rec { stroke: var(--green); }
 
-#chatbot-icon, #chatbot-window {
-  display: block !important;
-}
 
