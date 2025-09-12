@@ -49,10 +49,22 @@ section:last-of-type {
     border-bottom: none;
 }
 
+/* About illustration */
+.about-illustration { display: flex; align-items: center; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+.about-illustration img { max-width: 420px; width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow); }
+.tint-controls { display: flex; gap: 10px; align-items: center; }
+.tint-btn { background: #007BFF; color: #fff; border: none; padding: 8px 12px; border-radius: 999px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow); }
+.tint-btn.secondary { background: var(--green); }
+.tint-btn.outline { background: var(--white); color: var(--navy-blue); border: 1px solid var(--border-color); }
+.img-tint { transition: filter 200ms ease; }
+.img-tint.tint-blue { filter: hue-rotate(200deg) saturate(1.3) brightness(1.02); }
+.img-tint.tint-green { filter: hue-rotate(110deg) saturate(1.5) brightness(1.02); }
+.img-tint.tint-mono { filter: grayscale(100%) contrast(1.1); }
+
 /* --- Header & Navigation --- */
 .header {
     background: var(--white);
-    padding: 1rem 5%;
+    padding: 1.25rem 5%;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -70,7 +82,10 @@ section:last-of-type {
     color: var(--green);
 }
 .nav-links { display: flex; align-items: center; gap: 8px; }
-.nav-links img { height: 40px; object-fit: contain; }
+.nav-links img { height: 64px; object-fit: contain; }
+.nav-links img.logo--pminternship, .nav-links img.logo--viksitbharat, .nav-links img.logo--pm { height: 80px; }
+.nav-links a.logo-link { padding: 0; background: none; border-radius: 0; }
+.nav-links a.logo-link:hover { background: none; }
 .nav-links a {
     color: var(--navy-blue);
     text-decoration: none;
@@ -179,7 +194,8 @@ section:last-of-type {
 .stat-label { font-size: 0.95rem; color: #5e6b78; }
 
 .charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 24px; }
-.chart-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+.chart-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); position: relative; }
+.line-chart-root { position: relative; min-height: 300px; }
 
 /* Bar chart */
 .bar-chart { display: flex; gap: 30px; align-items: flex-end; height: 240px; padding: 10px; border-left: 2px solid #e9ecef; border-bottom: 2px solid #e9ecef; position: relative; }
@@ -199,6 +215,9 @@ section:last-of-type {
 .role-btn { display: inline-block; background-color: #007BFF; color: white; padding: 18px 40px; font-size: 20px; font-weight: bold; border-radius: 8px; text-decoration: none; box-shadow: 0px 4px 6px rgba(0,0,0,0.2); transition: background 0.3s, transform 0.2s; text-align: center; min-width: 200px; }
 .role-btn:hover { background-color: #0056b3; transform: translateY(-3px); }
 
+/* Footer educational note */
+.edu-note { text-align: center; color: #6c757d; font-size: 0.95rem; padding: 20px 0; border-top: 1px solid var(--border-color); }
+
 /* 📱 Mobile view: stack vertically */
 @media (max-width: 992px) {
   .map-and-legend { grid-template-columns: 1fr; }
@@ -212,6 +231,8 @@ section:last-of-type {
   .charts-grid { grid-template-columns: 1fr; }
   .india-map { min-height: 260px; }
   .nav-links img { display: none; }
+  .about-illustration { justify-content: center; }
+  .about-illustration img { max-width: 100%; }
 }
 
 /* Enhancements: map controls and clearer charts */
@@ -221,11 +242,11 @@ section:last-of-type {
 
 /* Gender chart axes */
 .chart-wrap { position: relative; display: grid; grid-template-columns: 48px 1fr; align-items: end; gap: 8px; height: 260px; }
-.y-axis { position: relative; height: 100%; border-left: 2px solid #e9ecef; }
+.y-axis { position: relative; height: 100%; border-left: 2px solid #c7d2fe; }
 .y-tick { position: absolute; left: 0; transform: translateX(-100%); display: flex; align-items: center; gap: 6px; }
 .y-tick span { font-size: 12px; color: #6c757d; }
-.grid-line { position: absolute; left: 48px; right: 0; height: 1px; background: #eef3ff; opacity: 0.9; }
-.bars { display: flex; gap: 36px; align-items: flex-end; height: 100%; padding: 0 10px 10px 10px; border-bottom: 2px solid #e9ecef; }
+.grid-line { position: absolute; left: 48px; right: 0; height: 1px; background: #dbe4ff; opacity: 1; }
+.bars { display: flex; gap: 36px; align-items: flex-end; height: 100%; padding: 0 10px 10px 10px; border-bottom: 2px solid #c7d2fe; }
 .bar { transition: height 300ms ease; }
 .chart-legend { display: flex; gap: 16px; margin-top: 10px; }
 .legend-item { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--navy-blue); }
@@ -233,7 +254,26 @@ section:last-of-type {
 .swatch-app { background: #007BFF; }
 .swatch-rec { background: var(--green); }
 
+/* Chart controls and tooltip */
+.chart-controls { display: flex; gap: 14px; align-items: center; margin-bottom: 8px; color: var(--navy-blue); font-weight: 600; }
+.chart-controls input { margin-right: 6px; }
+.chart-tooltip { position: absolute; pointer-events: none; background: rgba(0,0,0,0.85); color: #fff; padding: 6px 8px; border-radius: 6px; font-size: 12px; transform: translate(-50%, -120%); box-shadow: var(--shadow); }
+
 @media (max-width: 768px) {
   .map-controls { top: 8px; right: 8px; }
   .bars { gap: 24px; }
 }
+
+/* Line chart styles */
+.line-chart { position: relative; }
+.line-svg { width: 100%; height: auto; display: block; }
+.axis { stroke: #c7d2fe; stroke-width: 2; }
+.grid { stroke: #eef3ff; stroke-width: 1; }
+.y-label { font-size: 12px; fill: #6c757d; text-anchor: end; }
+.x-label { font-size: 12px; fill: #6c757d; text-anchor: middle; }
+.line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
+.line.app { stroke: #007BFF; }
+.line.rec { stroke: var(--green); stroke-dasharray: 4 3; }
+.dot { fill: #fff; stroke-width: 3; }
+.dot.app { stroke: #007BFF; }
+.dot.rec { stroke: var(--green); }
