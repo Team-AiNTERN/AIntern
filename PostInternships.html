@@ -5,26 +5,53 @@
   <title>Post Internship | PM Internship Portal</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <style>
-    body { 
-
-     <!-- Sidebar -->
-  <div class="sidebar">
-    <h2><i class="fas fa-graduation-cap"></i> PM Internship</h2>
-    <a href="recruiter.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
-    <a href="PostInternships.html"><i class="fas fa-briefcase"></i> Post Internships</a>
-    <a href="RecruiterApplications.html"><i class="fas fa-file-alt"></i> Applications</a>
-    <a href="RecruiterSettings.html"><i class="fas fa-cog"></i> Settings</a>
-    <a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
- 
+    body {
       font-family: Arial, sans-serif;
       background: #f4f7fa;
       margin: 0;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #2f3b52;
+      color: #fff;
+      padding-top: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 20px;
+      color: #fff;
+    }
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      border-left: 4px solid transparent;
+      transition: all 0.3s;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background: #1e2a3c;
+      border-left: 4px solid #ff7f50;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 250px;
       padding: 20px;
+      width: calc(100% - 250px);
     }
     .form-container {
       background: #fff;
-      padding: 30px;
+      padding: 25px;
       border-radius: 10px;
       max-width: 800px;
       margin: auto;
@@ -39,107 +66,118 @@
       margin-bottom: 15px;
     }
     label {
+      font-weight: bold;
       display: block;
       margin-bottom: 6px;
-      font-weight: 600;
-      color: #34495e;
     }
-    input, textarea, select {
+    input, textarea {
       width: 100%;
       padding: 10px;
-      border: 1px solid #dce1e6;
+      border: 1px solid #ccc;
       border-radius: 6px;
-      font-family: inherit;
     }
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-    .btn {
-      display: inline-block;
-      background: #3498db;
-      color: white;
+    button {
+      padding: 10px 20px;
       border: none;
-      padding: 12px 20px;
+      background: #ff7f50;
+      color: white;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 10px;
+      font-size: 16px;
     }
-    .btn:hover {
-      background: #2980b9;
-    }
-    .success {
-      padding: 12px;
-      background: #eafaf1;
-      border-left: 4px solid #2ecc71;
-      color: #27ae60;
-      margin-bottom: 15px;
-      border-radius: 6px;
-    }
-    .error {
-      padding: 12px;
-      background: #fdecea;
-      border-left: 4px solid #e74c3c;
-      color: #c0392b;
-      margin-bottom: 15px;
-      border-radius: 6px;
+    button:hover {
+      background: #e06a3f;
     }
   </style>
 </head>
 <body>
 
-<div class="form-container">
-  <h2><i class="fas fa-plus-circle"></i> Post Internship Requirements</h2>
-  <div id="message"></div>
-  <form id="internshipForm">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><i class="fas fa-graduation-cap"></i> PM Internship</h2>
+    <a href="recruiter.html"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="PostInternships.html" class="active"><i class="fas fa-briefcase"></i> Post Internships</a>
+    <a href="RecruiterApplications.html"><i class="fas fa-file-alt"></i> Applications</a>
+    <a href="RecruiterSettings.html"><i class="fas fa-cog"></i> Settings</a>
+    <a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
 
-    <div class="form-group"><label>Age</label><input type="number" name="age"></div>
-    <div class="form-group"><label>Gender</label><input type="text" name="gender"></div>
-    <div class="form-group"><label>Category</label><input type="text" name="category"></div>
-    <div class="form-group"><label>Minimum Class 10 %</label><input type="number" step="0.01" name="class10_percent"></div>
-    <div class="form-group"><label>Minimum Class 12 %</label><input type="number" step="0.01" name="class12_percent"></div>
-    <div class="form-group"><label>Minimum Grad %</label><input type="number" step="0.01" name="graduation_percent"></div>
-    <div class="form-group"><label>Degree Required</label><input type="text" name="degree"></div>
-    <div class="form-group"><label>Year of Passing</label><input type="text" name="year_of_passing"></div>
-    <div class="form-group"><label>Extra Courses</label><textarea name="extra_courses"></textarea></div>
-    <div class="form-group"><label>Specialisation</label><input type="text" name="specialisation"></div>
-    <div class="form-group"><label>Languages Known</label><textarea name="languages_known"></textarea></div>
-    <div class="form-group"><label>Skills</label><textarea name="skills"></textarea></div>
-    <div class="form-group"><label>Experience (yrs)</label><input type="text" name="experience"></div>
-    <div class="form-group"><label>Preferred Location</label><input type="text" name="preferred_location"></div>
-    <div class="form-group"><label>Projects</label><textarea name="projects"></textarea></div>
-    <div class="form-group"><label>Competitions</label><textarea name="competitions"></textarea></div>
-    <div class="form-group"><label>Publications</label><textarea name="publications"></textarea></div>
-    <div class="form-group"><label>Patents</label><textarea name="patents"></textarea></div>
-    <button type="submit" class="btn">Submit Internship</button>
-  </form>
-</div>
+  <!-- Main Content -->
+  <div class="main">
+    <div class="form-container">
+      <h2>Post Internship Requirement</h2>
+      <form id="internshipForm">
+        <div class="form-group">
+          <label>Company Name</label>
+          <input type="text" id="company_name" required>
+        </div>
+        <div class="form-group">
+          <label>Internship Title</label>
+          <input type="text" id="title" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Skills Required (comma separated)</label>
+          <input type="text" id="skills_required" placeholder="React, SQL, Python">
+        </div>
+        <div class="form-group">
+          <label>Openings</label>
+          <input type="number" id="openings" value="1">
+        </div>
+        <div class="form-group">
+          <label>Stipend</label>
+          <input type="text" id="stipend" placeholder="₹10,000/month">
+        </div>
+        <div class="form-group">
+          <label>Duration</label>
+          <input type="text" id="duration" placeholder="3 months">
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="location" placeholder="Bangalore / Remote">
+        </div>
+        <button type="button" onclick="postInternship()">Submit Requirement</button>
+      </form>
+    </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.27.0/dist/umd/supabase.min.js"></script>
-<script>
-  const SUPABASE_URL = "https://xozzpzasbdvgpyysuvew.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <!-- Supabase Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.27.0/dist/umd/supabase.min.js"></script>
+  <script>
+    const SUPABASE_URL = "YOUR_SUPABASE_URL";
+    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const form = document.getElementById("internshipForm");
-  const message = document.getElementById("message");
+    async function postInternship() {
+      const company_name = document.getElementById("company_name").value;
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const skills_required = document.getElementById("skills_required").value.split(",").map(s => s.trim());
+      const openings = document.getElementById("openings").value;
+      const stipend = document.getElementById("stipend").value;
+      const duration = document.getElementById("duration").value;
+      const location = document.getElementById("location").value;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
+      if (!company_name || !title || !description || !location) {
+        alert("Please fill all required fields!");
+        return;
+      }
 
-    let { error } = await supabase.from("internship_requirements").insert([data]);
+      const { error } = await supabase.from("internships").insert([{
+        company_name, title, description, skills_required, openings, stipend, duration, location
+      }]);
 
-    if (error) {
-      message.innerHTML = `<div class="error"><i class="fas fa-times-circle"></i> ${error.message}</div>`;
-    } else {
-      message.innerHTML = `<div class="success"><i class="fas fa-check-circle"></i> Internship requirement posted successfully!</div>`;
-      form.reset();
+      if (error) {
+        console.error("Error posting internship:", error.message);
+        alert("Error posting internship");
+      } else {
+        alert("Internship requirement posted successfully!");
+        document.getElementById("internshipForm").reset();
+      }
     }
-  });
-</script>
+  </script>
 </body>
 </html>
