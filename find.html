@@ -300,3 +300,180 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+/////////////////////changed 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Internships | AiNTERN</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    #searchContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #searchContainer input {
+      padding: 10px;
+      font-size: 16px;
+      flex: 1 1 200px;
+    }
+    #searchContainer button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #internshipResults {
+      margin-top: 20px;
+    }
+    .internship-card {
+      background: #fff;
+      border-left: 5px solid #4CAF50;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .internship-card h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+    .internship-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Find Internships</h1>
+
+  <!-- Search Inputs -->
+  <div id="searchContainer">
+    <input type="text" id="skillsInput" placeholder="Skills (e.g., Web Dev, Python)">
+    <input type="text" id="specialisationInput" placeholder="Specialisation (e.g., AI, ML)">
+    <input type="text" id="coursesInput" placeholder="Courses (e.g., NPTEL)">
+    <button onclick="searchInternships()">Search</button>
+  </div>
+
+  <!-- Results Container -->
+  <div id="internshipResults">
+    <p>Enter your preferences and click Search to see results.</p>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+  <script>
+    // 🔹 Supabase Setup
+    const supabaseUrl = 'https://YOUR_SUPABASE_URL.supabase.co';
+    const supabaseKey = 'YOUR_ANON_KEY';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // 🔹 Fetch All Internships
+    async function fetchInternships() {
+      const { data, error } = await supabase
+        .from('internships')
+        .select('*');
+
+      if (error) {
+        console.error('Error fetching internships:', error);
+        return [];
+      }
+      return data;
+    }
+
+    // 🔹 Filter by Multiple Keywords
+    function filterInternships(internships, skillsKeywords, specKeywords, courseKeywords) {
+      return internships.filter(internship => {
+        const skillsText = internship.skills.toLowerCase();
+        const specText = internship.specialisation.toLowerCase();
+        const courseText = internship.courses.toLowerCase();
+
+        const skillsMatch = skillsKeywords.length === 0 || skillsKeywords.some(k => skillsText.includes(k.toLowerCase()));
+        const specMatch = specKeywords.length === 0 || specKeywords.some(k => specText.includes(k.toLowerCase()));
+        const courseMatch = courseKeywords.length === 0 || courseKeywords.some(k => courseText.includes(k.toLowerCase()));
+
+        return skillsMatch && specMatch && courseMatch;
+      });
+    }
+
+    // 🔹 Display Results
+    async function searchInternships() {
+      const skillsKeywords = document.getElementById('skillsInput').value.split(',').map(k => k.trim()).filter(k => k);
+      const specKeywords = document.getElementById('specialisationInput').value.split(',').map(k => k.trim()).filter(k => k);
+      const courseKeywords = document.getElementById('coursesInput').value.split(',').map(k => k.trim()).filter(k => k);
+
+      const internships = await fetchInternships();
+      const filtered = filterInternships(internships, skillsKeywords, specKeywords, courseKeywords);
+
+      const container = document.getElementById('internshipResults');
+      container.innerHTML = '';
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p>No internships found matching your criteria.</p>';
+        return;
+      }
+
+      filtered.forEach(internship => {
+        const div = document.createElement('div');
+        div.className = 'internship-card';
+        div.innerHTML = `
+          <h3>${internship.title}</h3>
+          <p><strong>Skills:</strong> ${internship.skills}</p>
+          <p><strong>Specialisation:</strong> ${internship.specialisation}</p>
+          <p><strong>Courses:</strong> ${internship.courses}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+
