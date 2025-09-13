@@ -1,382 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AiNTERN – Find Internships</title>
-  <style>
-    :root {
-      --primary: #0f172a;
-      --primary-dark: #1e293b;
-      --accent: #f39c12;
-      --bg: #f8fafc;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: #333;
-      line-height: 1.6;
-    }
-
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 20px;
-      font-size: 1.5rem;
-      text-align: center;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-    }
-
-    .main {
-      padding: 30px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.25rem;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 10px;
-      color: var(--accent);
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .filters select,
-    .filters input {
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      min-width: 160px;
-      font-size: 0.95rem;
-    }
-
-    .selected-list {
-      margin-top: 10px;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      background: var(--accent);
-      color: white;
-      padding: 5px 10px;
-      margin: 5px 5px 0 0;
-      border-radius: 16px;
-      font-size: 0.85rem;
-      cursor: default;
-    }
-
-    .chip button {
-      background: transparent;
-      border: none;
-      color: white;
-      margin-left: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .search-btn {
-      padding: 12px 25px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
-
-    .search-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    #internshipResults p {
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .loading {
-      font-style: italic;
-      color: #666;
-    }
-
-    @media (max-width: 600px) {
-      .filters select,
-      .filters input {
-        flex: 1 1 100%;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<div class="main">
-  <!-- Search & Filters -->
-  <div class="card">
-    <h2>Search & Filter</h2>
-    <div class="filters">
-      <input type="text" id="searchInput" placeholder="Search internship title..." />
-
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Degree</option>
-        <option>B.A.</option>
-        <option>B.Com</option>
-        <option>B.E.</option>
-        <option>B.Sc.</option>
-        <option>B.Tech</option>
-        <option>BBA</option>
-        <option>Diploma</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Language</option>
-        <option>Hindi</option>
-        <option>English</option>
-        <option>Assamese</option>
-        <option>Bengali</option>
-        <option>Gujarati</option>
-        <option>Kannada</option>
-        <option>Kashmiri</option>
-        <option>Malayalam</option>
-        <option>Manipuri</option>
-        <option>Marathi</option>
-        <option>Nepali</option>
-        <option>Odia</option>
-        <option>Punjabi</option>
-        <option>Sanskrit</option>
-        <option>Sindhi</option>
-        <option>Tamil</option>
-        <option>Telugu</option>
-        <option>Urdu</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Skill</option>
-        <option>Accounting</option>
-        <option>CAD Design</option>
-        <option>Cloud Computing</option>
-        <option>Coding</option>
-        <option>Financial Analysis</option>
-        <option>Lab Skills</option>
-        <option>Machine Learning</option>
-        <option>Marketing</option>
-        <option>Programming</option>
-        <option>Research</option>
-        <option>Robotics</option>
-        <option>SEO</option>
-        <option>UI/UX</option>
-        <option>Writing</option>
-      </select>
-
-    <select onchange="addFilter(this)">
-        <option disabled selected>Projects</option>
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Experience (IN Months)</option>
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-        <option>9</option>
-        <option>10</option>
-        <option>11</option>
-        <option>12</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>No. Of Coding Competitions</option>
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-        <option>9</option>
-        <option>10</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Specialisation</option>
-        <option>AI</option>
-        <option>Biology</option>
-        <option>Chemistry</option>
-        <option>Commerce</option>
-        <option>Computer Science</option>
-        <option>Engineering</option>
-        <option>Finance</option>
-        <option>Genetics</option>
-        <option>History</option>
-        <option>IT</option>
-        <option>Literature</option>
-        <option>Marketing</option>
-        <option>Mechanical Engineering</option>
-        <option>Physics</option>
-        <option>Sociology</option>
-      </select>
-
-      <select onchange="addFilter(this)">
-        <option disabled selected>Domain</option>
-        <option>Consulting</option>
-        <option>Data Analytics</option>
-        <option>Design</option>
-        <option>Engineering</option>
-        <option>Finance</option>
-        <option>HR</option>
-        <option>IT</option>
-        <option>Marketing</option>
-        <option>Operations</option>
-        <option>R&D</option>
-      </select>
-    </div>
-
-    <div class="selected-list" id="selectedFilters"></div>
-    <button class="search-btn" onclick="searchInternships()">Search</button>
-  </div>
-
-  <!-- Results -->
-  <div class="card" id="internshipResults">
-    <h2>Available Internships</h2>
-    <p>AI Research Intern – Google</p>
-    <p>Data Science Intern – Microsoft</p>
-    <p>Web Development Intern – Amazon</p>
-    <p>UX Design Intern – Adobe</p>
-    <p>Cloud Intern – AWS</p>
-  </div>
-</div>
-
-<script>
-  const selected = [];
-  const internships = [
-    "AI Research Intern – Google",
-    "Data Science Intern – Microsoft",
-    "Web Development Intern – Amazon",
-    "UX Design Intern – Adobe",
-    "Cloud Intern – AWS"
-  ];
-
-  function addFilter(select) {
-    const value = select.value;
-    if (value && !selected.includes(value)) {
-      selected.push(value);
-      updateSelectedList();
-    }
-    select.selectedIndex = 0;
-  }
-
-  function updateSelectedList() {
-    const container = document.getElementById("selectedFilters");
-    container.innerHTML = "";
-    selected.forEach((item, index) => {
-      const chip = document.createElement("span");
-      chip.className = "chip";
-      chip.innerHTML = `${item} <button onclick="removeFilter(${index})">&times;</button>`;
-      container.appendChild(chip);
-    });
-  }
-
-  function removeFilter(index) {
-    selected.splice(index, 1);
-    updateSelectedList();
-  }
-
-  function searchInternships() {
-    const results = document.getElementById("internshipResults");
-    const query = document.getElementById("searchInput").value.trim().toLowerCase();
-    results.innerHTML = "<h2>Available Internships</h2><p class='loading'>Searching...</p>";
-
-    setTimeout(() => {
-      const filtered = internships.filter(role => {
-        const lower = role.toLowerCase();
-        return (
-          lower.includes(query) ||
-          selected.some(term => lower.includes(term.toLowerCase()))
-        );
-      });
-
-      results.innerHTML = "<h2>Available Internships</h2>";
-      if (filtered.length === 0) {
-        results.innerHTML += "<p>No internships match your criteria.</p>";
-      } else {
-        filtered.forEach(item => {
-          results.innerHTML += `<p>${item}</p>`;
-        });
-      }
-    }, 400);
-  }
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-/////////////////////changed 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find Internships | AiNTERN</title>
@@ -400,6 +24,19 @@
       padding: 10px;
       font-size: 16px;
       flex: 1 1 150px;
+    }
+    .submit-btn {
+      padding: 12px 25px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .submit-btn:hover {
+      background: #45a049;
     }
     #internshipResults {
       margin-top: 20px;
@@ -428,7 +65,7 @@
 
   <!-- Dropdown Filters -->
   <div id="searchContainer">
-    <select data-filter="degree" onchange="addFilter(this)">
+    <select data-filter="degree">
       <option disabled selected>Degree</option>
       <option>B.A.</option>
       <option>B.Com</option>
@@ -439,7 +76,7 @@
       <option>Diploma</option>
     </select>
 
-    <select data-filter="language" onchange="addFilter(this)">
+    <select data-filter="language">
       <option disabled selected>Language</option>
       <option>Hindi</option>
       <option>English</option>
@@ -461,7 +98,7 @@
       <option>Urdu</option>
     </select>
 
-    <select data-filter="skill" onchange="addFilter(this)">
+    <select data-filter="skill">
       <option disabled selected>Skill</option>
       <option>Accounting</option>
       <option>CAD Design</option>
@@ -479,7 +116,7 @@
       <option>Writing</option>
     </select>
 
-    <select data-filter="specialisation" onchange="addFilter(this)">
+    <select data-filter="specialisation">
       <option disabled selected>Specialisation</option>
       <option>AI</option>
       <option>Biology</option>
@@ -498,7 +135,7 @@
       <option>Sociology</option>
     </select>
 
-    <select data-filter="domain" onchange="addFilter(this)">
+    <select data-filter="domain">
       <option disabled selected>Domain</option>
       <option>Consulting</option>
       <option>Data Analytics</option>
@@ -513,86 +150,72 @@
     </select>
   </div>
 
+  <!-- Submit Button -->
+  <button class="submit-btn" onclick="handleSubmit()">Submit</button>
+
   <!-- Results Container -->
   <div id="internshipResults">
-    <p>Select filters to see internships here.</p>
+    <p>Choose your filters and click Submit.</p>
   </div>
 
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
   <script>
-    // Supabase setup
     const supabaseUrl = 'https://xozzpzasbdvgpyysuvew.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3Mjc2NDYzfQ.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM'; // Replace with safe key (anon)
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Track selected filters
-    const selectedFilters = {
-      degree: null,
-      language: null,
-      skill: null,
-      specialisation: null,
-      domain: null
-    };
-
-    // Add or update filter and search
-    function addFilter(selectElement) {
-      const filterType = selectElement.dataset.filter;
-      selectedFilters[filterType] = selectElement.value;
-      searchInternships();
-    }
-
-    // Fetch internships from Supabase
-    async function fetchInternships() {
-      const { data, error } = await supabase.from('internships').select('*');
-      if (error) {
-        console.error('Error fetching internships:', error);
-        return [];
-      }
-      return data;
-    }
-
-    // Filter internships based on selected dropdowns
-    function filterInternships(internships, filters) {
-      return internships.filter(internship => {
-        if (filters.degree && !internship.degree?.toLowerCase().includes(filters.degree.toLowerCase())) return false;
-        if (filters.language && !internship.language?.toLowerCase().includes(filters.language.toLowerCase())) return false;
-        if (filters.skill && !internship.skills?.toLowerCase().includes(filters.skill.toLowerCase())) return false;
-        if (filters.specialisation && !internship.specialisation?.toLowerCase().includes(filters.specialisation.toLowerCase())) return false;
-        if (filters.domain && !internship.domain?.toLowerCase().includes(filters.domain.toLowerCase())) return false;
-        return true;
+    function getSelectedFilters() {
+      const selects = document.querySelectorAll('#searchContainer select');
+      const filters = {};
+      selects.forEach(sel => {
+        const key = sel.dataset.filter;
+        const value = sel.value !== sel.options[0].text ? sel.value : null;
+        filters[key] = value;
       });
+      return filters;
     }
 
-    // Display results
-    async function searchInternships() {
-      const internships = await fetchInternships();
-      const filtered = filterInternships(internships, selectedFilters);
+    async function handleSubmit() {
+      const filters = getSelectedFilters();
+      console.log('Submitted Filters:', filters);
 
-      const container = document.getElementById('internshipResults');
-      container.innerHTML = '';
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<p>No internships match your selection.</p>';
+      // Fetch internships
+      const { data, error } = await supabaseClient.from('internships').select('*');
+      if (error) {
+        console.error(error);
         return;
       }
 
-      filtered.forEach(internship => {
-        const div = document.createElement('div');
-        div.className = 'internship-card';
-        div.innerHTML = `
-          <h3>${internship.title}</h3>
-          <p><strong>Degree:</strong> ${internship.degree}</p>
-          <p><strong>Language:</strong> ${internship.language}</p>
-          <p><strong>Skills:</strong> ${internship.skills}</p>
-          <p><strong>Specialisation:</strong> ${internship.specialisation}</p>
-          <p><strong>Domain:</strong> ${internship.domain}</p>
-        `;
-        container.appendChild(div);
+      const filtered = data.filter(item => {
+        return (!filters.degree || item.degree?.toLowerCase().includes(filters.degree.toLowerCase())) &&
+               (!filters.language || item.language?.toLowerCase().includes(filters.language.toLowerCase())) &&
+               (!filters.skill || item.skills?.toLowerCase().includes(filters.skill.toLowerCase())) &&
+               (!filters.specialisation || item.specialisation?.toLowerCase().includes(filters.specialisation.toLowerCase())) &&
+               (!filters.domain || item.domain?.toLowerCase().includes(filters.domain.toLowerCase()));
       });
+
+      const container = document.getElementById('internshipResults');
+      container.innerHTML = '';
+      if (filtered.length === 0) {
+        container.innerHTML = '<p>No internships match your selection.</p>';
+      } else {
+        filtered.forEach(intern => {
+          const div = document.createElement('div');
+          div.className = 'internship-card';
+          div.innerHTML = `
+            <h3>${intern.title}</h3>
+            <p><strong>Degree:</strong> ${intern.degree}</p>
+            <p><strong>Language:</strong> ${intern.language}</p>
+            <p><strong>Skills:</strong> ${intern.skills}</p>
+            <p><strong>Specialisation:</strong> ${intern.specialisation}</p>
+            <p><strong>Domain:</strong> ${intern.domain}</p>
+          `;
+          container.appendChild(div);
+        });
+      }
     }
   </script>
 
 </body>
 </html>
-
