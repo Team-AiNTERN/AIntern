@@ -53,7 +53,7 @@
       background: #fff;
       padding: 25px;
       border-radius: 10px;
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
@@ -70,7 +70,7 @@
       display: block;
       margin-bottom: 6px;
     }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -107,38 +107,42 @@
     <div class="form-container">
       <h2>Post Internship Requirement</h2>
       <form id="internshipForm">
+        
+        <!-- Basic Info -->
+        <div class="form-group"><label>Company Name</label><input type="text" id="company_name" required></div>
+        <div class="form-group"><label>Job Title</label><input type="text" id="job_title" required></div>
+        
+        <!-- Candidate Requirements -->
+        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
         <div class="form-group">
-          <label>Company Name</label>
-          <input type="text" id="company_name" required>
+          <label>Gender</label>
+          <select id="gender">
+            <option value="">Any</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label>Internship Title</label>
-          <input type="text" id="title" required>
-        </div>
-        <div class="form-group">
-          <label>Description</label>
-          <textarea id="description" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>Skills Required (comma separated)</label>
-          <input type="text" id="skills_required" placeholder="React, SQL, Python">
-        </div>
-        <div class="form-group">
-          <label>Openings</label>
-          <input type="number" id="openings" value="1">
-        </div>
-        <div class="form-group">
-          <label>Stipend</label>
-          <input type="text" id="stipend" placeholder="₹10,000/month">
-        </div>
-        <div class="form-group">
-          <label>Duration</label>
-          <input type="text" id="duration" placeholder="3 months">
-        </div>
-        <div class="form-group">
-          <label>Location</label>
-          <input type="text" id="location" placeholder="Bangalore / Remote">
-        </div>
+        <div class="form-group"><label>Category</label><input type="text" id="category"></div>
+        <div class="form-group"><label>Minimum Class 10 %</label><input type="number" id="min_class10"></div>
+        <div class="form-group"><label>Minimum Class 12 %</label><input type="number" id="min_class12"></div>
+        <div class="form-group"><label>Minimum Graduation %</label><input type="number" id="min_grad"></div>
+        <div class="form-group"><label>Degree Required</label><input type="text" id="degree_required"></div>
+        <div class="form-group"><label>Year of Passing</label><input type="number" id="year_of_passing"></div>
+        <div class="form-group"><label>Extra Courses</label><input type="text" id="extra_courses"></div>
+        <div class="form-group"><label>Specialisation</label><input type="text" id="specialisation"></div>
+        <div class="form-group"><label>Languages Known</label><input type="text" id="languages"></div>
+        <div class="form-group"><label>Skills</label><input type="text" id="skills"></div>
+        <div class="form-group"><label>Experience (yrs)</label><input type="number" id="experience"></div>
+        <div class="form-group"><label>Preferred Location</label><input type="text" id="preferred_location"></div>
+        <div class="form-group"><label>Duration</label><input type="text" id="duration"></div>
+
+        <!-- Additional -->
+        <div class="form-group"><label>Projects</label><textarea id="projects"></textarea></div>
+        <div class="form-group"><label>Competitions</label><textarea id="competitions"></textarea></div>
+        <div class="form-group"><label>Publications</label><textarea id="publications"></textarea></div>
+        <div class="form-group"><label>Patents</label><textarea id="patents"></textarea></div>
+        
         <button type="button" onclick="postInternship()">Submit Requirement</button>
       </form>
     </div>
@@ -147,28 +151,36 @@
   <!-- Supabase Script -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.27.0/dist/umd/supabase.min.js"></script>
   <script>
-    const SUPABASE_URL = "YOUR_SUPABASE_URL";
-    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+    const SUPABASE_URL = "https://xozzpzasbdvgpyysuvew.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function postInternship() {
-      const company_name = document.getElementById("company_name").value;
-      const title = document.getElementById("title").value;
-      const description = document.getElementById("description").value;
-      const skills_required = document.getElementById("skills_required").value.split(",").map(s => s.trim());
-      const openings = document.getElementById("openings").value;
-      const stipend = document.getElementById("stipend").value;
-      const duration = document.getElementById("duration").value;
-      const location = document.getElementById("location").value;
+      const formData = {
+        company_name: document.getElementById("company_name").value,
+        job_title: document.getElementById("job_title").value,
+        age: document.getElementById("age").value,
+        gender: document.getElementById("gender").value,
+        category: document.getElementById("category").value,
+        min_class10: document.getElementById("min_class10").value,
+        min_class12: document.getElementById("min_class12").value,
+        min_grad: document.getElementById("min_grad").value,
+        degree_required: document.getElementById("degree_required").value,
+        year_of_passing: document.getElementById("year_of_passing").value,
+        extra_courses: document.getElementById("extra_courses").value,
+        specialisation: document.getElementById("specialisation").value,
+        languages: document.getElementById("languages").value,
+        skills: document.getElementById("skills").value,
+        experience: document.getElementById("experience").value,
+        preferred_location: document.getElementById("preferred_location").value,
+        duration: document.getElementById("duration").value,
+        projects: document.getElementById("projects").value,
+        competitions: document.getElementById("competitions").value,
+        publications: document.getElementById("publications").value,
+        patents: document.getElementById("patents").value
+      };
 
-      if (!company_name || !title || !description || !location) {
-        alert("Please fill all required fields!");
-        return;
-      }
-
-      const { error } = await supabase.from("internships").insert([{
-        company_name, title, description, skills_required, openings, stipend, duration, location
-      }]);
+      const { error } = await supabase.from("internships").insert([formData]);
 
       if (error) {
         console.error("Error posting internship:", error.message);
