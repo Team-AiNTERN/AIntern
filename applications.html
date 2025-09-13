@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       background: #f9f9f9;
     }
@@ -107,6 +107,20 @@
       color: #333;
     }
 
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input, .search-bar select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 200px;
+    }
+
     .card {
       background: white;
       border-radius: 10px;
@@ -114,6 +128,7 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       transition: 0.3s;
+      position: relative;
     }
 
     .card:hover {
@@ -132,6 +147,46 @@
       margin: 8px 0;
       font-size: 15px;
       color: #555;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      margin-left: 10px;
+    }
+
+    .in-review { background: #f57c00; }
+    .applied { background: #4caf50; }
+    .rejected { background: #e74c3c; }
+
+    .timeline {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .card-actions {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-actions button {
+      background: transparent;
+      border: none;
+      color: #f57c00;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .card-actions button:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -158,10 +213,43 @@
 
   <div class="main">
     <h1>My Applications</h1>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search by role..." />
+      <select>
+        <option>Status</option>
+        <option>Applied</option>
+        <option>In Review</option>
+        <option>Rejected</option>
+      </select>
+      <select>
+        <option>Domain</option>
+        <option>AI/ML</option>
+        <option>Web Dev</option>
+        <option>Data Science</option>
+      </select>
+    </div>
+
     <div class="card">
-      <h2>Application Status</h2>
-      <p>AI Research Intern – <strong>In Review</strong></p>
-      <p>Data Science Intern – <strong>Applied</strong></p>
+      <h2>AI Research Intern <span class="badge in-review">In Review</span></h2>
+      <p>Company: DeepVision Labs</p>
+      <p>Applied on: Aug 25, 2025</p>
+      <div class="timeline">Timeline: Applied → In Review → Interview Scheduled</div>
+      <div class="card-actions">
+        <button>View Details</button>
+        <button>Withdraw</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Data Science Intern <span class="badge applied">Applied</span></h2>
+      <p>Company: QuantifyX</p>
+      <p>Applied on: Sep 5, 2025</p>
+      <div class="timeline">Timeline: Applied → Awaiting Review</div>
+      <div class="card-actions">
+        <button>View Details</button>
+        <button>Withdraw</button>
+      </div>
     </div>
   </div>
 
