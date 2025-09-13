@@ -57,11 +57,14 @@
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about">
-    <div class="container">
-      <h2>About the Program</h2>
-      <p>The AiNTERN Portal connects learners, recruiters, and institutions through an AI-powered allocation engine that matches profiles to opportunities based on skills, interests, and goals. Our approach emphasizes transparency and equal access, using explainable models and anonymized matching to reduce bias. Students discover relevant roles faster, recruiters reach motivated talent at scale, and institutions gain insights that help improve curricula and outcomes.</p>
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <h2>About the Program</h2>
+    <p>The AiNTERN Portal connects learners, recruiters, and institutions through an AI-powered allocation engine that matches profiles to opportunities based on skills, interests, and goals. Our approach emphasizes transparency and equal access, using explainable models and anonymized matching to reduce bias. Students discover relevant roles faster, recruiters reach motivated talent at scale, and institutions gain insights that help improve curricula and outcomes.</p>
+
+    <div class="about-layout">
+      <!-- Left: Illustration -->
       <div class="about-illustration">
         <img id="about-illustration-img" class="img-tint tint-blue" src="https://cdn.builder.io/api/v1/image/assets%2Fd90bbe9fa7e84f6aa0f8e85ef524c7ad%2F90638ea550664f6182debc7771e25fd4?format=webp&width=800" alt="AI learning illustration" />
         <div class="tint-controls" aria-label="Change illustration color">
@@ -70,88 +73,51 @@
           <button class="tint-btn outline" data-tint="tint-mono">Mono</button>
         </div>
       </div>
+
+     <!-- Critics' Corner -->
+<div class="critics-corner">
+  <h3><i class="fas fa-comment-dots"></i> Critics’ Corner</h3>
+  <div class="review-wrapper">
+    <div class="review-card active">
+      <h4>Aarav Sharma</h4>
+      <span class="role">Web Developer</span>
+      <p>"This website helped me find the perfect internship. Super smooth and easy to use!"</p>
+      <span class="timeline">— August 2025</span>
     </div>
-  </section>
-
-
-
+    <div class="review-card">
+      <h4>Priya Nair</h4>
+      <span class="role">Student</span>
+      <p>"Loved the platform! Found an internship in just 3 days."</p>
+      <span class="timeline">— July 2025</span>
     </div>
+    <div class="review-card">
+      <h4>Rohan Verma</h4>
+      <span class="role">AI Enthusiast</span>
+      <p>"Amazing interface and smooth process. Highly recommend!"</p>
+      <span class="timeline">— June 2025</span>
+    </div>
+    <div class="review-card">
+      <h4>Karan Mehta</h4>
+      <span class="role">Full Stack Intern</span>
+      <p>"AiNTERN matched me with a role that fit my skills perfectly. Great experience!"</p>
+      <span class="timeline">— May 2025</span>
+    </div>
+  </div>
+</div>
+</div>
   </div>
 </section>
 
-<!-- Slider Script -->
 <script>
-  const slider = document.getElementById("review-slider");
-  let index = 0;
-  const total = 5; // total reviews
+  const reviews = document.querySelectorAll(".review-card");
+  let current = 0;
 
   setInterval(() => {
-    index = (index + 1) % total;
-    slider.style.transform = `translateX(-${index * 24}rem)`; // 24rem = w-96
-  }, 3000); // change every 3s
+    reviews[current].classList.remove("active");
+    current = (current + 1) % reviews.length;
+    reviews[current].classList.add("active");
+  }, 3000);
 </script>
-
-<!-- PM Modi Video Styles (Compact Version) -->
-<style>
-  #pm-video {
-    margin: 40px 0;
-  }
-  .pm-video-card {
-    max-width: 400px; /* reduced size */
-    margin: 0 auto;
-    background: #fff;
-    border: 2px solid rgba(255,106,0,0.25);
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    overflow: hidden;
-  }
-  .pm-video-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(90deg, #ff6a00, #ff8b2b);
-    color: #fff;
-    padding: 8px 12px;
-  }
-  .pm-logo {
-    width: 32px;
-    height: 32px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-  }
-  .pm-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-  }
-  .pm-video-wrap {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 ratio */
-    background: #000;
-  }
-  .pm-video-wrap iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-  .pm-desc {
-    font-size: 13px;
-    color: #444;
-    padding: 10px 14px;
-    background: #fff;
-    margin: 0;
-  }
-</style>
-
-
   
 
 
@@ -337,6 +303,83 @@
     </div>
   </div>
 </div>
+
+<style>
+<style>
+.critics-corner {
+  background: linear-gradient(135deg, #1e1b3a, #3a1e5f);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 100%;
+  margin-top: 50px;
+  color: #f4f4f4;
+}
+
+.critics-corner h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #ff80ab;
+  margin-bottom: 35px;
+  letter-spacing: 0.5px;
+}
+
+.review-wrapper {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+.review-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  text-align: center;
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: #2a2547;
+  border-radius: 16px;
+}
+
+.review-card.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.review-card h4 {
+  font-size: 1.4rem;
+  color: #ffd54f;
+  margin-bottom: 8px;
+}
+
+.review-card .role {
+  display: block;
+  font-size: 1rem;
+  color: #cfd8dc;
+  margin-bottom: 15px;
+}
+
+.review-card p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.review-card .timeline {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: #b39ddb;
+  font-style: italic;
+}
+</style>
 <!-- Footer Start -->
 <footer>
   <div class="footer-container">
@@ -356,6 +399,96 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
+<style>
+.about-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 30px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.about-illustration {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+<style>
+.critics-corner {
+  background: linear-gradient(135deg, #1e1b3a, #3a1e5f);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 100%;
+  margin-top: 50px;
+  color: #f4f4f4;
+}
+
+.critics-corner h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #ff80ab;
+  margin-bottom: 35px;
+  letter-spacing: 0.5px;
+}
+
+.review-wrapper {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+.review-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  text-align: center;
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: #2a2547;
+  border-radius: 16px;
+}
+
+.review-card.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.review-card h4 {
+  font-size: 1.4rem;
+  color: #ffd54f;
+  margin-bottom: 8px;
+}
+
+.review-card .role {
+  display: block;
+  font-size: 1rem;
+  color: #cfd8dc;
+  margin-bottom: 15px;
+}
+
+.review-card p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.review-card .timeline {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: #b39ddb;
+  font-style: italic;
+}
+</style>
 <!-- Footer CSS -->
 <style>
   footer {
@@ -383,16 +516,6 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
 
 
