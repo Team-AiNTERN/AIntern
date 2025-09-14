@@ -149,6 +149,15 @@
     .apply-btn:hover {
       background: #e65100;
     }
+    
+    .applied-btn {
+      background: #4caf50;
+      cursor: default;
+    }
+    
+    .applied-btn:hover {
+      background: #4caf50;
+    }
 
     @media (max-width: 600px) {
       .filters select,
@@ -317,10 +326,58 @@
     updateSelectedList();
   }
 
+  // Function to check if user has already applied to an internship
+  function hasApplied(company, role) {
+    const applications = JSON.parse(localStorage.getItem('internshipApplications')) || [];
+    return applications.some(app => app.company === company && app.role === role);
+  }
+
   // Function to handle applying to an internship
   function applyToInternship(company, role) {
-    // Redirect to applications.html with company and role as URL parameters
+    // Check if already applied
+    if (hasApplied(company, role)) {
+      alert('You have already applied to this internship!');
+      return;
+    }
+    
+    // Create application object
+    const application = {
+      company: company,
+      role: role,
+      appliedOn: new Date().toLocaleDateString(),
+      status: 'Applied',
+      timeline: 'Applied → Awaiting Review'
+    };
+    
+    // Get existing applications
+    const applications = JSON.parse(localStorage.getItem('internshipApplications')) || [];
+    
+    // Add new application
+    applications.push(application);
+    
+    // Save back to localStorage
+    localStorage.setItem('internshipApplications', JSON.stringify(applications));
+    
+    // Update UI to show applied status
+    updateApplyButtons();
+    
+    // Redirect to applications page
     window.location.href = `applications.html?company=${encodeURIComponent(company)}&role=${encodeURIComponent(role)}`;
+  }
+
+  // Function to update Apply buttons based on application status
+  function updateApplyButtons() {
+    const applyButtons = document.querySelectorAll('.apply-btn');
+    applyButtons.forEach(button => {
+      const company = button.getAttribute('data-company');
+      const role = button.getAttribute('data-role');
+      
+      if (hasApplied(company, role)) {
+        button.textContent = 'Applied';
+        button.classList.add('applied-btn');
+        button.onclick = null;
+      }
+    });
   }
 
   // Replaced searchInternships with safe version (fetch all rows, filter in JS)
@@ -471,6 +528,9 @@
       return matchScore(b) - matchScore(a);
     });
 
+    // Clear results and add header
+    results.innerHTML = "<h2>Available Internships</h2>";
+    
     // render results
     filtered.forEach((m, idx) => {
       const companyName = m.CompanyName || '';
@@ -488,6 +548,9 @@
       
       const badge = idx === 0 ? ' <span style="color:green;font-weight:bold;">Best Match</span>' : '';
       
+      // Check if user has already applied
+      const applied = hasApplied(companyName, role);
+      
       // Create a div for each internship with an Apply button
       const internshipDiv = document.createElement('div');
       internshipDiv.className = 'internship-item';
@@ -498,9 +561,20 @@
           ${badge}
         </div>
         <div class="internship-actions">
-          <button class="apply-btn" onclick="applyToInternship('${companyName}', '${role}')">Apply</button>
+          <button class="apply-btn ${applied ? 'applied-btn' : ''}" 
+                  data-company="${companyName}" 
+                  data-role="${role}"
+                  ${applied ? 'disabled' : ''}>
+            ${applied ? 'Applied' : 'Apply'}
+          </button>
         </div>
       `;
+      
+      // Add event listener if not already applied
+      if (!applied) {
+        const applyButton = internshipDiv.querySelector('.apply-btn');
+        applyButton.addEventListener('click', () => applyToInternship(companyName, role));
+      }
       
       results.appendChild(internshipDiv);
     });
