@@ -121,7 +121,6 @@
         </div>
 
         <!-- Candidate Requirements -->
-        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
         <div class="form-group">
           <label>Gender</label>
           <select id="gender">
@@ -131,28 +130,135 @@
             <option>Other</option>
           </select>
         </div>
-        <div class="form-group"><label>Category</label><input type="text" id="category"></div>
         <div class="form-group"><label>Minimum Class 10 %</label><input type="number" id="min_class10"></div>
         <div class="form-group"><label>Minimum Class 12 %</label><input type="number" id="min_class12"></div>
         <div class="form-group"><label>Minimum Graduation %</label><input type="number" id="min_grad"></div>
-        <div class="form-group"><label>Degree Required</label><input type="text" id="degree_required"></div>
+        <div class="form-group"><label>Degree Required</label>
+          <select id="degree_required">
+            <option value="">Select degree</option>
+            <option>B.A.</option>
+            <option>B.Com</option>
+            <option>B.E.</option>
+            <option>B.Sc.</option>
+            <option>B.Tech</option>
+            <option>BBA</option>
+            <option>Diploma</option>
+          </select>
+        </div>
         <div class="form-group"><label>Year of Passing</label><input type="number" id="year_of_passing"></div>
         <div class="form-group"><label>Extra Courses</label><input type="text" id="extra_courses"></div>
-        <div class="form-group"><label>Specialisation</label><input type="text" id="specialisation"></div>
-        <div class="form-group"><label>Languages Known</label><input type="text" id="languages"></div>
-        <div class="form-group"><label>Skills</label><input type="text" id="skills"></div>
-        <div class="form-group"><label>Experience (yrs)</label><input type="number" id="experience"></div>
+        <div class="form-group"><label>Specialisation</label>
+          <select id="specialisation_select">
+            <option value="">Select specialisation</option>
+            <option>Data Science</option>
+            <option>Civil</option>
+            <option>Marketing</option>
+            <option>Computer Science</option>
+            <option>Finance</option>
+            <option>Biotechnology</option>
+            <option>Electronics</option>
+            <option>Chemical</option>
+            <option>Mechanical</option>
+            <option>Electrical</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Languages Known</label>
+          <select id="languages_select" multiple size="8">
+            <option>Hindi</option>
+            <option>English</option>
+            <option>Assamese</option>
+            <option>Bengali</option>
+            <option>Gujarati</option>
+            <option>Kannada</option>
+            <option>Kashmiri</option>
+            <option>Malayalam</option>
+            <option>Manipuri</option>
+            <option>Marathi</option>
+            <option>Nepali</option>
+            <option>Odia</option>
+            <option>Punjabi</option>
+            <option>Sanskrit</option>
+            <option>Sindhi</option>
+            <option>Tamil</option>
+            <option>Telugu</option>
+            <option>Urdu</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Skills</label>
+          <select id="skills_select" multiple size="8">
+            <option>Sql</option>
+            <option>Marketing</option>
+            <option>MS excel</option>
+            <option>Java</option>
+            <option>C++</option>
+            <option>Sales</option>
+            <option>Data learning</option>
+            <option>Python</option>
+            <option>Tableau</option>
+            <option>Power bi</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Past Experience(months)</label>
+          <select id="past_experience_months">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+          </select>
+        </div>
         <div class="form-group"><label>Preferred Location</label><input type="text" id="preferred_location"></div>
         <div class="form-group"><label>Duration</label><input type="text" id="duration"></div>
 
         <!-- Additional -->
-        <div class="form-group"><label>Projects</label><textarea id="projects"></textarea></div>
-        <div class="form-group"><label>Competitions</label><textarea id="competitions"></textarea></div>
+        <div class="form-group"><label>Projects</label>
+          <select id="projects_count">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Competitions</label>
+          <select id="competitions_count">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+        </div>
         <div class="form-group"><label>Publications</label><textarea id="publications"></textarea></div>
         <div class="form-group"><label>Patents</label><textarea id="patents"></textarea></div>
 
         <button type="button" onclick="postInternship()">Submit Requirement</button>
       </form>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="form-container">
+      <h2>Recent Postings (CompaniesData)</h2>
+      <div id="recent_list" class="loading">Loading...</div>
     </div>
   </div>
 
@@ -163,41 +269,92 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    async function postInternship() {
-      const formData = {
-        company_name: document.getElementById("company_name").value,
-        job_title: document.getElementById("job_title").value,
-        age: document.getElementById("age").value,
-        gender: document.getElementById("gender").value,
-        category: document.getElementById("category").value,
-        min_class10: document.getElementById("min_class10").value,
-        min_class12: document.getElementById("min_class12").value,
-        min_grad: document.getElementById("min_grad").value,
-        degree_required: document.getElementById("degree_required").value,
-        year_of_passing: document.getElementById("year_of_passing").value,
-        extra_courses: document.getElementById("extra_courses").value,
-        specialisation: document.getElementById("specialisation").value,
-        languages: document.getElementById("languages").value,
-        skills: document.getElementById("skills").value,
-        experience: document.getElementById("experience").value,
-        preferred_location: document.getElementById("preferred_location").value,
-        duration: document.getElementById("duration").value,
-        projects: document.getElementById("projects").value,
-        competitions: document.getElementById("competitions").value,
-        publications: document.getElementById("publications").value,
-        patents: document.getElementById("patents").value
-      };
-
-      const { error } = await supabase.from("internships").insert([formData]);
-
-      if (error) {
-        console.error("Error posting internship:", error.message);
-        alert("Error posting internship");
-      } else {
-        alert("Internship requirement posted successfully!");
-        document.getElementById("internshipForm").reset();
+    async function loadRecent() {
+      const box = document.getElementById('recent_list');
+      box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+      try {
+        const { data, error } = await supabase
+          .from('CompaniesData')
+          .select('*');
+        if (error) {
+          box.innerHTML = `Failed to load recent: ${error.message || JSON.stringify(error)}`;
+          return;
+        }
+        if (!data || !data.length) {
+          box.innerHTML = 'No postings yet.';
+          return;
+        }
+        const rows = data.slice(-10).reverse();
+        box.innerHTML = rows.map(r => {
+          const meta = [r.Degree, r.Languages, r.Skills, r["Past Experience(months)"], r.Projects, r.Competitions]
+            .filter(Boolean).join(' • ');
+          return `<div style="padding:8px 0;border-bottom:1px solid #eee;">
+            <strong>${r.CompanyName || ''}</strong>${r.Specialisation ? ' – ' + r.Specialisation : ''}
+            ${meta ? ` <small>(${meta})</small>` : ''}
+          </div>`;
+        }).join('');
+      } catch (e) {
+        box.innerHTML = `Failed to load recent: ${e.message || e}`;
       }
     }
+
+    async function postInternship() {
+      const get = (id) => (document.getElementById(id)?.value || '').toString();
+      const getMulti = (id) => Array.from(document.getElementById(id)?.selectedOptions || []).map(o => o.value).join(', ');
+
+      const formData = {
+        company_name: get("company_name").trim(),
+        job_title: get("job_title").trim(),
+        gender: document.getElementById("gender").value,
+        min_class10: get("min_class10"),
+        min_class12: get("min_class12"),
+        min_grad: get("min_grad"),
+        degree_required: get("degree_required").trim(),
+        year_of_passing: get("year_of_passing"),
+        extra_courses: get("extra_courses").trim(),
+        specialisation: get("specialisation_select").trim(),
+        languages: getMulti("languages_select"),
+        skills: getMulti("skills_select"),
+        preferred_location: get("preferred_location").trim(),
+        duration: get("duration").trim(),
+        projects: get("projects_count"),
+        competitions: get("competitions_count"),
+        publications: get("publications").trim(),
+        patents: get("patents").trim(),
+        past_experience_months: get("past_experience_months")
+      };
+
+      const companiesRow = {
+        CompanyName: formData.company_name,
+        Specialisation: formData.specialisation,
+        Degree: formData.degree_required,
+        Languages: formData.languages,
+        Skills: formData.skills,
+        Projects: formData.projects,
+        Competitions: formData.competitions,
+        "Past Experience(months)": formData.past_experience_months || null
+      };
+
+      const { error: postError } = await supabase.from("internships").insert([formData]);
+      if (postError) {
+        console.error("Error posting internship:", postError);
+        alert(`Error posting internship: ${postError.message || JSON.stringify(postError)}`);
+        return;
+      }
+
+      const { error: linkError } = await supabase.from("CompaniesData").insert([companiesRow]);
+      if (linkError) {
+        console.error("Posted but linking to student listings failed:", linkError);
+        alert(`Posted, but linking to student search failed: ${linkError.message || JSON.stringify(linkError)}`);
+      } else {
+        alert("Internship posted and visible to students.");
+      }
+
+      document.getElementById("internshipForm").reset();
+      loadRecent();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRecent);
   </script>
 </body>
 </html>
