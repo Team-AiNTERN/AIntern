@@ -19,11 +19,11 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 400px;
       width: 100%;
       margin: auto;
       background: #fff;
-      padding: 35px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
@@ -34,98 +34,6 @@
       color: #0078D4;
     }
 
-    /* Progress bar */
-    .progressbar {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
-      counter-reset: step;
-      position: relative;
-    }
-
-    .progressbar::before {
-      content: "";
-      position: absolute;
-      top: 15px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: #d0d7de;
-      z-index: 1;
-    }
-
-    .progress-step {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      flex: 1;
-    }
-
-    .progress-step::before {
-      counter-increment: step;
-      content: counter(step);
-      width: 30px;
-      height: 30px;
-      border: 2px solid #d0d7de;
-      display: inline-block;
-      border-radius: 50%;
-      line-height: 26px;
-      background: #fff;
-      color: #555;
-      margin-bottom: 8px;
-    }
-
-    .progress-step-active::before {
-      border-color: #0078D4;
-      background: #0078D4;
-      color: #fff;
-    }
-
-    .progress {
-      position: absolute;
-      top: 15px;
-      left: 0;
-      height: 3px;
-      background: #0078D4;
-      width: 0%;
-      z-index: 1;
-      transition: 0.3s;
-    }
-
-    /* Form sections */
-    fieldset {
-      border: none;
-      display: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    fieldset.active { 
-      display: block; 
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    legend {
-      font-size: 1.15em;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #2c3e50;
-      border-left: 4px solid #0078D4;
-      padding-left: 8px;
-      width: 100%;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
     label {
       display: block;
       margin-bottom: 6px;
@@ -133,27 +41,22 @@
       font-size: 0.95em;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid #d0d7de;
       border-radius: 8px;
       font-size: 0.95em;
+      margin-bottom: 15px;
       background-color: #fafafa;
       box-sizing: border-box;
     }
 
-    input:focus, select:focus {
+    input:focus {
       outline: none;
       border-color: #0078D4;
       background: #fff;
       box-shadow: 0 0 4px rgba(0,120,212,0.25);
-    }
-
-    .btns {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 25px;
     }
 
     button {
@@ -164,6 +67,7 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 1em;
+      width: 100%;
       transition: background 0.3s;
     }
 
@@ -175,231 +79,27 @@
       background: #ccc;
       cursor: not-allowed;
     }
-
-    .error {
-      color: #d32f2f;
-      font-size: 0.8em;
-      margin-top: 5px;
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 20px;
-      }
-      
-      .form-grid { 
-        grid-template-columns: 1fr; 
-      }
-      
-      .progressbar {
-        margin-bottom: 20px;
-      }
-      
-      .progress-step {
-        font-size: 0.8em;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Student Registration</h2>
 
-    <!-- Progress bar -->
-    <div class="progressbar">
-      <div class="progress"></div>
-      <div class="progress-step progress-step-active">Step 1</div>
-      <div class="progress-step">Step 2</div>
-      <div class="progress-step">Step 3</div>
-      <div class="progress-step">Step 4</div>
-    </div>
-
     <form id="registerForm">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required>
 
-      <!-- Step 1 -->
-      <fieldset class="active" id="step1">
-        <legend>Personal & Contact Details</legend>
-        <div class="form-grid">
-          <div>
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" name="fullName" required>
-            <span class="error" id="fullNameError"></span>
-          </div>
-          <div>
-            <label for="age">Age</label>
-            <input type="number" id="age" name="age" min="16" max="30" required>
-            <span class="error" id="ageError"></span>
-          </div>
-          <div>
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-              <option value="">Select</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-            <span class="error" id="genderError"></span>
-          </div>
-          <div>
-            <label for="category">Category</label>
-            <select id="category" name="category" required>
-              <option value="">Select</option>
-              <option>General</option>
-              <option>OBC</option>
-              <option>SC</option>
-              <option>ST</option>
-              <option>EWS</option>
-            </select>
-            <span class="error" id="categoryError"></span>
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-            <span class="error" id="emailError"></span>
-          </div>
-          <div>
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
-            <span class="error" id="phoneError"></span>
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" minlength="6" required>
-            <span class="error" id="passwordError"></span>
-          </div>
-        </div>
-        <div class="btns"><span></span><button type="button" class="next" id="next1">Next</button></div>
-      </fieldset>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
 
-      <!-- Step 2 -->
-      <fieldset id="step2">
-        <legend>Permanent Address</legend>
-        <div class="form-grid">
-          <div>
-            <label for="permHouse">House No.</label>
-            <input type="text" id="permHouse" name="permHouse" required>
-            <span class="error" id="permHouseError"></span>
-          </div>
-          <div>
-            <label for="permLine1">Address Line 1</label>
-            <input type="text" id="permLine1" name="permLine1" required>
-            <span class="error" id="permLine1Error"></span>
-          </div>
-          <div>
-            <label for="permLine2">Address Line 2</label>
-            <input type="text" id="permLine2" name="permLine2">
-          </div>
-          <div>
-            <label for="permState">State</label>
-            <select id="permState" name="permState" required>
-              <option value="">Select</option>
-              <option>Tamil Nadu</option>
-              <option>Maharashtra</option>
-              <option>Delhi</option>
-              <option>Karnataka</option>
-              <option>Andhra Pradesh</option>
-              <option>West Bengal</option>
-            </select>
-            <span class="error" id="permStateError"></span>
-          </div>
-          <div>
-            <label for="permDistrict">District</label>
-            <input type="text" id="permDistrict" name="permDistrict" required>
-            <span class="error" id="permDistrictError"></span>
-          </div>
-          <div>
-            <label for="permPin">Pin Code</label>
-            <input type="text" id="permPin" name="permPin" pattern="[0-9]{6}" required>
-            <span class="error" id="permPinError"></span>
-          </div>
-        </div>
-        <div class="btns"><button type="button" class="prev">Back</button><button type="button" class="next" id="next2">Next</button></div>
-      </fieldset>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" minlength="6" required>
 
-      <!-- Step 3 -->
-      <fieldset id="step3">
-        <legend>Education</legend>
-        <div class="form-grid">
-          <div>
-            <label for="class10School">Class 10 School</label>
-            <input type="text" id="class10School" name="class10School" required>
-            <span class="error" id="class10SchoolError"></span>
-          </div>
-          <div>
-            <label for="class10Percent">Class 10 %</label>
-            <input type="number" id="class10Percent" name="class10Percent" min="0" max="100" step="0.01" required>
-            <span class="error" id="class10PercentError"></span>
-          </div>
-          <div>
-            <label for="class12School">Class 12 School</label>
-            <input type="text" id="class12School" name="class12School" required>
-            <span class="error" id="class12SchoolError"></span>
-          </div>
-          <div>
-            <label for="class12Percent">Class 12 %</label>
-            <input type="number" id="class12Percent" name="class12Percent" min="0" max="100" step="0.01" required>
-            <span class="error" id="class12PercentError"></span>
-          </div>
-          <div>
-            <label for="gradCollege">Graduation College</label>
-            <input type="text" id="gradCollege" name="gradCollege" required>
-            <span class="error" id="gradCollegeError"></span>
-          </div>
-          <div>
-            <label for="gradPercent">Graduation %</label>
-            <input type="number" id="gradPercent" name="gradPercent" min="0" max="100" step="0.01" required>
-            <span class="error" id="gradPercentError"></span>
-          </div>
-          <div>
-            <label for="degree">Degree</label>
-            <input type="text" id="degree" name="degree" required>
-            <span class="error" id="degreeError"></span>
-          </div>
-          <div>
-            <label for="gradYear">Passing Year</label>
-            <input type="number" id="gradYear" name="gradYear" min="2000" max="2030" required>
-            <span class="error" id="gradYearError"></span>
-          </div>
-        </div>
-        <div class="btns"><button type="button" class="prev">Back</button><button type="button" class="next" id="next3">Next</button></div>
-      </fieldset>
-
-      <!-- Step 4 -->
-      <fieldset id="step4">
-        <legend>Additional & Achievements</legend>
-        <div class="form-grid">
-          <div>
-            <label for="skills">Skills</label>
-            <input type="text" id="skills" name="skills" placeholder="Separate with commas">
-          </div>
-          <div>
-            <label for="languages">Languages</label>
-            <input type="text" id="languages" name="languages" placeholder="Separate with commas">
-          </div>
-          <div>
-            <label for="projects">Projects</label>
-            <input type="text" id="projects" name="projects" placeholder="Separate with commas">
-          </div>
-          <div>
-            <label for="competitions">Competitions</label>
-            <input type="text" id="competitions" name="competitions" placeholder="Separate with commas">
-          </div>
-          <div>
-            <label for="publications">Publications</label>
-            <input type="text" id="publications" name="publications" placeholder="Separate with commas">
-          </div>
-          <div>
-            <label for="patents">Patents</label>
-            <input type="text" id="patents" name="patents" placeholder="Separate with commas">
-          </div>
-        </div>
-        <div class="btns"><button type="button" class="prev">Back</button><button type="submit" id="submitBtn">Register</button></div>
-      </fieldset>
+      <button type="submit" id="submitBtn">Register</button>
     </form>
   </div>
 
-  <!-- Firebase + Step Logic -->
+  <!-- Firebase Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } 
@@ -421,247 +121,27 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Multi-step navigation
-    const steps = document.querySelectorAll("fieldset");
-    const progressSteps = document.querySelectorAll(".progress-step");
-    const progress = document.querySelector(".progress");
-    let currentStep = 0;
-
-    // Form validation functions
-    function validateStep1() {
-      let isValid = true;
-      
-      // Reset errors
-      document.querySelectorAll('#step1 .error').forEach(el => el.textContent = '');
-      
-      // Validate full name
-      const fullName = document.getElementById('fullName').value.trim();
-      if (!fullName) {
-        document.getElementById('fullNameError').textContent = 'Full name is required';
-        isValid = false;
-      }
-      
-      // Validate age
-      const age = document.getElementById('age').value;
-      if (!age || age < 16 || age > 30) {
-        document.getElementById('ageError').textContent = 'Age must be between 16 and 30';
-        isValid = false;
-      }
-      
-      // Validate gender
-      const gender = document.getElementById('gender').value;
-      if (!gender) {
-        document.getElementById('genderError').textContent = 'Please select a gender';
-        isValid = false;
-      }
-      
-      // Validate category
-      const category = document.getElementById('category').value;
-      if (!category) {
-        document.getElementById('categoryError').textContent = 'Please select a category';
-        isValid = false;
-      }
-      
-      // Validate email
-      const email = document.getElementById('email').value;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-        document.getElementById('emailError').textContent = 'Please enter a valid email';
-        isValid = false;
-      }
-      
-      // Validate phone
-      const phone = document.getElementById('phone').value;
-      const phoneRegex = /^[0-9]{10}$/;
-      if (!phone || !phoneRegex.test(phone)) {
-        document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
-        isValid = false;
-      }
-      
-      // Validate password
-      const password = document.getElementById('password').value;
-      if (!password || password.length < 6) {
-        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
-        isValid = false;
-      }
-      
-      return isValid;
-    }
-    
-    function validateStep2() {
-      let isValid = true;
-      
-      // Reset errors
-      document.querySelectorAll('#step2 .error').forEach(el => el.textContent = '');
-      
-      // Validate house number
-      const permHouse = document.getElementById('permHouse').value.trim();
-      if (!permHouse) {
-        document.getElementById('permHouseError').textContent = 'House number is required';
-        isValid = false;
-      }
-      
-      // Validate address line 1
-      const permLine1 = document.getElementById('permLine1').value.trim();
-      if (!permLine1) {
-        document.getElementById('permLine1Error').textContent = 'Address line 1 is required';
-        isValid = false;
-      }
-      
-      // Validate state
-      const permState = document.getElementById('permState').value;
-      if (!permState) {
-        document.getElementById('permStateError').textContent = 'Please select a state';
-        isValid = false;
-      }
-      
-      // Validate district
-      const permDistrict = document.getElementById('permDistrict').value.trim();
-      if (!permDistrict) {
-        document.getElementById('permDistrictError').textContent = 'District is required';
-        isValid = false;
-      }
-      
-      // Validate pincode
-      const permPin = document.getElementById('permPin').value;
-      const pinRegex = /^[0-9]{6}$/;
-      if (!permPin || !pinRegex.test(permPin)) {
-        document.getElementById('permPinError').textContent = 'Please enter a valid 6-digit pincode';
-        isValid = false;
-      }
-      
-      return isValid;
-    }
-    
-    function validateStep3() {
-      let isValid = true;
-      
-      // Reset errors
-      document.querySelectorAll('#step3 .error').forEach(el => el.textContent = '');
-      
-      // Validate class 10 school
-      const class10School = document.getElementById('class10School').value.trim();
-      if (!class10School) {
-        document.getElementById('class10SchoolError').textContent = 'Class 10 school is required';
-        isValid = false;
-      }
-      
-      // Validate class 10 percentage
-      const class10Percent = document.getElementById('class10Percent').value;
-      if (!class10Percent || class10Percent < 0 || class10Percent > 100) {
-        document.getElementById('class10PercentError').textContent = 'Please enter a valid percentage (0-100)';
-        isValid = false;
-      }
-      
-      // Validate class 12 school
-      const class12School = document.getElementById('class12School').value.trim();
-      if (!class12School) {
-        document.getElementById('class12SchoolError').textContent = 'Class 12 school is required';
-        isValid = false;
-      }
-      
-      // Validate class 12 percentage
-      const class12Percent = document.getElementById('class12Percent').value;
-      if (!class12Percent || class12Percent < 0 || class12Percent > 100) {
-        document.getElementById('class12PercentError').textContent = 'Please enter a valid percentage (0-100)';
-        isValid = false;
-      }
-      
-      // Validate graduation college
-      const gradCollege = document.getElementById('gradCollege').value.trim();
-      if (!gradCollege) {
-        document.getElementById('gradCollegeError').textContent = 'Graduation college is required';
-        isValid = false;
-      }
-      
-      // Validate graduation percentage
-      const gradPercent = document.getElementById('gradPercent').value;
-      if (!gradPercent || gradPercent < 0 || gradPercent > 100) {
-        document.getElementById('gradPercentError').textContent = 'Please enter a valid percentage (0-100)';
-        isValid = false;
-      }
-      
-      // Validate degree
-      const degree = document.getElementById('degree').value.trim();
-      if (!degree) {
-        document.getElementById('degreeError').textContent = 'Degree is required';
-        isValid = false;
-      }
-      
-      // Validate passing year
-      const gradYear = document.getElementById('gradYear').value;
-      const currentYear = new Date().getFullYear();
-      if (!gradYear || gradYear < 2000 || gradYear > currentYear + 5) {
-        document.getElementById('gradYearError').textContent = 'Please enter a valid year';
-        isValid = false;
-      }
-      
-      return isValid;
-    }
-
-    document.querySelectorAll(".next").forEach(btn => {
-      btn.addEventListener("click", () => {
-        let valid = true;
-        
-        // Validate current step before proceeding
-        if (currentStep === 0) valid = validateStep1();
-        else if (currentStep === 1) valid = validateStep2();
-        else if (currentStep === 2) valid = validateStep3();
-        
-        if (valid && currentStep < steps.length - 1) {
-          steps[currentStep].classList.remove("active");
-          currentStep++;
-          steps[currentStep].classList.add("active");
-          updateProgress();
-        }
-      });
-    });
-
-    document.querySelectorAll(".prev").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (currentStep > 0) {
-          steps[currentStep].classList.remove("active");
-          currentStep--;
-          steps[currentStep].classList.add("active");
-          updateProgress();
-        }
-      });
-    });
-
-    function updateProgress() {
-      progressSteps.forEach((step, index) => {
-        step.classList.toggle("progress-step-active", index <= currentStep);
-      });
-      progress.style.width = (currentStep / (steps.length - 1)) * 100 + "%";
-    }
-
-    // Handle form submit
     document.getElementById("registerForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      
-      // Validate the final step
-      if (!validateStep3()) {
-        // Go back to step 3 if validation fails
-        steps[currentStep].classList.remove("active");
-        currentStep = 2;
-        steps[currentStep].classList.add("active");
-        updateProgress();
-        return;
-      }
-      
+
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Registering...';
-      
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
       try {
-        const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        // Create user in Firebase Auth
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
 
-        delete data.password;
-        await setDoc(doc(db, "students", user.uid), data);
+        // Save additional details in Firestore
+        await setDoc(doc(db, "students", user.uid), {
+          fullName,
+          email
+        });
 
         alert("🎉 Registration successful! Please login.");
         window.location.href = "login.html";
