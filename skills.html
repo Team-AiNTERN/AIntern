@@ -225,60 +225,184 @@
   <a href="applications.html">📂 My Applications</a>
   <a href="skills.html">⭐ Skill Insights</a>
   <a href="profile.html">👤 Profile</a>
-  <a href="settings.html">⚙️ Settings</a>
+  <a href="settings.html">⚙ Settings</a>
   <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
 
 <div class="main">
   <h1>Skill Insights</h1>
 
-  <div class="filter-bar">
-    <select>
-      <option>Filter by Domain</option>
-      <option>Programming</option>
-      <option>Data Science</option>
-      <option>Web Development</option>
-      <option>Machine Learning</option>
-    </select>
-  </div>
+<!-- Domain Dropdown -->
+<div class="filter-bar">
+  <label for="domain-select">Choose Domain:</label>
+  <select id="domain-select">
+    <option value="">-- Select Domain --</option>
+    <option value="programming">Programming</option>
+    <option value="datascience">Data Science</option>
+    <option value="webdev">Web Development</option>
+    <option value="ml">Machine Learning</option>
+  </select>
+</div>
 
-  <div class="card">
-    <h2>Python</h2>
-    <div class="progress-container">
-      <div class="progress-label">Progress – 80%</div>
-      <div class="progress-bar"><div class="progress-fill python">80%</div></div>
-    </div>
-    <div class="skill-desc">Strong grasp of syntax, data structures, and scripting. Ready for backend roles and automation tasks.</div>
-    <div class="card-actions">
-      <button>View Resources</button>
-      <button>Practice More</button>
-    </div>
-  </div>
+<!-- Subdomain Dropdown -->
+<div class="filter-bar" style="margin-top: 15px;">
+  <label for="subdomain-select">Choose Subdomain:</label>
+  <select id="subdomain-select">
+    <option value="">-- Select Subdomain --</option>
+  </select>
+</div>
+<!-- Search Button -->
+<div class="filter-bar" style="margin-top: 10px;">
+  <button id="search-btn" style="padding: 8px 16px; background: #f57c00; color: white; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">Search Resources</button>
+</div>
+<!-- Resource Display Box (Initially Hidden) -->
+<div id="resource-box" style="display:none; margin-top: 20px;">
+  <h2 id="resource-title" style="color: #f57c00; font-size: 20px; margin-bottom: 15px;"></h2>
+  <div id="resource-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;"></div>
+</div>
+<!-- JS -->
+<script>
+  const resourceMap = {
+    python: [
+      { name: "Python for Everybody – Coursera", url: "https://www.coursera.org/specializations/python" },
+      { name: "CS50 – Harvard", url: "https://cs50.harvard.edu/x/" },
+      { name: "Real Python", url: "https://realpython.com/" }
+    ],
+    java: [
+      { name: "Java Programming – Udemy", url: "https://www.udemy.com/course/java-the-complete-java-developer-course/" },
+      { name: "Java OOP – GeeksforGeeks", url: "https://www.geeksforgeeks.org/java-oops-concepts/" },
+      { name: "Java Practice – HackerRank", url: "https://www.hackerrank.com/domains/tutorials/10-days-of-java" }
+    ],
+    "c++": [
+      { name: "Learn C++ – Codecademy", url: "https://www.codecademy.com/learn/learn-c-plus-plus" },
+      { name: "C++ STL – GeeksforGeeks", url: "https://www.geeksforgeeks.org/the-c-standard-template-library-stl/" },
+      { name: "C++ Practice – HackerRank", url: "https://www.hackerrank.com/domains/cpp" }
+    ],
+    javascript: [
+      { name: "JavaScript Basics – freeCodeCamp", url: "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" },
+      { name: "JavaScript.info – Deep Dive", url: "https://javascript.info/" },
+      { name: "JavaScript Projects – Codecademy", url: "https://www.codecademy.com/learn/introduction-to-javascript" }
+    ],
+    pandas: [
+      { name: "Pandas Tutorial – W3Schools", url: "https://www.w3schools.com/python/pandas/default.asp" },
+      { name: "Pandas – DataCamp", url: "https://www.datacamp.com/courses/pandas-foundations" },
+      { name: "Pandas – GeeksforGeeks", url: "https://www.geeksforgeeks.org/python-pandas/" }
+    ],
+    numpy: [
+      { name: "NumPy Basics – TutorialsPoint", url: "https://www.tutorialspoint.com/numpy/index.htm" },
+      { name: "NumPy – W3Schools", url: "https://www.w3schools.com/python/numpy/default.asp" },
+      { name: "NumPy – GeeksforGeeks", url: "https://www.geeksforgeeks.org/numpy-in-python-set-1-introduction/" }
+    ],
+    eda: [
+      { name: "EDA with Python – Kaggle", url: "https://www.kaggle.com/learn/data-cleaning" },
+      { name: "EDA – Analytics Vidhya", url: "https://www.analyticsvidhya.com/blog/2021/06/exploratory-data-analysis-eda-a-practical-guide/" }
+    ],
+    "data-visualization": [
+      { name: "Data Viz – Tableau Public", url: "https://public.tableau.com/en-us/s/resources" },
+      { name: "Matplotlib – Official Docs", url: "https://matplotlib.org/stable/contents.html" },
+      { name: "Seaborn – Tutorials", url: "https://seaborn.pydata.org/tutorial.html" }
+    ],
+    html: [
+      { name: "HTML Basics – W3Schools", url: "https://www.w3schools.com/html/" },
+      { name: "HTML – freeCodeCamp", url: "https://www.freecodecamp.org/learn/responsive-web-design/" }
+    ],
+    css: [
+      { name: "CSS Fundamentals – MDN", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+      { name: "CSS Grid – CSS Tricks", url: "https://css-tricks.com/snippets/css/complete-guide-grid/" }
+    ],
+    react: [
+      { name: "React Docs – Official", url: "https://react.dev/learn" },
+      { name: "React Projects – freeCodeCamp", url: "https://www.freecodecamp.org/news/react-projects-for-beginners/" }
+    ],
+    "supervised-learning": [
+      { name: "Supervised ML – Coursera", url: "https://www.coursera.org/learn/machine-learning" },
+      { name: "ML Crash Course – Google", url: "https://developers.google.com/machine-learning/crash-course" }
+    ],
+    "unsupervised-learning": [
+      { name: "Unsupervised ML – Analytics Vidhya", url: "https://www.analyticsvidhya.com/blog/2021/06/introduction-to-unsupervised-learning/" },
+      { name: "Clustering – Scikit-learn", url: "https://scikit-learn.org/stable/modules/clustering.html" }
+    ],
+    "model-evaluation": [
+      { name: "Model Metrics – Towards Data Science", url: "https://towardsdatascience.com/evaluating-machine-learning-models-using-metrics-2f0f6d7f6c5c" },
+      { name: "Confusion Matrix – GeeksforGeeks", url: "https://www.geeksforgeeks.org/confusion-matrix-machine-learning/" }
+    ],
+    "deep-learning": [
+      { name: "Deep Learning – Coursera", url: "https://www.coursera.org/specializations/deep-learning" },
+      { name: "DL – Fast.ai", url: "https://course.fast.ai/" }
+    ]
+  };
 
-  <div class="card">
-    <h2>Data Science</h2>
-    <div class="progress-container">
-      <div class="progress-label">Progress – 65%</div>
-      <div class="progress-bar"><div class="progress-fill ds">65%</div></div>
-    </div>
-    <div class="skill-desc">Comfortable with pandas, NumPy, and basic EDA. Needs deeper exposure to modeling and deployment.</div>
-    <div class="card-actions">
-      <button>View Resources</button>
-      <button>Practice More</button>
-    </div>
-  </div>
+  const searchBtn = document.getElementById("search-btn");
+  const resourceBox = document.getElementById("resource-box");
+  const resourceTitle = document.getElementById("resource-title");
+  const resourceList = document.getElementById("resource-list");
 
-  <div class="card">
-    <h2>Web Development</h2>
-    <div class="progress-container">
-      <div class="progress-label">Progress – 90%</div>
-      <div class="progress-bar"><div class="progress-fill web">90%</div></div>
-    </div>
-    <div class="skill-desc">Proficient in HTML, CSS, JS. Capable of building responsive UIs and integrating APIs.</div>
-    <div class="card-actions">
-      <button>View Resources</button>
-      <button>Practice More</button>
-    </div>
-  </div>
+  searchBtn.addEventListener("click", () => {
+    const selectedSubdomain = document.getElementById("subdomain-select").value;
+    const selectedText = document.getElementById("subdomain-select").options[document.getElementById("subdomain-select").selectedIndex].text;
+    const resources = resourceMap[selectedSubdomain] || [];
 
-  <div
+    if (!selectedSubdomain || resources.length === 0) {
+      alert("Please select a valid subdomain with available resources.");
+      resourceBox.style.display = "none";
+      return;
+    }
+
+    resourceTitle.textContent = `${selectedText} – Learning Resources`;
+resourceList.innerHTML = resources.map(link => `
+  <div style="
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 20px;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  ">
+    <div>
+      <h3 style="margin-top: 0; font-size: 16px; color: #f57c00;">${link.name}</h3>
+      <p style="font-size: 13px; color: #666;">Explore this resource to deepen your skills.</p>
+    </div>
+    <a href="${link.url}" target="_blank" style="
+      margin-top: 15px;
+      padding: 8px 12px;
+      background: #f57c00;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      text-align: center;
+    ">Visit Site</a>
+  </div>
+`).join("");    resourceBox.style.display = "block";
+  });
+</script>
+<!-- JavaScript -->
+<script>
+  const subdomains = {
+    programming: ["Python", "Java", "C++", "JavaScript"],
+    datascience: ["Pandas", "NumPy", "EDA", "Data Visualization"],
+    webdev: ["HTML", "CSS", "JavaScript", "React"],
+    ml: ["Supervised Learning", "Unsupervised Learning", "Model Evaluation", "Deep Learning"]
+  };
+
+  const domainSelect = document.getElementById("domain-select");
+  const subdomainSelect = document.getElementById("subdomain-select");
+
+  domainSelect.addEventListener("change", () => {
+    const selectedDomain = domainSelect.value;
+    const options = subdomains[selectedDomain] || [];
+
+    // Clear previous subdomain options
+    subdomainSelect.innerHTML = `<option value="">-- Select Subdomain --</option>`;
+
+    // Populate new subdomain options
+    options.forEach(sub => {
+      const option = document.createElement("option");
+      option.value = sub.toLowerCase().replace(/\s+/g, "-");
+      option.textContent = sub;
+      subdomainSelect.appendChild(option);
+    });
+  });
+</script>
