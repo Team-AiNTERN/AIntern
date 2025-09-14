@@ -121,6 +121,7 @@
         </div>
 
         <!-- Candidate Requirements -->
+        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
         <div class="form-group">
           <label>Gender</label>
           <select id="gender">
@@ -305,6 +306,7 @@
       const formData = {
         company_name: get("company_name").trim(),
         job_title: get("job_title").trim(),
+        age: get("age"),
         gender: document.getElementById("gender").value,
         min_class10: get("min_class10"),
         min_class12: get("min_class12"),
