@@ -435,9 +435,9 @@
     // Load dashboard data
     async function loadDashboard() {
       try {
-        // Load candidate data from Aintern table
+        // Load candidate data from InternsData table
         let { data: candidates, error: candidateError } = await supabase
-          .from("Aintern")
+          .from("InternsData")
           .select("*");
 
         if (candidateError) {
