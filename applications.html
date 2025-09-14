@@ -205,6 +205,17 @@
     .apply-btn:hover {
       background: #e65100;
     }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+    }
+    
+    .empty-state p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -247,27 +258,7 @@
     </div>
 
     <div id="application-list">
-      <div class="card">
-        <h2>AI Research Intern <span class="badge in-review">In Review</span></h2>
-        <p>Company: DeepVision Labs</p>
-        <p>Applied on: Aug 25, 2025</p>
-        <div class="timeline">Timeline: Applied → In Review → Interview Scheduled</div>
-        <div class="card-actions">
-          <button>View Details</button>
-          <button>Withdraw</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Data Science Intern <span class="badge applied">Applied</span></h2>
-        <p>Company: QuantifyX</p>
-        <p>Applied on: Sep 5, 2025</p>
-        <div class="timeline">Timeline: Applied → Awaiting Review</div>
-        <div class="card-actions">
-          <button>View Details</button>
-          <button>Withdraw</button>
-        </div>
-      </div>
+      <!-- Applications will be loaded here -->
     </div>
   </div>
 
@@ -276,38 +267,86 @@
       window.location.href = "student-login.html";
     }
     
-    // Function to handle URL parameters and show the newly applied company
+    // Function to load applications from localStorage
+    function loadApplications() {
+      const applications = JSON.parse(localStorage.getItem('internshipApplications')) || [];
+      const applicationList = document.getElementById('application-list');
+      
+      if (applications.length === 0) {
+        applicationList.innerHTML = `
+          <div class="empty-state">
+            <p>You haven't applied to any internships yet.</p>
+            <a href="find.html"><button class="apply-btn">Find Internships</button></a>
+          </div>
+        `;
+        return;
+      }
+      
+      applicationList.innerHTML = '';
+      
+      applications.forEach(app => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h2>${app.role} <span class="badge ${app.status === 'Applied' ? 'applied' : app.status === 'In Review' ? 'in-review' : 'rejected'}">${app.status}</span></h2>
+          <p>Company: ${app.company}</p>
+          <p>Applied on: ${app.appliedOn}</p>
+          <div class="timeline">Timeline: ${app.timeline}</div>
+          <div class="card-actions">
+            <button>View Details</button>
+            <button onclick="withdrawApplication('${app.company}', '${app.role}')">Withdraw</button>
+          </div>
+        `;
+        applicationList.appendChild(card);
+      });
+    }
+    
+    // Function to withdraw an application
+    function withdrawApplication(company, role) {
+      let applications = JSON.parse(localStorage.getItem('internshipApplications')) || [];
+      applications = applications.filter(app => !(app.company === company && app.role === role));
+      localStorage.setItem('internshipApplications', JSON.stringify(applications));
+      loadApplications();
+    }
+    
+    // Function to handle URL parameters and add new applications
     function handleUrlParameters() {
       const urlParams = new URLSearchParams(window.location.search);
       const company = urlParams.get('company');
       const role = urlParams.get('role');
       
       if (company && role) {
-        // Create a new application card
-        const applicationList = document.getElementById('application-list');
-        const newCard = document.createElement('div');
-        newCard.className = 'card';
-        newCard.innerHTML = `
-          <h2>${role} <span class="badge applied">Applied</span></h2>
-          <p>Company: ${company}</p>
-          <p>Applied on: ${new Date().toLocaleDateString()}</p>
-          <div class="timeline">Timeline: Applied → Awaiting Review</div>
-          <div class="card-actions">
-            <button>View Details</button>
-            <button>Withdraw</button>
-          </div>
-        `;
+        // Check if this application already exists
+        const applications = JSON.parse(localStorage.getItem('internshipApplications')) || [];
+        const exists = applications.some(app => app.company === company && app.role === role);
         
-        // Insert the new card at the top of the list
-        applicationList.insertBefore(newCard, applicationList.firstChild);
+        if (!exists) {
+          // Create a new application object
+          const newApplication = {
+            company: company,
+            role: role,
+            appliedOn: new Date().toLocaleDateString(),
+            status: 'Applied',
+            timeline: 'Applied → Awaiting Review'
+          };
+          
+          // Add to applications array
+          applications.push(newApplication);
+          
+          // Save back to localStorage
+          localStorage.setItem('internshipApplications', JSON.stringify(applications));
+        }
         
         // Remove the query parameters from the URL
         window.history.replaceState({}, document.title, window.location.pathname);
       }
     }
     
-    // Call the function when the page loads
-    document.addEventListener('DOMContentLoaded', handleUrlParameters);
+    // Load applications when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      handleUrlParameters();
+      loadApplications();
+    });
   </script>
 </body>
 </html>
