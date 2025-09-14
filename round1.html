@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aintern Eligibility Form</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #ffffff);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      max-width: 450px;
+      width: 100%;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #0078D4;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    input:focus {
+      border-color: #0078D4;
+      outline: none;
+      box-shadow: 0 0 4px rgba(0,120,212,0.3);
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #0078D4;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .success {
+      color: green;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Aintern</h2>
+    <form id="eligibilityForm">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="class10">Class 10 %</label>
+      <input type="number" id="class10" name="class10" step="0.01" required>
+
+      <label for="class12">Class 12 %</label>
+      <input type="number" id="class12" name="class12" step="0.01" required>
+
+      <label for="cgpa">CGPA</label>
+      <input type="number" id="cgpa" name="cgpa" step="0.01" required>
+
+      <div id="message"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Supabase client
+    const { createClient } = supabase;
+    const supabaseUrl = "https://xozzpzasbdvgpyysuvew.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM"; 
+    const db = createClient(supabaseUrl, supabaseKey);
+
+    const form = document.getElementById("eligibilityForm");
+    const messageDiv = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageDiv.textContent = "";
+      messageDiv.className = "";
+
+      const age = parseInt(document.getElementById("age").value);
+      const class10 = parseFloat(document.getElementById("class10").value);
+      const class12 = parseFloat(document.getElementById("class12").value);
+      const cgpa = parseFloat(document.getElementById("cgpa").value);
+
+      // Validation
+      if (age < 21 || age > 24) {
+        messageDiv.textContent = "❌ Age must be between 21 and 24";
+        messageDiv.className = "error";
+        return;
+      }
+      if (class10 < 65) {
+        messageDiv.textContent = "❌ Class 10% must be at least 65";
+        messageDiv.className = "error";
+        return;
+      }
+      if (class12 < 65) {
+        messageDiv.textContent = "❌ Class 12% must be at least 65";
+        messageDiv.className = "error";
+        return;
+      }
+      if (cgpa < 6.5) {
+        messageDiv.textContent = "❌ CGPA must be at least 7.0";
+        messageDiv.className = "error";
+        return;
+      }
+
+      try {
+        // Insert into Supabase table (example: "eligibility")
+        const { error } = await db
+          .from("eligibility")
+          .insert([{ age, class10, class12, cgpa }]);
+
+        if (error) throw error;
+
+        messageDiv.textContent = "✅ Eligibility confirmed! Redirecting...";
+        messageDiv.className = "success";
+
+        setTimeout(() => {
+          window.location.href = "register.html";
+        }, 1500);
+
+      } catch (err) {
+        messageDiv.textContent = "❌ " + err.message;
+        messageDiv.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>
