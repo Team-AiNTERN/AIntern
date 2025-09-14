@@ -189,6 +189,22 @@
     .card-actions button:hover {
       text-decoration: underline;
     }
+
+    .apply-btn {
+      background: #f57c00;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .apply-btn:hover {
+      background: #e65100;
+    }
   </style>
 </head>
 <body>
@@ -230,25 +246,27 @@
       </select>
     </div>
 
-    <div class="card">
-      <h2>AI Research Intern <span class="badge in-review">In Review</span></h2>
-      <p>Company: DeepVision Labs</p>
-      <p>Applied on: Aug 25, 2025</p>
-      <div class="timeline">Timeline: Applied → In Review → Interview Scheduled</div>
-      <div class="card-actions">
-        <button>View Details</button>
-        <button>Withdraw</button>
+    <div id="application-list">
+      <div class="card">
+        <h2>AI Research Intern <span class="badge in-review">In Review</span></h2>
+        <p>Company: DeepVision Labs</p>
+        <p>Applied on: Aug 25, 2025</p>
+        <div class="timeline">Timeline: Applied → In Review → Interview Scheduled</div>
+        <div class="card-actions">
+          <button>View Details</button>
+          <button>Withdraw</button>
+        </div>
       </div>
-    </div>
 
-    <div class="card">
-      <h2>Data Science Intern <span class="badge applied">Applied</span></h2>
-      <p>Company: QuantifyX</p>
-      <p>Applied on: Sep 5, 2025</p>
-      <div class="timeline">Timeline: Applied → Awaiting Review</div>
-      <div class="card-actions">
-        <button>View Details</button>
-        <button>Withdraw</button>
+      <div class="card">
+        <h2>Data Science Intern <span class="badge applied">Applied</span></h2>
+        <p>Company: QuantifyX</p>
+        <p>Applied on: Sep 5, 2025</p>
+        <div class="timeline">Timeline: Applied → Awaiting Review</div>
+        <div class="card-actions">
+          <button>View Details</button>
+          <button>Withdraw</button>
+        </div>
       </div>
     </div>
   </div>
@@ -257,6 +275,39 @@
     function logout() {
       window.location.href = "student-login.html";
     }
+    
+    // Function to handle URL parameters and show the newly applied company
+    function handleUrlParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const company = urlParams.get('company');
+      const role = urlParams.get('role');
+      
+      if (company && role) {
+        // Create a new application card
+        const applicationList = document.getElementById('application-list');
+        const newCard = document.createElement('div');
+        newCard.className = 'card';
+        newCard.innerHTML = `
+          <h2>${role} <span class="badge applied">Applied</span></h2>
+          <p>Company: ${company}</p>
+          <p>Applied on: ${new Date().toLocaleDateString()}</p>
+          <div class="timeline">Timeline: Applied → Awaiting Review</div>
+          <div class="card-actions">
+            <button>View Details</button>
+            <button>Withdraw</button>
+          </div>
+        `;
+        
+        // Insert the new card at the top of the list
+        applicationList.insertBefore(newCard, applicationList.firstChild);
+        
+        // Remove the query parameters from the URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', handleUrlParameters);
   </script>
 </body>
 </html>
