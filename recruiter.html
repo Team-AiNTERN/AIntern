@@ -513,9 +513,9 @@
           displayCandidates(allCandidates);
         }
 
-        // Load company data from companies data table
+        // Load company data from CompaniesData table
         let { data: companies, error: companyError } = await supabase
-          .from("companies data")
+          .from("CompaniesData")
           .select("*");
 
         if (companyError) {
