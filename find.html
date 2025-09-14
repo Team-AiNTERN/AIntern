@@ -118,11 +118,52 @@
       font-style: italic;
       color: #666;
     }
+    
+    .internship-item {
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .internship-details {
+      flex: 1;
+    }
+    
+    .internship-actions {
+      margin-left: 15px;
+    }
+    
+    .apply-btn {
+      background: #f57c00;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    
+    .apply-btn:hover {
+      background: #e65100;
+    }
 
     @media (max-width: 600px) {
       .filters select,
       .filters input {
         flex: 1 1 100%;
+      }
+      
+      .internship-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .internship-actions {
+        margin-left: 0;
+        margin-top: 10px;
       }
     }
   </style>
@@ -235,11 +276,7 @@
   <!-- Results -->
   <div class="card" id="internshipResults">
     <h2>Available Internships</h2>
-    <p>AI Research Intern – Google</p>
-    <p>Data Science Intern – Microsoft</p>
-    <p>Web Development Intern – Amazon</p>
-    <p>UX Design Intern – Adobe</p>
-    <p>Cloud Intern – AWS</p>
+    <p class="loading">Use the search button to find internships</p>
   </div>
 
   <div id="debugOutput" style="margin-top:12px;color:#444;"></div>
@@ -270,7 +307,7 @@
     selected.forEach((item, index) => {
       const chip = document.createElement("span");
       chip.className = "chip";
-      chip.innerHTML = `${item} <button onclick="removeFilter(${index})">&times;</button>`; // <-- Fixed template string
+      chip.innerHTML = `${item} <button onclick="removeFilter(${index})">&times;</button>`;
       container.appendChild(chip);
     });
   }
@@ -278,6 +315,12 @@
   function removeFilter(index) {
     selected.splice(index, 1);
     updateSelectedList();
+  }
+
+  // Function to handle applying to an internship
+  function applyToInternship(company, role) {
+    // Redirect to applications.html with company and role as URL parameters
+    window.location.href = `applications.html?company=${encodeURIComponent(company)}&role=${encodeURIComponent(role)}`;
   }
 
   // Replaced searchInternships with safe version (fetch all rows, filter in JS)
@@ -430,10 +473,10 @@
 
     // render results
     filtered.forEach((m, idx) => {
-      const lines = [
-        `<strong>${m.CompanyName || ''}</strong>`,
-        m.Specialisation ? ` – ${m.Specialisation}` : '',
-      ].join('');
+      const companyName = m.CompanyName || '';
+      const specialisation = m.Specialisation || '';
+      const role = specialisation ? `${specialisation} Intern` : 'Intern';
+      
       const meta = [
         m.Degree,
         m.Languages,
@@ -442,8 +485,24 @@
         m.Projects,
         m.Competitions
       ].filter(Boolean).join(' • ');
+      
       const badge = idx === 0 ? ' <span style="color:green;font-weight:bold;">Best Match</span>' : '';
-      results.innerHTML += `<p>${lines}${meta ? ` <small>(${meta})</small>` : ''}${badge}</p>`;
+      
+      // Create a div for each internship with an Apply button
+      const internshipDiv = document.createElement('div');
+      internshipDiv.className = 'internship-item';
+      internshipDiv.innerHTML = `
+        <div class="internship-details">
+          <strong>${companyName}</strong> – ${role}
+          ${meta ? `<br><small>(${meta})</small>` : ''}
+          ${badge}
+        </div>
+        <div class="internship-actions">
+          <button class="apply-btn" onclick="applyToInternship('${companyName}', '${role}')">Apply</button>
+        </div>
+      `;
+      
+      results.appendChild(internshipDiv);
     });
 
     searchInFlight = false;
@@ -475,16 +534,4 @@
   }
 </script>
 </body>
-</html>
-      const badge = idx === 0 ? ' <span style="color:green;font-weight:bold;">Best Match</span>' : '';
-      results.innerHTML += `<p>${lines}${meta ? ` <small>(${meta})</small>` : ''}${badge}</p>`;
-    });
-
-    searchInFlight = false;
-    const btn = document.querySelector('.search-btn');
-    if (btn) { btn.disabled = false; btn.textContent = 'Search'; }
-  }
-</script>
-</body>
-</html>
 </html>
