@@ -93,6 +93,8 @@ Create a .env file (if you want to keep Firebase keys out of source code):
 
 env
 Copy code
+  NEXT_PUBLIC_SUPABASE_URL=https://xozzpzasbdvgpyysuvew.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvenpwemFzYmR2Z3B5eXN1dmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MDA0NjMsImV4cCI6MjA3MzI3NjQ2M30.SiiaH38cNz21EHpvGOZNQCQ5vW2f6H2GBocGn4qYfGM
   apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
   authDomain: "aintern-285f9.firebaseapp.com",
   projectId: "aintern-285f9",
@@ -125,3 +127,6 @@ Team AiNTERN
 Maintainer: Pritish, Sarthak, Srijan 
 Contact: Support@aintern.netlify.app
 Repo: github.com/Team-AiNTERN/AIntern
+
+
+⭐ If you like this project, don’t forget to star this repo on GitHub!
