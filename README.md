@@ -1,17 +1,11 @@
 # AiNTERN – Internship Portal 🎓💼
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
-[![Contributors](https://img.shields.io/github/contributors/Team-AiNTERN/AIntern)](https://github.com/Team-AiNTERN/AIntern/graphs/contributors)  
-[![Live Demo](https://img.shields.io/badge/Live-Demo-green.svg)](https://aintern-peach.vercel.app/)  
-
----
-
 ## 📌 About
 
 **AiNTERN** is a web-based internship portal created for the **PM Internship Scheme**.  
 It provides students with a simple way to register, log in, and apply for internships — while recruiters and admins can manage applications more effectively.  
 
-🚀 **Live Demo** → [AiNTERN Portal](https://aintern-peach.vercel.app/)  
+🚀 **Live Demo** → [AiNTERN Portal](https://ainternnn.netlify.app/)  
 
 ---
 
@@ -51,11 +45,8 @@ It provides students with a simple way to register, log in, and apply for intern
    git clone https://github.com/Team-AiNTERN/AIntern.git
    cd AIntern
 Add your Firebase configuration.
-
 Create a Firebase project in the Firebase Console.
-
 Enable Authentication (Email/Password) and Firestore Database.
-
 Copy the config snippet from your Firebase project and paste it into firebaseConfig.js (or wherever it’s imported).
 
 Example:
@@ -63,19 +54,17 @@ Example:
 javascript
 Copy code
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+   apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
+  authDomain: "aintern-285f9.firebaseapp.com",
+  projectId: "aintern-285f9",
+  storageBucket: "aintern-285f9.firebasestorage.app",
+  messagingSenderId: "1035209257137",
+  appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
+  measurementId: "G-4QSNCJQYFY"
 };
 Run the project locally:
-
 Open index.html directly in the browser, or
-
 Serve via a simple HTTP server:
-
 bash
 Copy code
 npx serve .
@@ -98,46 +87,34 @@ AIntern/
 ├── scripts/               # JavaScript files (Firebase integration, auth, forms)
 ├── firebaseConfig.js      # Firebase credentials (not committed to repo)
 └── README.md
-📸 Screenshots (add here)
-(You can add screenshots of login, dashboard, applying to an internship, etc.)
 
 ⚙️ Configuration
 Create a .env file (if you want to keep Firebase keys out of source code):
 
 env
 Copy code
-FIREBASE_API_KEY=your_api_key
-FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-FIREBASE_PROJECT_ID=your_project
-FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-FIREBASE_APP_ID=your_app_id
-Update your Firebase initialization code to read from environment variables.
+  apiKey: "AIzaSyBbMUoq3Cjx3IvWo-b2hPsp-s9E3cAHRsY",
+  authDomain: "aintern-285f9.firebaseapp.com",
+  projectId: "aintern-285f9",
+  storageBucket: "aintern-285f9.firebasestorage.app",
+  messagingSenderId: "1035209257137",
+  appId: "1:1035209257137:web:dd20ce2d10842d6f127290",
+  measurementId: "G-4QSNCJQYFY"
 
 🤝 Contributing
 We welcome contributions! To contribute:
-
 Fork this repo
-
 Create a new branch → git checkout -b feature/my-feature
-
 Commit your changes → git commit -m "Added my feature"
-
 Push to your branch → git push origin feature/my-feature
-
 Open a Pull Request 🚀
 
 🛤️ Roadmap
  Recruiter / Admin panel with internship posting
-
  Internship search & filtering
-
  Notifications (email / SMS) for new internships
-
  Profile editing & resume upload
-
  Fully responsive mobile-first UI
-
  Unit & integration tests
 
 📜 License
@@ -145,9 +122,6 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 
 👥 Authors / Contact
 Team AiNTERN
-
-Maintainer: [Your Name(s)]
-
-Contact: [your.email@example.com]
-
+Maintainer: Pritish, Sarthak, Srijan 
+Contact: Support@aintern.netlify.app
 Repo: github.com/Team-AiNTERN/AIntern
