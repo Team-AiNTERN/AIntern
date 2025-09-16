@@ -91,6 +91,7 @@
       background: #e06a3f;
     }
   </style>
+  <link rel="stylesheet" href="dark-mode.css">
 </head>
 <body>
 
@@ -109,33 +110,19 @@
     <div class="form-container">
       <h2>Post Internship Requirement</h2>
       <form id="internshipForm">
-
-        <!-- Basic Info -->
         <div class="form-group">
-          <label>Company Name</label>
-          <input type="text" id="company_name" required>
+          <label>CompanyName</label>
+          <input type="text" id="CompanyName" required>
         </div>
         <div class="form-group">
-          <label>Job Title</label>
-          <input type="text" id="job_title" required>
+          <label>Company Location</label>
+          <input type="text" id="CompanyLocation">
         </div>
-
-        <!-- Candidate Requirements -->
-        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
-        <div class="form-group">
-          <label>Gender</label>
-          <select id="gender">
-            <option value="">Any</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Minimum Class 10 %</label><input type="number" id="min_class10"></div>
-        <div class="form-group"><label>Minimum Class 12 %</label><input type="number" id="min_class12"></div>
-        <div class="form-group"><label>Minimum Graduation %</label><input type="number" id="min_grad"></div>
-        <div class="form-group"><label>Degree Required</label>
-          <select id="degree_required">
+        <div class="form-group"><label>Class 10 Percentage</label><input type="number" id="Class10Percentage" step="0.01"></div>
+        <div class="form-group"><label>Class 12 Percentage</label><input type="number" id="Class12Percentage" step="0.01"></div>
+        <div class="form-group"><label>CGPA</label><input type="number" id="CGPA" step="0.01"></div>
+        <div class="form-group"><label>Degree</label>
+          <select id="Degree">
             <option value="">Select degree</option>
             <option>B.A.</option>
             <option>B.Com</option>
@@ -146,10 +133,8 @@
             <option>Diploma</option>
           </select>
         </div>
-        <div class="form-group"><label>Year of Passing</label><input type="number" id="year_of_passing"></div>
-        <div class="form-group"><label>Extra Courses</label><input type="text" id="extra_courses"></div>
         <div class="form-group"><label>Specialisation</label>
-          <select id="specialisation_select">
+          <select id="Specialisation">
             <option value="">Select specialisation</option>
             <option>Data Science</option>
             <option>Civil</option>
@@ -163,8 +148,8 @@
             <option>Electrical</option>
           </select>
         </div>
-        <div class="form-group"><label>Languages Known</label>
-          <select id="languages_select" multiple size="8">
+        <div class="form-group"><label>Languages</label>
+          <select id="Languages" multiple size="8">
             <option>Hindi</option>
             <option>English</option>
             <option>Assamese</option>
@@ -186,7 +171,7 @@
           </select>
         </div>
         <div class="form-group"><label>Skills</label>
-          <select id="skills_select" multiple size="8">
+          <select id="Skills" multiple size="8">
             <option>Sql</option>
             <option>Marketing</option>
             <option>MS excel</option>
@@ -200,7 +185,7 @@
           </select>
         </div>
         <div class="form-group"><label>Past Experience(months)</label>
-          <select id="past_experience_months">
+          <select id="PastExperienceMonths">
             <option>0</option>
             <option>1</option>
             <option>2</option>
@@ -216,40 +201,37 @@
             <option>12</option>
           </select>
         </div>
-        <div class="form-group"><label>Preferred Location</label><input type="text" id="preferred_location"></div>
-        <div class="form-group"><label>Duration</label><input type="text" id="duration"></div>
-
-        <!-- Additional -->
-        <div class="form-group"><label>Projects</label>
-          <select id="projects_count">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
+        <div class="form-group"><label>Preferred Work Location</label><input type="text" id="PreferredWorkLocation"></div>
+        <div class="form-group"><label>Achievements</label><input type="text" id="Achievements"></div>
+        <div class="form-group"><label>Competitions</label><input type="number" id="Competitions" min="0" step="1"></div>
+        <div class="form-group"><label>Internship Duration (months)</label><input type="number" id="InternshipDurationMonths" min="0"></div>
+        <div class="form-group"><label>Domains</label>
+          <select id="Domains">
+            <option>Consulting</option>
+            <option>IT</option>
+            <option>Operations</option>
+            <option>Data Analytics</option>
+            <option>Marketing</option>
+            <option>Design</option>
+            <option>HR</option>
+            <option>Finance</option>
+            <option>Engineering</option>
+            <option>R&D</option>
           </select>
         </div>
-        <div class="form-group"><label>Competitions</label>
-          <select id="competitions_count">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
+        <div class="form-group"><label>Internship Type</label>
+          <select id="InternshipType">
+            <option>Remote</option>
+            <option>On-site</option>
+            <option>Hybrid</option>
           </select>
         </div>
-        <div class="form-group"><label>Publications</label><textarea id="publications"></textarea></div>
-        <div class="form-group"><label>Patents</label><textarea id="patents"></textarea></div>
+        <div class="form-group"><label>Contact Email</label><input type="email" id="ContactEmail"></div>
+        <div class="form-group"><label>Contact Phone</label><input type="text" id="ContactPhone"></div>
+        <div class="form-group"><label>Application Deadline</label><input type="date" id="ApplicationDeadline"></div>
+        <div class="form-group"><label>Vacancies</label><input type="number" id="Vacancies" min="1"></div>
+        <div class="form-group"><label>Stipend</label><input type="text" id="Stipend"></div>
+        <div class="form-group"><label>Duration</label><input type="text" id="Duration"></div>
 
         <button type="button" onclick="postInternship()">Submit Requirement</button>
       </form>
@@ -276,7 +258,8 @@
       try {
         const { data, error } = await supabase
           .from('CompaniesData')
-          .select('*');
+          .select('*')
+          .order('Application Deadline', { ascending: true })
         if (error) {
           box.innerHTML = `Failed to load recent: ${error.message || JSON.stringify(error)}`;
           return;
@@ -287,11 +270,15 @@
         }
         const rows = data.slice(-10).reverse();
         box.innerHTML = rows.map(r => {
-          const meta = [r.Degree, r.Languages, r.Skills, r["Past Experience(months)"], r.Projects, r.Competitions]
+          const meta = [r.Degree, r.Languages, r.Skills, r["Past Experience(months)"], r["Internship Type"], r.Domains]
             .filter(Boolean).join(' • ');
+          const deadline = r["Application Deadline"] ? ` | Deadline: ${r["Application Deadline"]}` : '';
+          const stipend = r.Stipend ? ` | Stipend: ${r.Stipend}` : '';
+          const vacancies = r.Vacancies ? ` | Vacancies: ${r.Vacancies}` : '';
           return `<div style="padding:8px 0;border-bottom:1px solid #eee;">
             <strong>${r.CompanyName || ''}</strong>${r.Specialisation ? ' – ' + r.Specialisation : ''}
             ${meta ? ` <small>(${meta})</small>` : ''}
+            <div style="color:#6b7280;font-size:13px;">${deadline}${stipend}${vacancies}</div>
           </div>`;
         }).join('');
       } catch (e) {
@@ -300,63 +287,135 @@
     }
 
     async function postInternship() {
-      const get = (id) => (document.getElementById(id)?.value || '').toString();
-      const getMulti = (id) => Array.from(document.getElementById(id)?.selectedOptions || []).map(o => o.value).join(', ');
+      const btn = document.querySelector('#internshipForm button[type="button"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+      try {
+        const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
+        const getMulti = (id) => Array.from(document.getElementById(id)?.selectedOptions || []).map(o => o.value).join(', ');
 
-      const formData = {
-        company_name: get("company_name").trim(),
-        job_title: get("job_title").trim(),
-        age: get("age"),
-        gender: document.getElementById("gender").value,
-        min_class10: get("min_class10"),
-        min_class12: get("min_class12"),
-        min_grad: get("min_grad"),
-        degree_required: get("degree_required").trim(),
-        year_of_passing: get("year_of_passing"),
-        extra_courses: get("extra_courses").trim(),
-        specialisation: get("specialisation_select").trim(),
-        languages: getMulti("languages_select"),
-        skills: getMulti("skills_select"),
-        preferred_location: get("preferred_location").trim(),
-        duration: get("duration").trim(),
-        projects: get("projects_count"),
-        competitions: get("competitions_count"),
-        publications: get("publications").trim(),
-        patents: get("patents").trim(),
-        past_experience_months: get("past_experience_months")
-      };
+        // Gather desired values (from the new form)
+        const desired = {
+          CompanyName: get('CompanyName'),
+          'Company Location': get('CompanyLocation'),
+          'Class 10 Percentage': get('Class10Percentage') || null,
+          'Class 12 Percentage': get('Class12Percentage') || null,
+          CGPA: get('CGPA') || null,
+          Degree: get('Degree'),
+          Specialisation: get('Specialisation'),
+          Languages: getMulti('Languages'),
+          Skills: getMulti('Skills'),
+          'Past Experience(months)': get('PastExperienceMonths') || null,
+          'Preferred Work Location': get('PreferredWorkLocation'),
+          Achievements: get('Achievements'),
+          Competitions: get('Competitions') || null,
+          'Internship Duration (months)': get('InternshipDurationMonths') || null,
+          Domains: get('Domains'),
+          'Internship Type': get('InternshipType'),
+          'Contact Email': get('ContactEmail'),
+          'Contact Phone': get('ContactPhone'),
+          'Application Deadline': get('ApplicationDeadline'),
+          Vacancies: get('Vacancies') || null,
+          Stipend: get('Stipend'),
+          Duration: get('Duration')
+        };
+        if (!desired.CompanyName) { alert('Please fill CompanyName'); return; }
 
-      const companiesRow = {
-        CompanyName: formData.company_name,
-        Specialisation: formData.specialisation,
-        Degree: formData.degree_required,
-        Languages: formData.languages,
-        Skills: formData.skills,
-        Projects: formData.projects,
-        Competitions: formData.competitions,
-        "Past Experience(months)": formData.past_experience_months || null
-      };
+        // Detect existing columns from CompaniesData
+        const probe = await supabase.from('CompaniesData').select('*').limit(1);
+        const colSet = new Set(Object.keys((probe.data && probe.data[0]) || {}));
 
-      const { error: postError } = await supabase.from("internships").insert([formData]);
-      if (postError) {
-        console.error("Error posting internship:", postError);
-        alert(`Error posting internship: ${postError.message || JSON.stringify(postError)}`);
-        return;
+        // Candidate mappings for compatibility with existing schema
+        const candidates = {
+          CompanyName: ['CompanyName','Company Name'],
+          'Company Location': ['Company Location','Location','Company_Location'],
+          'Class 10 Percentage': ['Class 10 Percentage','Class 10 %'],
+          'Class 12 Percentage': ['Class 12 Percentage','Class 12 %'],
+          CGPA: ['CGPA','Graduation Percentage','Grad %'],
+          Degree: ['Degree'],
+          Specialisation: ['Specialisation','Department'],
+          Languages: ['Languages'],
+          Skills: ['Skills'],
+          'Past Experience(months)': ['Past Experience(months)','Past Experience (months)'],
+          'Preferred Work Location': ['Preferred Work Location','Company Location','Location'],
+          Achievements: ['Achievements'],
+          Competitions: ['Competitions'],
+          'Internship Duration (months)': ['Internship Duration (months)','Duration'],
+          Domains: ['Domains','Department'],
+          'Internship Type': ['Internship Type','Type'],
+          'Contact Email': ['Contact Email','Email'],
+          'Contact Phone': ['Contact Phone','Phone'],
+          'Application Deadline': ['Application Deadline','Deadline'],
+          Vacancies: ['Vacancies','Openings'],
+          Stipend: ['Stipend','Internship Stipend (£/month)'],
+          Duration: ['Duration','Internship Duration (months)']
+        };
+
+        // Build payload using only columns that exist in table
+        const payload = {};
+        Object.entries(desired).forEach(([key, val]) => {
+          if (val === null || val === undefined || String(val) === '') return;
+          const opts = candidates[key] || [key];
+          const match = opts.find(o => colSet.has(o));
+          if (match) payload[match] = val;
+        });
+
+        // Fallback: if no columns detected (empty table), attempt insert with desired keys
+        const insertObj = Object.keys(payload).length ? payload : desired;
+
+        // Try insert with computed keys
+        let firstError = null;
+        let res = await supabase.from('CompaniesData').insert([insertObj]);
+        if (res.error) {
+          firstError = res.error;
+          // Retry with legacy schema mapping used elsewhere in app
+          const alt = {
+            'Company Name': desired.CompanyName,
+            'Company Location': desired['Company Location'],
+            'Class 10 Percentage': desired['Class 10 Percentage'],
+            'Class 12 Percentage': desired['Class 12 Percentage'],
+            'Graduation Percentage': desired.CGPA,
+            'Degree': desired.Degree,
+            'Specialisation': desired.Specialisation,
+            'Languages': desired.Languages,
+            'Skills': desired.Skills,
+            'Past Experience (months)': desired['Past Experience(months)'],
+            'Preferred Work Location': desired['Preferred Work Location'],
+            'Competitions': desired.Competitions,
+            'Internship Duration (months)': desired['Internship Duration (months)'],
+            'Department': desired.Domains,
+            'Internship Type': desired['Internship Type'],
+            'Application Deadline': desired['Application Deadline'],
+            'Vacancies': desired.Vacancies,
+            'Internship Stipend (£/month)': desired.Stipend,
+            'Duration': desired.Duration,
+            'Contact Email': desired['Contact Email'],
+            'Contact Phone': desired['Contact Phone']
+          };
+          // Remove undefined/empty
+          Object.keys(alt).forEach(k=>{ if (alt[k]===undefined || alt[k]===null || String(alt[k])==='') delete alt[k]; });
+          res = await supabase.from('CompaniesData').insert([alt]);
+          if (res.error) {
+            console.error('Error posting (both attempts failed):', firstError, res.error);
+            const a = JSON.stringify(firstError || {}, null, 2);
+            const b = JSON.stringify(res.error || {}, null, 2);
+            let hint = '';
+            if ((firstError && (firstError.code === '42501' || a.includes('RLS'))) || (res.error && (res.error.code === '42501' || b.includes('RLS')))) {
+              hint = '\nHint: Supabase Row Level Security is likely blocking inserts for anon role on CompaniesData. Please enable an INSERT policy for anon or provide a service key.';
+            }
+            alert('Insert failed.\nAttempt A: ' + a + '\nAttempt B: ' + b + hint);
+            return;
+          }
+        }
+        alert('Internship posted.');
+        document.getElementById('internshipForm').reset();
+        loadRecent();
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Submit Requirement'; }
       }
-
-      const { error: linkError } = await supabase.from("CompaniesData").insert([companiesRow]);
-      if (linkError) {
-        console.error("Posted but linking to student listings failed:", linkError);
-        alert(`Posted, but linking to student search failed: ${linkError.message || JSON.stringify(linkError)}`);
-      } else {
-        alert("Internship posted and visible to students.");
-      }
-
-      document.getElementById("internshipForm").reset();
-      loadRecent();
     }
 
     document.addEventListener('DOMContentLoaded', loadRecent);
   </script>
+  <script src="dark-mode.js" defer></script>
 </body>
 </html>
